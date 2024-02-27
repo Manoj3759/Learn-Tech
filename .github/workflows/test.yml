@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  cypress-tests:
+  tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,4 +17,4 @@ jobs:
         run: yarn install
 
       - name: Host
-        run: yarn clean-content && yarn build-content && yarn dev
+        run: yarn clean-content && yarn build-content && yarn generate
