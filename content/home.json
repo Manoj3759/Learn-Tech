@@ -1,0 +1,10 @@
+{
+    "id": "recWGMBdlsSgTKXHk",
+    "name": "Manoj",
+    "user_id": 1,
+    "phone": 789456123,
+    "features": [
+        "F-nuxt-image \n nuxtImage Text",
+        "F-nuxt-content \n nuxtContent Text"
+    ]
+}
