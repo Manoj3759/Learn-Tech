@@ -1,5 +1,5 @@
 const BASE = "apppjYD56k3fq9H2G";
-const tableName = "tblK7OBNKssVQXngi";
+const TABLENAME = "tblK7OBNKssVQXngi";
 import Airtable from "airtable";
 import dotenv from "dotenv";
 
@@ -12,12 +12,13 @@ import {
   filterDescriptionToText,
   textToUrl,
   extractVideoId,
-} from "../utils/FileUtils.js";
+} from "../utils/file-utils.js";
 
+// fetching each record from the airtable and storing at ./content/vendors based on title
 const getData = (resolve, reject) => {
   const allRecords = [];
 
-  client(tableName)
+  client(TABLENAME)
     .select()
     .eachPage(
       function page(records, fetchNextPage) {

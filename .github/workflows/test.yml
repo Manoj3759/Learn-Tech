@@ -1,0 +1,20 @@
+name: Cypress Tests
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  cypress-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: yarn install
+
+      - name: Host
+        run: yarn clean-content && build-content && yarn dev

@@ -1,5 +1,6 @@
 import { writeFileSync } from "fs";
 
+// Json creation based on title
 const generateFileWritePromises = async (
   collection,
   basePath,
@@ -18,9 +19,12 @@ const generateFileWritePromises = async (
   }
 };
 
+// extract file name by removing unwanted characters
 const sanitizeFilename = (fileName) => {
   return fileName.replace(/[/\\?%*:|"<>]/g, "-").replace(/ +/g, "-");
 };
+
+// extract text by removing unwanted characters
 const filterDescriptionToText = (description) => {
   if (!description) return "";
   return description
@@ -28,6 +32,8 @@ const filterDescriptionToText = (description) => {
     .replace(/\([^)]*\)+/gm, "")
     .replace(/\n/g, "");
 };
+
+// extract URL from text by removing unwanted characters
 const textToUrl = (text) => {
   if (!text) return "";
   return text
@@ -36,6 +42,8 @@ const textToUrl = (text) => {
     .replace(/ +/g, "")
     .replace(/\n/g, "");
 };
+
+// extract only video id
 const extractVideoId = (text) => {
   if (!text) return "";
   return text.replace(/<https:\/\/youtu\.be\/(\w+)>/, "$1").replace(/\n/g, "");

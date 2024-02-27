@@ -7,7 +7,7 @@ dotenv.config();
 const client = new Airtable({ apiKey: process.env.AIRTABLE_AUTH_ed_tech }).base(
   BASE
 );
-import { generateFileWritePromises } from "../utils/FileUtils.js";
+import { generateFileWritePromises } from "../utils/file-utils.js";
 
 const getData = (resolve, reject) => {
   const allRecords = [];

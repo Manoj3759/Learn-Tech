@@ -436,8 +436,8 @@
     <!-- Test -->
     <!-- <pre>---------{{ Data[0] }}</pre>
     <div v-for="(item, index) in Data[0].features" :key="index">
-      <h1>{{ getFirstPart(item) }}</h1>
-      <p>{{ getSecondPart(item) }}</p>
+      <h1>{{ getTitle(item) }}</h1>
+      <p>{{ getDescription(item) }}</p>
     </div> -->
     <!-- End -->
   </main>
@@ -470,12 +470,13 @@ let pageData = await queryContent("vendors")
   .only(["title", "tag", "category"])
   .find();
 
-// let Data = await queryContent("home").find();
+let Data = await queryContent("home").find();
 
-// const splitText = (text: string): string[] => text.split("\n");
-// const getFirstPart = (text: string): string => splitText(text)[0];
-// const getSecondPart = (text: string): string =>
-//   splitText(text).slice(1).join("-");
+// split the string based on any character/ special character
+const splitText = (text: string): string[] => text.split("\n");
+const getTitle = (text: string): string => splitText(text)[0];
+const getDescription = (text: string): string =>
+  splitText(text).slice(1).join(" ");
 
 type TrackingData = {
   event: string;
@@ -533,10 +534,12 @@ const fuseOptions = ref<fuseOptions>({
   keys: ["title", "tag", "category"],
 });
 
+//   fetch a particular number of items in the array of filteredVendors
 const visibleVendors = computed(() => {
   return filteredVendors.value.slice(0, visibleItemsCount.value);
 });
 
+//   fetch all items in the array of filteredVendors
 const loadMore = () => {
   visibleItemsCount.value = filteredVendors.value.length;
 };
@@ -549,6 +552,7 @@ const data = JSON.parse(JSON.stringify(pageData));
 // initialise Fuse with the index
 fuseInstance.value = new Fuse(data, fuseOptions.value);
 
+// sorting of items
 const sortByTitle = (a: vendorsData, b: vendorsData): number => {
   if (a.title.toLowerCase() < b.title.toLowerCase()) {
     return -1;
@@ -558,6 +562,7 @@ const sortByTitle = (a: vendorsData, b: vendorsData): number => {
   return 0;
 };
 
+// search value using fuse JS
 const searchPrograms = () => {
   const query = getSearchQuery();
   console.log("anything", query);
@@ -635,6 +640,7 @@ function getSearchQuery() {
   });
 })();
 
+// toggle between views (card / grid)
 const changeDisplay = (action: string): void => {
   if (action === "list-filter") {
     listDisplay.value = "inline-block";
@@ -665,6 +671,7 @@ const changeDisplay = (action: string): void => {
   }
 };
 
+// clear all the selected fields
 const clearFilter = () => {
   searchValue.value = "";
   filteredVendorsTags.value = [];
@@ -682,23 +689,6 @@ const clearFilter = () => {
   analyticsComposable.trackEvent(eventObject);
 };
 
-const triggerHome = (eventObject: TrackingData): void => {
-  analyticsComposable.trackEvent(eventObject);
-};
-
-const triggerHomeLogo = (eventObject: TrackingData): void => {
-  analyticsComposable.trackEvent(eventObject);
-};
-
-// const triggerNavItems = (eventObject: TrackingData): void => {
-//   analyticsComposable.trackEvent(eventObject);
-// };
-const triggerMobileNavItems = (eventObject: TrackingData): void => {
-  analyticsComposable.trackEvent(eventObject);
-};
-const triggerSearchNavItems = (eventObject: TrackingData): void => {
-  analyticsComposable.trackEvent(eventObject);
-};
 watch(
   [searchValue, () => searchPrograms()],
   [filteredVendorsCategory, () => searchPrograms()],
@@ -786,6 +776,22 @@ const triggerCloseButton = () => {
     section: "main navbar",
     text: "close button",
   };
+  analyticsComposable.trackEvent(eventObject);
+};
+
+const triggerHome = (eventObject: TrackingData): void => {
+  analyticsComposable.trackEvent(eventObject);
+};
+
+const triggerHomeLogo = (eventObject: TrackingData): void => {
+  analyticsComposable.trackEvent(eventObject);
+};
+
+const triggerMobileNavItems = (eventObject: TrackingData): void => {
+  analyticsComposable.trackEvent(eventObject);
+};
+
+const triggerSearchNavItems = (eventObject: TrackingData): void => {
   analyticsComposable.trackEvent(eventObject);
 };
 </script>

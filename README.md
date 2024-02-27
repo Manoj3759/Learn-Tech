@@ -1,75 +1,48 @@
-# Nuxt 3 Minimal Starter
+# Future-student-exp-lp
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+#### URLs
 
-## Setup
+- [staging]()
+- [production]()
 
-Make sure to install the dependencies:
+### Technology stack
 
-```bash
-# npm
-npm install
+This project leverages [Rocket Design System 3](https://master.d34gtp7q60k178.amplifyapp.com/?path=/docs/introduction-migration--docs), an in-house design system project of EdPlus at ASU. It also uses the following technologies:
 
-# pnpm
-pnpm install
+- NuxtJS Framework v3
+- Bootstrap 5
+- Airtable
+- TypeScript / JavaScript
+- yarn
 
-# yarn
-yarn install
+#### Local dev server
 
-# bun
-bun install
-```
+- `yarn dev`: to start a local dev server at `http://localhost:3000`.
 
-## Development Server
+#### Workflow
 
-Start the development server on `http://localhost:3000`:
+- Normal workflow, branch out of `Master` to add new feature to the project. The naming convention of feature branch is `feature/[feature-name]`.
+- Once your work is done, issue a PR on `Master` branch, and once its approved, it will be passed onto the `staging` env.
+- Once its merged onto the `test` branch, then you will be able to test the functionality on [staging environment]().
 
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
+### Build Setup
 
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+# install dependencies
+$ yarn install
+# delete all file in content dir
+$ yarn clean-content
+# write all json files in content dir
+$ yarn build-content
+# serve with hot reload at localhost:3000
+$ yarn dev
+# Review production setup in local
+$ yarn start
+# generate static project /dist is where the files will reside
+$ yarn generate
 ```
+## Team
+- **Manoj R** - *Developer* - [Manoj R](mraju10@asu.edu)
 
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+From Team,
+Happy coding 🎉🙌

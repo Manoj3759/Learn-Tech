@@ -129,14 +129,6 @@
             v-for="item in slotProps.paginatedSlides"
             :key="item.slideKey"
           >
-            <!-- <div class="card">
-              <img
-                :src="item.img"
-                class="card-img-top"
-                style="height: 275px"
-                alt="card image"
-              />
-            </div> -->
             <imageModalAtlas
               :imgSourceUrl="item.img"
               @modalOpen="triggerplayBtnclickDataLayer('open', 'image', '')"
@@ -278,13 +270,17 @@ const relatedData = await queryContent("vendors")
 
 console.log(relatedData);
 
+//   fetch a particular number of items in the array of relatedVendorsData
 const visibleVendors = computed(() => {
   return relatedVendorsData.value.slice(0, visibleItemsCount.value);
 });
 
+//   fetch all items in the array of relatedVendorsData
 const loadMore = () => {
   visibleItemsCount.value = relatedVendorsData.value.length;
 };
+
+// filtering the cards based on tag in slug
 const filteredData = relatedData.filter((data: relatedVendorsData) => {
   console.log("data", data);
   let shouldInclude = false;
