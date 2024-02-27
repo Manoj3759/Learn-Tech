@@ -1,4 +1,4 @@
-name: Cypress Tests
+name: Tests
 
 on:
   push:
@@ -17,4 +17,4 @@ jobs:
         run: yarn install
 
       - name: Host
-        run: yarn clean-content && build-content && yarn dev
+        run: yarn clean-content && yarn build-content && yarn dev
