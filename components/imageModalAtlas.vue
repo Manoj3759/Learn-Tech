@@ -78,4 +78,8 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+button.rds-modal-close {
+  margin-top: 18px !important;
+}
+</style>

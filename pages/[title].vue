@@ -171,9 +171,13 @@
               <div>
                 <div class="d-flex flex-wrap">
                   <div v-for="(item, idx) in data.tag" :key="idx">
-                    <div class="bg-light-1 p-space-xxxs fs-xs m-space-xxxs">
+                    <a
+                      href="/"
+                      class="bg-light-1 p-space-xxxs fs-xs m-space-xxxs"
+                    >
+                      <!-- @click="useEventsBus().emit('subDomainCardFilter', item)" -->
                       {{ item }}
-                    </div>
+                    </a>
                   </div>
                 </div>
                 <a
@@ -247,6 +251,7 @@ import globalHeader from "../components/globalHeader.vue";
 import imageModalAtlas from "../components/imageModalAtlas.vue";
 import { ref, computed } from "vue";
 import { analyticsComposable } from "@rds-vue-ui/analytics-gs-composable";
+// import { useEventsBus } from "../plugins/useEventBus";
 
 interface relatedVendorsData {
   title?: string;
@@ -269,6 +274,10 @@ const relatedData = await queryContent("vendors")
   .find();
 
 console.log(relatedData);
+
+const emit = defineEmits<{
+  (e: "subDomainCardFilter", item: string): void;
+}>();
 
 //   fetch a particular number of items in the array of relatedVendorsData
 const visibleVendors = computed(() => {

@@ -78,7 +78,6 @@
           <div class="py-space-xs border-bottom">
             <div class="d-flex align-items-center justify-content-between">
               <span class="fw-bold">Tags</span>
-              <span></span>
             </div>
             <div
               v-for="(item, idx) in vendorsTag"
@@ -286,9 +285,12 @@
                   <div>
                     <div class="d-flex flex-wrap">
                       <div v-for="(item, idx) in data.tag" :key="idx">
-                        <div class="bg-light-1 p-space-xxxs fs-xs m-space-xxxs">
+                        <a
+                          class="bg-light-1 p-space-xxxs fs-xs m-space-xxxs text-dark-3"
+                          @click="filterBAsedOnTags(item)"
+                        >
                           {{ item }}
-                        </div>
+                        </a>
                       </div>
                     </div>
                     <a
@@ -339,9 +341,10 @@
                       </h3>
                       <div class="py-space-xs d-flex">
                         <div v-for="(item, idx) in data.tag" :key="idx">
-                          <span
+                          <a
                             class="bg-light-1 p-space-xxs fs-xs me-space-xxs"
-                            >{{ item }}</span
+                            @click="filterBAsedOnTags(item)"
+                            >{{ item }}</a
                           >
                         </div>
                       </div>
@@ -396,9 +399,10 @@
                         :key="idx"
                         class="my-space-xxs"
                       >
-                        <span
-                          class="bg-light-1 p-space-xxs fs-xs me-space-xxs"
-                          >{{ item }}</span
+                        <a
+                          class="bg-light-1 p-space-xxs fs-xs me-space-xxs text-dark-3"
+                          @click="filterBAsedOnTags(item)"
+                          >{{ item }}</a
                         >
                       </div>
                     </div>
@@ -447,7 +451,11 @@ import globalHeader from "../components/globalHeader.vue";
 import { ref, watch, onMounted, computed } from "vue";
 import Fuse from "fuse.js";
 import { analyticsComposable } from "@rds-vue-ui/analytics-gs-composable";
+// import { useEventsBus } from "../plugins/useEventBus";
 
+// useEventsBus().on("subDomainCardFilter", (payload: string) => {
+//   console.log("payloaddddddddddd", payload);
+// });
 useHead({
   title: "Learning Technology Platform | IDNM",
   htmlAttrs: {
@@ -529,7 +537,7 @@ const fuseOptions = ref<fuseOptions>({
   shouldSort: true,
   findAllMatches: false,
   location: 0,
-  threshold: 0.2,
+  threshold: 0.6,
   distance: 200,
   keys: ["title", "tag", "category"],
 });
@@ -671,6 +679,11 @@ const changeDisplay = (action: string): void => {
   }
 };
 
+// filter cards based on tags
+const filterBAsedOnTags = (val: string): void => {
+  filteredVendorsTags.value[0] = val;
+};
+
 // clear all the selected fields
 const clearFilter = () => {
   searchValue.value = "";
@@ -701,7 +714,7 @@ onMounted(() => {
 // create gtm trigger events
 
 const triggerCheckBoxClick = (text: string, section: string): void => {
-  if (text) {
+  if (filteredVendorsTags || filteredVendorsCategory) {
     const eventObject = {
       event: "select",
       action: "click",
