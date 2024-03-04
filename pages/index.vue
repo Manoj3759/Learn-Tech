@@ -33,13 +33,15 @@
         <!-- side bar filter section -->
         <aside
           id="section-filter-sidebar"
-          class="col-lg-3 d-lg-block d-none p-space-xxs pt-0 mt-space-sm sticky-top bg-light-1"
+          class="col-lg-3 d-lg-block d-none p-space-xxs pt-0 mt-space-sm sticky-top bg-white"
         >
           <div
             class="border-bottom py-space-xs d-flex align-items-center justify-content-between"
           >
             <span class="fw-bold fs-large"
-              >Filters ({{ filteredVendors.length }})</span
+              >Filters ({{
+                filteredVendorsTags.length + filteredVendorsCategory.length
+              }})</span
             >
             <span
               class="text-primary text-decoration-underline"
@@ -51,52 +53,91 @@
           <div class="py-space-xs border-bottom">
             <div class="d-flex align-items-center justify-content-between">
               <span class="fw-bold">Categories</span>
-            </div>
-            <div
-              v-for="(item, idx) in vendorsCategory"
-              :key="item"
-              :id="`category-check-box-${idx}`"
-              class="text-dark-3"
-            >
-              <input
-                type="checkbox"
-                :id="`${item}-category-checkbox-${idx}`"
-                v-model="filteredVendorsCategory"
-                :value="item"
-                @change="triggerCheckBoxClick(item, 'categories')"
-              />
-              <label
-                :for="`${item}-category-checkbox-${idx}`"
-                class="pt-space-xs px-space-xxs"
-                >{{ item }}</label
+
+              <a
+                class="category-collapse"
+                :class="visibleCategories ? null : 'collapsed'"
+                href="#collapse-categories"
+                data-bs-toggle="collapse"
+                :aria-expanded="visibleCategories ? 'true' : 'false'"
+                aria-controls="collapse-categories"
+                @click="visibleCategories = !visibleCategories"
               >
+                <img
+                  :src="visibleCategories ? plusimg : minusimg"
+                  alt="collapse icon"
+                />
+              </a>
+            </div>
+            <div id="collapse-categories">
+              <div
+                v-for="(item, idx) in vendorsCategory"
+                :key="item"
+                :id="`category-check-box-${idx}`"
+                class="text-dark-3"
+              >
+                <input
+                  type="checkbox"
+                  :id="`${item}-category-checkbox-${idx}`"
+                  v-model="filteredVendorsCategory"
+                  :value="item"
+                  @change="triggerCheckBoxClick(item, 'categories')"
+                />
+                <label
+                  :for="`${item}-category-checkbox-${idx}`"
+                  class="pt-space-xs px-space-xxs"
+                  >{{ item }}</label
+                >
+              </div>
             </div>
           </div>
           <!-- End -->
 
           <!-- tag check box -->
-          <div class="py-space-xs border-bottom">
-            <div class="d-flex align-items-center justify-content-between">
-              <span class="fw-bold">Tags</span>
-            </div>
+          <div
+            class="pb-space-xs border-bottom"
+            id="section-filter-sidebar-tag"
+          >
             <div
-              v-for="(item, idx) in vendorsTag"
-              :key="item"
-              :id="`tag-check-box-${idx}`"
-              class="text-dark-3"
+              class="d-flex align-items-center justify-content-between sticky-top bg-white pt-space-xs"
             >
-              <input
-                type="checkbox"
-                :id="`${item}-tag-checkbox-${idx}`"
-                v-model="filteredVendorsTags"
-                :value="item"
-                @click="triggerCheckBoxClick(item, 'tags')"
-              />
-              <label
-                :for="`${item}-tag-checkbox-${idx}`"
-                class="pt-space-xs px-space-xxs"
-                >{{ item }}</label
+              <span class="fw-bold">Tags</span>
+
+              <a
+                class="category-collapse"
+                :class="visibleCategories ? null : 'collapsed'"
+                href="#collapse-tag"
+                data-bs-toggle="collapse"
+                :aria-expanded="visibleTag ? 'true' : 'false'"
+                aria-controls="collapse-tag"
+                @click="visibleTag = !visibleTag"
               >
+                <img
+                  :src="visibleTag ? plusimg : minusimg"
+                  alt="collapse icon"
+                />
+              </a>
+            </div>
+            <div id="collapse-tag">
+              <div
+                v-for="(item, idx) in vendorsTag"
+                :key="item"
+                :id="`tag-check-box-${idx}`"
+                class="text-dark-3"
+              >
+                <input
+                  type="checkbox"
+                  :id="`${item}-tag-checkbox-${idx}`"
+                  v-model="filteredVendorsTags"
+                  :value="item"
+                  @click="triggerCheckBoxClick(item, 'tags')"
+                />
+                <label
+                  :for="`${item}-tag-checkbox-${idx}`"
+                  class="pt-space-xs px-space-xxs"
+                  >{{ item }}</label
+                >
+              </div>
             </div>
           </div>
           <!-- End -->
@@ -105,7 +146,7 @@
 
         <div class="col-lg-9 p-space-xxs pt-0 mt-lg-space-sm">
           <!-- search bar section -->
-          <section id="search-search-bar" class="sticky-top bg-light-1">
+          <section id="search-search-bar" class="sticky-top bg-white">
             <div class="py-space-xs">
               <input
                 v-model="searchValue"
@@ -136,7 +177,7 @@
               <div class="d-flex">
                 <div
                   class="grid-filter p-space-xxxs"
-                  :class="{ 'bg-secondary': gridDisplay == 'inline-block' }"
+                  :class="{ 'svg-styles': gridDisplay == 'inline-block' }"
                   @click="changeDisplay('grid-filter')"
                 >
                   <img
@@ -202,7 +243,6 @@
               <div class="border-bottom">
                 <div class="d-flex align-items-center justify-content-between">
                   <span class="fw-bold">Categories</span>
-                  <span></span>
                 </div>
                 <div
                   v-for="item in vendorsCategory"
@@ -259,6 +299,7 @@
           <!-- view items section -->
           <section id="view_items_section">
             <!-- card section -->
+
             <section
               id="card_section"
               v-show="listDisplay == 'inline-block' ? true : false"
@@ -273,7 +314,10 @@
                 >
                   <div>
                     <span class="d-flex justify-content-start"
-                      ><img src="~/assets/images/hero-section-logo.png" alt=""
+                      ><img
+                        :src="data.cardLogo"
+                        alt="card logo"
+                        class="img-fluid"
                     /></span>
                     <div class="my-space-sm custom-line"></div>
                     <h3
@@ -284,14 +328,20 @@
                   </div>
                   <div>
                     <div class="d-flex flex-wrap">
-                      <div v-for="(item, idx) in data.tag" :key="idx">
+                      <template v-for="(item, idx) in data.tag" :key="idx">
                         <a
-                          class="bg-light-1 p-space-xxxs fs-xs m-space-xxxs text-dark-3"
+                          class="bg-light-2 p-space-xxxs fs-xs m-space-xxxs text-dark-3"
                           @click="filterBAsedOnTags(item)"
                         >
                           {{ item }}
                         </a>
-                      </div>
+                      </template>
+                      <a
+                        class="bg-light-2 p-space-xxxs fs-xs m-space-xxxs text-dark-3"
+                        @click="filterBAsedOnTags(data.category)"
+                      >
+                        {{ data.category }}
+                      </a>
                     </div>
                     <a
                       :href="data.title"
@@ -314,6 +364,17 @@
                   Show more...
                 </a>
               </div>
+              <div
+                v-else
+                class="d-flex justify-content-center align-content-center"
+              >
+                <a
+                  @click="loadLess"
+                  class="text-primary mb-space-sm fw-bold text-decoration-underline"
+                >
+                  Show less...
+                </a>
+              </div>
               <!-- End -->
             </section>
             <!-- list grid section -->
@@ -322,7 +383,7 @@
               v-show="gridDisplay == 'inline-block' ? true : false"
             >
               <div
-                class="px-lg-0 py-lg-space-md px-space-xs py-space-md d-none d-lg-block"
+                class="px-lg-0 py-lg-space-md px-space-xs py-space-md d-none d-xl-block"
               >
                 <div
                   v-for="(data, idx) in visibleVendors"
@@ -330,23 +391,32 @@
                   class="bg-white border-bottom border-2 mx-lg-space-xs mb-space-xs p-space-md d-flex justify-content-between"
                 >
                   <div class="d-flex">
-                    <img
-                      src="~/assets/images/hero-section-logo.png"
-                      class="pe-space-md"
-                      alt=""
-                    />
+                    <span class="d-flex justify-content-start"
+                      ><img
+                        :src="data.cardLogo"
+                        width="190px"
+                        class="pe-space-sm img-fluid"
+                        alt="card logo"
+                    /></span>
+
                     <div class="d-flex flex-column">
                       <h3 class="h3-large text-dark-3 text-start">
                         {{ data.title }}
                       </h3>
-                      <div class="py-space-xs d-flex">
-                        <div v-for="(item, idx) in data.tag" :key="idx">
+                      <div class="py-space-xs d-flex flex-wrap">
+                        <template v-for="(item, idx) in data.tag" :key="idx">
                           <a
-                            class="bg-light-1 p-space-xxs fs-xs me-space-xxs"
+                            class="bg-light-2 p-space-xxs fs-xs me-space-xxs text-dark-3 mb-space-xxs"
                             @click="filterBAsedOnTags(item)"
                             >{{ item }}</a
                           >
-                        </div>
+                        </template>
+                        <a
+                          class="bg-light-2 p-space-xxs fs-xs me-space-xxs mb-space-xxs text-dark-3"
+                          @click="filterBAsedOnTags(data.category)"
+                        >
+                          {{ data.category }}
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -360,19 +430,6 @@
                   </div>
                 </div>
               </div>
-              <!-- show more button -->
-              <div
-                v-if="visibleVendors.length < filteredVendors.length"
-                class="d-lg-flex justify-content-center align-content-center d-none"
-              >
-                <a
-                  @click="loadMoreGrid"
-                  class="text-primary mb-space-sm fw-bold text-decoration-underline"
-                >
-                  Show more...
-                </a>
-              </div>
-              <!-- End -->
             </section>
             <!-- End -->
 
@@ -382,7 +439,7 @@
               v-show="gridDisplay == 'inline-block' ? true : false"
             >
               <div
-                class="px-lg-0 py-lg-space-md px-space-xs py-space-md d-lg-none d-block"
+                class="px-lg-0 py-lg-space-md px-space-xs py-space-md d-xl-none d-block"
               >
                 <div
                   v-for="(data, idx) in visibleVendors"
@@ -400,11 +457,17 @@
                         class="my-space-xxs"
                       >
                         <a
-                          class="bg-light-1 p-space-xxs fs-xs me-space-xxs text-dark-3"
+                          class="bg-light-2 p-space-xxs fs-xs me-space-xxs text-dark-3"
                           @click="filterBAsedOnTags(item)"
                           >{{ item }}</a
                         >
                       </div>
+                      <a
+                        class="bg-light-2 p-space-xxs fs-xs me-space-xxs text-dark-3"
+                        @click="filterBAsedOnTags(data.category)"
+                      >
+                        {{ data.category }}
+                      </a>
                     </div>
                   </div>
                   <div>
@@ -423,10 +486,21 @@
                 class="d-flex justify-content-center align-content-center d-lg-none"
               >
                 <a
-                  @click="loadMoreGrid"
+                  @click="loadMore"
                   class="text-primary mb-space-sm fw-bold text-decoration-underline"
                 >
                   Show more...
+                </a>
+              </div>
+              <div
+                v-else
+                class="d-flex justify-content-center align-content-center"
+              >
+                <a
+                  @click="loadLess"
+                  class="text-primary mb-space-sm fw-bold text-decoration-underline"
+                >
+                  Show less...
                 </a>
               </div>
               <!-- End -->
@@ -451,11 +525,7 @@ import globalHeader from "../components/globalHeader.vue";
 import { ref, watch, onMounted, computed } from "vue";
 import Fuse from "fuse.js";
 import { analyticsComposable } from "@rds-vue-ui/analytics-gs-composable";
-// import { useEventsBus } from "../plugins/useEventBus";
 
-// useEventsBus().on("subDomainCardFilter", (payload: string) => {
-//   console.log("payloaddddddddddd", payload);
-// });
 useHead({
   title: "Learning Technology Platform | IDNM",
   htmlAttrs: {
@@ -475,7 +545,7 @@ useHead({
 });
 
 let pageData = await queryContent("vendors")
-  .only(["title", "tag", "category"])
+  .only(["title", "tag", "category", "cardLogo"])
   .find();
 
 let Data = await queryContent("home").find();
@@ -527,6 +597,14 @@ let vendorsCategory = ref<string[]>([]);
 let vendorsTag = ref<string[]>([]);
 let fuseInstance = ref();
 let visibleItemsCount = ref<number>(9);
+let visibleTag = ref<boolean>(true);
+let visibleCategories = ref<boolean>(true);
+let minusimg = ref<string>(
+  "https://currentstudent.asuonline.asu.edu/sites/default/files/Icon%20-%20minus-circle-solid.png"
+);
+let plusimg = ref<string>(
+  "https://currentstudent.asuonline.asu.edu/sites/default/files/plus-circle-solid.svg"
+);
 
 const fuseOptions = ref<fuseOptions>({
   isCaseSensitive: false,
@@ -537,7 +615,7 @@ const fuseOptions = ref<fuseOptions>({
   shouldSort: true,
   findAllMatches: false,
   location: 0,
-  threshold: 0.6,
+  threshold: 0.2,
   distance: 200,
   keys: ["title", "tag", "category"],
 });
@@ -547,12 +625,17 @@ const visibleVendors = computed(() => {
   return filteredVendors.value.slice(0, visibleItemsCount.value);
 });
 
+const route = useRoute();
+const currentRoute: string = route.query.tag;
+
 //   fetch all items in the array of filteredVendors
 const loadMore = () => {
   visibleItemsCount.value = filteredVendors.value.length;
 };
-const loadMoreGrid = () => {
-  visibleItemsCount.value = filteredVendors.value.length;
+
+//   fetch all items in the array with length 9
+const loadLess = () => {
+  visibleItemsCount.value = 6;
 };
 
 const data = JSON.parse(JSON.stringify(pageData));
@@ -576,7 +659,7 @@ const searchPrograms = () => {
   console.log("anything", query);
   if (query.length > 0) {
     const searchResult = fuseInstance.value.search({
-      $and: query,
+      $or: query,
     });
     filteredVendors.value = searchResult.map((vendors) => {
       console.log("vendor itemmmmmm", vendors);
@@ -594,6 +677,8 @@ function getSearchQuery() {
   // populate filters - if pre-selected before input of search query
   if (searchValue.value !== "") {
     searchQuery.push({ title: searchValue.value });
+    searchQuery.push({ tag: searchValue.value });
+    searchQuery.push({ category: searchValue.value });
   }
   if (filteredVendorsTags.value.length > 0) {
     const interestAreaQuery = { $or: [] };
@@ -682,7 +767,22 @@ const changeDisplay = (action: string): void => {
 // filter cards based on tags
 const filterBAsedOnTags = (val: string): void => {
   filteredVendorsTags.value[0] = val;
+  // Get the target element by ID
+  const sectionId = document.getElementById("view_items_section");
+
+  // Check if the element is found
+  if (sectionId) {
+    // Use the smooth scroll behavior for a better user experience
+    sectionId.scrollIntoView({ behavior: "smooth" });
+  }
 };
+// if (router.query.title) {
+//   console.log("===========================", router.query.title);
+//   filterBAsedOnTags(router.query.title);
+// }
+if (currentRoute) {
+  filterBAsedOnTags(currentRoute);
+}
 
 // clear all the selected fields
 const clearFilter = () => {
@@ -812,20 +912,36 @@ const triggerSearchNavItems = (eventObject: TrackingData): void => {
 <style lang="scss">
 .card_spacing {
   cursor: default;
-  border-bottom: 3px solid var(--rds-secondary, #ffc627) !important;
+  border-bottom: 8px solid var(--rds-secondary, #ffc627) !important;
   @media (min-width: 991px) {
     width: 255px;
     height: 420px;
   }
 }
 .custom-line {
-  width: 54px;
-  height: 8px;
+  width: 30px;
+  height: 4px;
   background-color: #ffc627;
 }
 
 #section-filter-sidebar {
-  max-height: calc(100vh - 9rem);
+  max-height: calc(100vh - 1rem);
+}
+#section-filter-sidebar-tag {
+  max-height: calc(100vh - 75vh);
   overflow-y: auto;
+}
+
+input[type="checkbox"] {
+  accent-color: #ffc627;
+}
+
+.category-collapse:focus {
+  outline: none;
+}
+
+.svg-styles {
+  fill: white !important;
+  background-color: grey;
 }
 </style>

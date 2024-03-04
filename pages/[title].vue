@@ -16,18 +16,29 @@
       ></globalHeader>
     </header>
     <!-- End -->
+
     <!-- Hero section -->
     <section id="hero_section">
-      <div class="bg-img-hero-section">
-        <div class="py-space-xl px-lg-space-xxl px-space-lg">
+      <div
+        class="bg-img-hero-section"
+        :style="
+          'background-image:linear-gradient(rgba(255,255,255,.15), rgba(255,255,255,.15)),url(' +
+          getImageUrl(pageData.heroSectionImg) +
+          ')'
+        "
+      >
+        <div class="py-space-xl px-lg-space-xxl px-space-lg hero-section">
           <h1 class="h1-medium">
             <span class="bg-secondary p-space-xxs">{{ pageData.title }}</span>
           </h1>
           <div class="py-space-xs d-flex flex-wrap">
             <div v-for="(item, idx) in pageData.tag" :key="idx">
-              <span class="bg-light-1 p-space-xxs fs-xs me-space-xxs">{{
-                item
-              }}</span>
+              <a
+                @click="emitTags(item)"
+                class="bg-light-2 p-space-xxxs fs-xs m-space-xxxs text-dark-3"
+              >
+                {{ item }}
+              </a>
             </div>
           </div>
         </div>
@@ -47,12 +58,30 @@
         :always-show-sticky-slot="true"
       >
         <template #stuckMenu>
-          <div class="text-end">
+          <div class="d-flex justify-content-end">
             <a
-              class="btn btn-secondary text-medium font-weight-bold ml-space-sm"
-              href="#program-rfi"
+              v-if="pageData.ctaSupportLink"
+              class="btn btn-secondary font-weight-bold ms-space-sm"
+              :href="pageData.ctaSupportLink"
+              target="_blank"
               @click="triggerStickyNavButton('')"
-              >Ally Support</a
+              >{{ pageData.title }} Support</a
+            >
+            <a
+              v-if="pageData.ctaWebinarLink"
+              class="btn btn-secondary text-medium font-weight-bold ms-space-sm"
+              :href="pageData.ctaWebinarLink"
+              target="_blank"
+              @click="triggerStickyNavButton('')"
+              >{{ pageData.title }} Webinar</a
+            >
+            <a
+              v-if="pageData.ctaTryLink"
+              class="btn btn-secondary text-medium font-weight-bold ms-space-sm"
+              :href="pageData.ctaTryLink"
+              target="_blank"
+              @click="triggerStickyNavButton('')"
+              >Try {{ pageData.title }}</a
             >
           </div>
         </template>
@@ -68,7 +97,7 @@
           class="bg-dark-3"
           video-position="right"
           :video-source="`https://www.youtube.com/embed/${pageData.videoSrc}`"
-          bg-image-source="images/hero-section-img.png"
+          :bg-image-source="pageData.heroSectionImg"
           title-variant="light-1"
           @modalOpen="triggerplayBtnclickDataLayer('open', 'play button', '')"
           @modalClose="triggerplayBtnclickDataLayer('close', 'play button', '')"
@@ -86,24 +115,27 @@
     <!-- feature section -->
     <section id="feature_section">
       <section-parallax-atlas
-        bg-image-source="images/feature-section-img.png"
+        :bg-image-source="pageData.parallaxSectionImg"
         title="Features"
         title-size="large"
       >
         <template #body>
           <div>
             <p class="py-space-xs">
-              Check back later for more information. We’re currently updating
-              this page to bring you valuable content and support.
+              {{ pageData.featureText }}
             </p>
             <ListTimeline
               :display-item-title="true"
               item-title-size="large"
-              :items="listItemObject"
+              :items="pageData.features"
               number-bg-color="light-1"
             ></ListTimeline>
-            <a href="#" class="btn btn-secondary" @click="triggerTryButton('')"
-              >Try Ally</a
+            <a
+              :href="pageData.ctaFeaturesLink"
+              target="_blank"
+              class="btn btn-secondary"
+              @click="triggerTryButton('')"
+              >Try {{ pageData.title }}</a
             >
           </div>
         </template>
@@ -114,7 +146,8 @@
     <!-- preview section -->
     <section id="preview_section">
       <carousel-card-apollo
-        :slides="slideItemObject"
+        :slides="pageData.previewImages"
+        :slidesPerPage="4"
         title="Preview"
         title-variant="light-1"
         section-background-variant="dark-3"
@@ -153,13 +186,11 @@
             <div
               v-for="(data, idx) in visibleVendors"
               :key="idx"
-              class="bg-white border mx-lg-space-xs mb-space-xs p-space-md card_spacing d-flex justify-content-between flex-column"
+              class="bg-white border ms-lg-space-xxs me-lg-space-xs mb-space-xs p-space-md card_spacing d-flex justify-content-between flex-column"
             >
               <div>
                 <span class="d-flex justify-content-start"
-                  ><img
-                    src="~/assets/images/hero-section-logo.png"
-                    alt="card logo"
+                  ><img :src="data.cardLogo" alt="card logo" class="img-fluid"
                 /></span>
                 <div class="my-space-sm custom-line"></div>
                 <h3
@@ -172,10 +203,9 @@
                 <div class="d-flex flex-wrap">
                   <div v-for="(item, idx) in data.tag" :key="idx">
                     <a
-                      href="/"
-                      class="bg-light-1 p-space-xxxs fs-xs m-space-xxxs"
+                      class="bg-light-2 p-space-xxxs fs-xs m-space-xxxs text-dark-3"
+                      @click="emitTags(item)"
                     >
-                      <!-- @click="useEventsBus().emit('subDomainCardFilter', item)" -->
                       {{ item }}
                     </a>
                   </div>
@@ -227,7 +257,7 @@
                   <a
                     :href="`mailto:${item}`"
                     class="btn btn-light py-space-xs me-space-xxs"
-                    @click="triggerAsuOwner(item)"
+                    @click="triggerAsuContact(item)"
                     >{{ item }}</a
                   >
                 </div>
@@ -251,16 +281,21 @@ import globalHeader from "../components/globalHeader.vue";
 import imageModalAtlas from "../components/imageModalAtlas.vue";
 import { ref, computed } from "vue";
 import { analyticsComposable } from "@rds-vue-ui/analytics-gs-composable";
-// import { useEventsBus } from "../plugins/useEventBus";
 
 interface relatedVendorsData {
   title?: string;
   category?: string;
   tag?: string[];
+  cardLogo?: string;
 }
 
 let relatedVendorsData = ref<relatedVendorsData[]>([]);
 let visibleItemsCount = ref<number>(4);
+
+const router = useRouter();
+const emitTags = (item: string): void => {
+  router.push({ path: "/", query: { tag: item } });
+};
 
 const route = useRoute();
 console.log("route", route);
@@ -269,9 +304,7 @@ const pageData = await queryContent("vendors")
   .where({ title: routeName })
   .findOne();
 
-const relatedData = await queryContent("vendors")
-  .only(["title", "tag", "category"])
-  .find();
+const relatedData = await queryContent("vendors").find();
 
 console.log(relatedData);
 
@@ -287,6 +320,11 @@ const visibleVendors = computed(() => {
 //   fetch all items in the array of relatedVendorsData
 const loadMore = () => {
   visibleItemsCount.value = relatedVendorsData.value.length;
+};
+
+// loading bg img
+const getImageUrl = (name: string): string => {
+  return new URL(name, import.meta.url).href;
 };
 
 // filtering the cards based on tag in slug
@@ -367,6 +405,9 @@ const listItemObject = ref([
 
 const slideItemObject = ref([
   { img: "images/Group 119826.png" },
+  { img: "images/feature-section-img.png" },
+  { img: "images/feature-section-img.png" },
+  { img: "images/feature-section-img.png" },
   { img: "images/feature-section-img.png" },
   { img: "images/feature-section-img.png" },
   { img: "images/feature-section-img.png" },
@@ -526,7 +567,6 @@ const triggerSearchNavItems = (eventObject: TrackingData): void => {
 </script>
 <style lang="scss">
 .bg-img-hero-section {
-  background-image: url("~/assets/images/hero-section-img.png");
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -542,5 +582,12 @@ const triggerSearchNavItems = (eventObject: TrackingData): void => {
   width: 54px;
   height: 8px;
   background-color: #ffc627;
+}
+
+.rds-modal-close.exterior svg[data-v-06e1beef] {
+  fill: #fff;
+}
+svg[data-v-06e1beef]path[data-v-06e1beef] :focus {
+  outline: none !important;
 }
 </style>
