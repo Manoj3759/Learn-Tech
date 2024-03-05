@@ -38,20 +38,25 @@
 
               <a
                 class="category-collapse"
-                :class="visibleCategories ? null : 'collapsed'"
                 href="#collapse-categories"
                 data-bs-toggle="collapse"
-                :aria-expanded="visibleCategories ? 'true' : 'false'"
+                aria-expanded="true"
                 aria-controls="collapse-categories"
                 @click="visibleCategories = !visibleCategories"
               >
                 <img
-                  :src="visibleCategories ? plusimg : minusimg"
+                  :src="visibleCategories ? minusimg : plusimg"
                   alt="collapse icon"
                 />
               </a>
             </div>
-            <div id="collapse-categories">
+            <div
+              id="collapse-categories"
+              :class="{
+                collapse: !visibleCategories,
+                show: visibleCategories,
+              }"
+            >
               <div
                 v-for="(item, idx) in vendorsCategory"
                 :key="item"
@@ -87,20 +92,25 @@
 
               <a
                 class="category-collapse"
-                :class="visibleCategories ? null : 'collapsed'"
                 href="#collapse-tag"
                 data-bs-toggle="collapse"
-                :aria-expanded="visibleTag ? 'true' : 'false'"
+                aria-expanded="true"
                 aria-controls="collapse-tag"
                 @click="visibleTag = !visibleTag"
               >
                 <img
-                  :src="visibleTag ? plusimg : minusimg"
+                  :src="visibleTag ? minusimg : plusimg"
                   alt="collapse icon"
                 />
               </a>
             </div>
-            <div id="collapse-tag">
+            <div
+              id="collapse-tag"
+              :class="{
+                collapse: !visibleTag,
+                show: visibleTag,
+              }"
+            >
               <div
                 v-for="(item, idx) in vendorsTag"
                 :key="item"
@@ -396,7 +406,6 @@
                         >
                           {{ data.category }}
                         </a>
-
                         <template
                           v-for="(item, idx) in displayedTags[idx]"
                           :key="idx"
@@ -407,7 +416,20 @@
                             >{{ item }}</a
                           >
                         </template>
-                        <!-- <span v-if="shouldShowButton" :key="idx"> </span> -->
+                        <a
+                          v-if="
+                            data.tag &&
+                            displayedTags[idx] &&
+                            data.tag.length > 2 &&
+                            displayedTags[idx].length
+                          "
+                          :key="idx"
+                          role="button"
+                          class="bg-light-2 text-dark-3 fs-small me-space-xxs mb-space-xxs p-space-xxs"
+                          @click="showAllTags(data.tag, idx)"
+                        >
+                          +{{ data.tag.length - displayedTags[idx].length }}
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -582,12 +604,13 @@ let displayedTags = ref<string[]>([]);
 let filteredVendors = ref<string[]>([]);
 let filteredVendorsTags = ref<string[]>([]);
 let filteredVendorsCategory = ref<string[]>([]);
-let showAll = ref<boolean>(false);
 let vendorsCategory = ref<string[]>([]);
 let vendorsTag = ref<string[]>([]);
 let fuseInstance = ref();
 let visibleItemsCount = ref<number>(9);
 let visibleTag = ref<boolean>(true);
+let showAll = ref<boolean>(true);
+
 let visibleCategories = ref<boolean>(true);
 let minusimg = ref<string>(
   "https://currentstudent.asuonline.asu.edu/sites/default/files/Icon%20-%20minus-circle-solid.png"
@@ -628,17 +651,9 @@ const loadLess = () => {
   visibleItemsCount.value = 6;
 };
 
-const showAllTags = () => {
-  // Toggle the showAll flag to display/hide all tags
-  showAll.value = !showAll.value;
-
-  // Update the displayedTags based on the showAll flag
-  displayedTags.value = showAll.value ? pageData.tag : pageData.tag.slice(0, 1);
+const showAllTags = (tags: string[], i: number): void => {
+  displayedTags.value[i] = [...tags];
 };
-
-const shouldShowButton = computed(() => {
-  return displayedTags.value.length > 2;
-});
 
 const data = JSON.parse(JSON.stringify(pageData));
 

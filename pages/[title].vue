@@ -5,7 +5,7 @@
       <div
         class="bg-img-hero-section"
         :style="
-          'background-image:linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.25)),url(' +
+          'background-image:linear-gradient(rgba(25,25,25,.25), rgba(25,25,25,.25)),url(' +
           getImageUrl(pageData.heroSectionImg) +
           ')'
         "
@@ -572,7 +572,10 @@ const triggerSearchNavItems = (eventObject: TrackingData): void => {
 svg[data-v-06e1beef]path[data-v-06e1beef] :focus {
   outline: none !important;
 }
-.header-image {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25));
+.header-image::before {
+  background-image: linear-gradient(
+    rgb(25, 25, 25, 0.25),
+    rgba(25, 25, 25, 0.25)
+  ) !important;
 }
 </style>
