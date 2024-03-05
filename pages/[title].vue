@@ -1,28 +1,11 @@
 <template>
   <main>
-    <!-- header section -->
-    <header id="section-header">
-      <globalHeader
-        home-title="Teach Online"
-        :rfi-cta-link="pageData.ctaToolRequestFormLink"
-        logo-link-url="https://www.asu.edu/"
-        logo-link-target="_blank"
-        rfi-cta-text="Tool Request Form"
-        @homeClick="triggerHome($event)"
-        @asuLogoClick="triggerHomeLogo($event)"
-        @navCollapseHidden="triggerMobileNavItems($event)"
-        @navCollapseShown="triggerMobileNavItems($event)"
-        @asuSearchEvent="triggerSearchNavItems($event)"
-      ></globalHeader>
-    </header>
-    <!-- End -->
-
     <!-- Hero section -->
     <section id="hero_section">
       <div
         class="bg-img-hero-section"
         :style="
-          'background-image:linear-gradient(rgba(255,255,255,.15), rgba(255,255,255,.15)),url(' +
+          'background-image:linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.25)),url(' +
           getImageUrl(pageData.heroSectionImg) +
           ')'
         "
@@ -65,7 +48,8 @@
               :href="pageData.ctaSupportLink"
               target="_blank"
               @click="triggerStickyNavButton('')"
-              >{{ pageData.title }} Support</a
+            >
+              Support</a
             >
             <a
               v-if="pageData.ctaWebinarLink"
@@ -73,7 +57,7 @@
               :href="pageData.ctaWebinarLink"
               target="_blank"
               @click="triggerStickyNavButton('')"
-              >{{ pageData.title }} Webinar</a
+              >Webinar</a
             >
             <a
               v-if="pageData.ctaTryLink"
@@ -81,8 +65,8 @@
               :href="pageData.ctaTryLink"
               target="_blank"
               @click="triggerStickyNavButton('')"
-              >Try {{ pageData.title }}</a
-            >
+              >Try
+            </a>
           </div>
         </template>
       </navbar-sticky-atlas>
@@ -96,7 +80,7 @@
           :title="pageData.title"
           class="bg-dark-3"
           video-position="right"
-          :video-source="`https://www.youtube.com/embed/${pageData.videoSrc}`"
+          video-source="https://asuonline.wistia.com/medias/l6bb6qf05s"
           :bg-image-source="pageData.heroSectionImg"
           title-variant="light-1"
           @modalOpen="triggerplayBtnclickDataLayer('open', 'play button', '')"
@@ -142,11 +126,10 @@
       </section-parallax-atlas>
     </section>
     <!-- End -->
-
     <!-- preview section -->
     <section id="preview_section">
       <carousel-card-apollo
-        :slides="pageData.previewImages"
+        :slides="pageData.imageSize.images"
         :slidesPerPage="4"
         title="Preview"
         title-variant="light-1"
@@ -163,7 +146,7 @@
             :key="item.slideKey"
           >
             <imageModalAtlas
-              :imgSourceUrl="item.img"
+              :imgSourceUrl="item.url"
               @modalOpen="triggerplayBtnclickDataLayer('open', 'image', '')"
               @modalClose="triggerplayBtnclickDataLayer('close', 'image', '')"
             ></imageModalAtlas>
@@ -277,7 +260,6 @@ import { VideoModalAtlas } from "@rds-vue-ui/video-modal-atlas";
 import { SectionParallaxAtlas } from "@rds-vue-ui/section-parallax-atlas";
 import { ListTimeline } from "@rds-vue-ui/list-timeline";
 import { CarouselCardApollo } from "@rds-vue-ui/carousel-card-apollo";
-import globalHeader from "../components/globalHeader.vue";
 import imageModalAtlas from "../components/imageModalAtlas.vue";
 import { ref, computed } from "vue";
 import { analyticsComposable } from "@rds-vue-ui/analytics-gs-composable";
@@ -347,7 +329,7 @@ console.log("filteredData", filteredData);
 relatedVendorsData.value = filteredData;
 
 useHead({
-  title: "slug",
+  title: pageData.title,
   htmlAttrs: {
     lang: "en",
   },
@@ -589,5 +571,8 @@ const triggerSearchNavItems = (eventObject: TrackingData): void => {
 }
 svg[data-v-06e1beef]path[data-v-06e1beef] :focus {
   outline: none !important;
+}
+.header-image {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25));
 }
 </style>

@@ -1,27 +1,9 @@
 <template>
   <main>
-    <!-- header section -->
-    <header id="section-header">
-      <globalHeader
-        home-title="Teach Online"
-        rfi-cta-link="#"
-        logo-link-url="https://www.asu.edu/"
-        logo-link-target="_blank"
-        :display-rfi-cta="false"
-        :display-apply-now="false"
-        @homeClick="triggerHome($event)"
-        @asuLogoClick="triggerHomeLogo($event)"
-        @navCollapseHidden="triggerMobileNavItems($event)"
-        @navCollapseShown="triggerMobileNavItems($event)"
-        @asuSearchEvent="triggerSearchNavItems($event)"
-      ></globalHeader>
-    </header>
-    <!-- End -->
-
     <section class="container">
       <!-- intro section -->
       <section id="section-intro">
-        <h1 class="h1-medium pt-space-xl">Learning technology platform</h1>
+        <h1 class="h1-medium pt-space-xl">EdTech Connect</h1>
         <p class="py-space-sm">
           Explore our library to find the support you need. Navigate through
           resources using tags organized by topics, tools, technology and media.
@@ -177,27 +159,31 @@
               <div class="d-flex">
                 <div
                   class="grid-filter p-space-xxxs"
-                  :class="{ 'svg-styles': gridDisplay == 'inline-block' }"
+                  :class="{ 'bg-dark-3': gridDisplay == 'inline-block' }"
                   @click="changeDisplay('grid-filter')"
                 >
-                  <img
-                    src="../assets/images/list.svg"
-                    alt="list icon"
-                    height=" 20px"
-                    width=" 20px"
-                  />
+                  <font-awesome-icon
+                    :icon="listIcon"
+                    size="lg"
+                    role="tooltip"
+                    aria-label="navbar-toggle-icon"
+                    :class="{ 'svg-color': gridDisplay == 'inline-block' }"
+                  >
+                  </font-awesome-icon>
                 </div>
                 <div
                   class="list-filter p-space-xxxs"
-                  :class="{ 'bg-secondary': listDisplay == 'inline-block' }"
+                  :class="{ 'bg-dark-3': listDisplay == 'inline-block' }"
                   @click="changeDisplay('list-filter')"
                 >
-                  <img
-                    src="../assets/images/grid.svg"
-                    alt="list icon"
-                    height=" 20px"
-                    width=" 20px"
-                  />
+                  <font-awesome-icon
+                    :icon="gridIcon"
+                    size="lg"
+                    role="tooltip"
+                    aria-label="navbar-toggle-icon"
+                    :class="{ 'svg-color': 'inline-block' == listDisplay }"
+                  >
+                  </font-awesome-icon>
                 </div>
               </div>
             </div>
@@ -394,8 +380,8 @@
                     <span class="d-flex justify-content-start"
                       ><img
                         :src="data.cardLogo"
-                        width="190px"
-                        class="pe-space-sm img-fluid"
+                        width="144px"
+                        height="36px"
                         alt="card logo"
                     /></span>
 
@@ -404,19 +390,24 @@
                         {{ data.title }}
                       </h3>
                       <div class="py-space-xs d-flex flex-wrap">
-                        <template v-for="(item, idx) in data.tag" :key="idx">
-                          <a
-                            class="bg-light-2 p-space-xxs fs-xs me-space-xxs text-dark-3 mb-space-xxs"
-                            @click="filterBAsedOnTags(item)"
-                            >{{ item }}</a
-                          >
-                        </template>
                         <a
                           class="bg-light-2 p-space-xxs fs-xs me-space-xxs mb-space-xxs text-dark-3"
                           @click="filterBAsedOnTags(data.category)"
                         >
                           {{ data.category }}
                         </a>
+
+                        <template
+                          v-for="(item, idx) in displayedTags[idx]"
+                          :key="idx"
+                        >
+                          <a
+                            class="bg-light-2 p-space-xxs fs-xs me-space-xxs text-dark-3 mb-space-xxs"
+                            @click="filterBAsedOnTags(item)"
+                            >{{ item }}</a
+                          >
+                        </template>
+                        <!-- <span v-if="shouldShowButton" :key="idx"> </span> -->
                       </div>
                     </div>
                   </div>
@@ -462,12 +453,14 @@
                           >{{ item }}</a
                         >
                       </div>
-                      <a
-                        class="bg-light-2 p-space-xxs fs-xs me-space-xxs text-dark-3"
-                        @click="filterBAsedOnTags(data.category)"
-                      >
-                        {{ data.category }}
-                      </a>
+                      <div class="my-space-xxs">
+                        <a
+                          class="bg-light-2 p-space-xxs fs-xs me-space-xxs text-dark-3"
+                          @click="filterBAsedOnTags(data.category)"
+                        >
+                          {{ data.category }}
+                        </a>
+                      </div>
                     </div>
                   </div>
                   <div>
@@ -483,7 +476,7 @@
               <!-- show more button -->
               <div
                 v-if="visibleVendors.length < filteredVendors.length"
-                class="d-flex justify-content-center align-content-center d-lg-none"
+                class="d-flex justify-content-center align-content-center"
               >
                 <a
                   @click="loadMore"
@@ -511,17 +504,13 @@
         </div>
       </section>
     </section>
-    <!-- Test -->
-    <!-- <pre>---------{{ Data[0] }}</pre>
-    <div v-for="(item, index) in Data[0].features" :key="index">
-      <h1>{{ getTitle(item) }}</h1>
-      <p>{{ getDescription(item) }}</p>
-    </div> -->
-    <!-- End -->
   </main>
 </template>
+
 <script setup lang="ts">
-import globalHeader from "../components/globalHeader.vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faList as listIcon } from "@fortawesome/free-solid-svg-icons";
+import { faBorderAll as gridIcon } from "@fortawesome/free-solid-svg-icons";
 import { ref, watch, onMounted, computed } from "vue";
 import Fuse from "fuse.js";
 import { analyticsComposable } from "@rds-vue-ui/analytics-gs-composable";
@@ -548,13 +537,12 @@ let pageData = await queryContent("vendors")
   .only(["title", "tag", "category", "cardLogo"])
   .find();
 
-let Data = await queryContent("home").find();
-
+console.log("pageData", pageData);
 // split the string based on any character/ special character
-const splitText = (text: string): string[] => text.split("\n");
-const getTitle = (text: string): string => splitText(text)[0];
-const getDescription = (text: string): string =>
-  splitText(text).slice(1).join(" ");
+// const splitText = (text: string): string[] => text.split("\n");
+// const getTitle = (text: string): string => splitText(text)[0];
+// const getDescription = (text: string): string =>
+//   splitText(text).slice(1).join(" ");
 
 type TrackingData = {
   event: string;
@@ -590,9 +578,11 @@ interface vendorsData {
 let listDisplay = ref<string>("inline-block");
 let gridDisplay = ref<string>("");
 const searchValue = ref<string>("");
+let displayedTags = ref<string[]>([]);
 let filteredVendors = ref<string[]>([]);
 let filteredVendorsTags = ref<string[]>([]);
 let filteredVendorsCategory = ref<string[]>([]);
+let showAll = ref<boolean>(false);
 let vendorsCategory = ref<string[]>([]);
 let vendorsTag = ref<string[]>([]);
 let fuseInstance = ref();
@@ -626,7 +616,7 @@ const visibleVendors = computed(() => {
 });
 
 const route = useRoute();
-const currentRoute: string = route.query.tag;
+const currentRoute = route.query.tag;
 
 //   fetch all items in the array of filteredVendors
 const loadMore = () => {
@@ -637,6 +627,18 @@ const loadMore = () => {
 const loadLess = () => {
   visibleItemsCount.value = 6;
 };
+
+const showAllTags = () => {
+  // Toggle the showAll flag to display/hide all tags
+  showAll.value = !showAll.value;
+
+  // Update the displayedTags based on the showAll flag
+  displayedTags.value = showAll.value ? pageData.tag : pageData.tag.slice(0, 1);
+};
+
+const shouldShowButton = computed(() => {
+  return displayedTags.value.length > 2;
+});
 
 const data = JSON.parse(JSON.stringify(pageData));
 
@@ -692,7 +694,7 @@ function getSearchQuery() {
     const categoryQuery = { $or: [] };
 
     filteredVendorsCategory.value.forEach((item) => {
-      categoryQuery.$or.push({ category: `=${item}` });
+      categoryQuery.$or.push({ category: `^${item}` });
     });
 
     searchQuery.push(categoryQuery);
@@ -776,10 +778,7 @@ const filterBAsedOnTags = (val: string): void => {
     sectionId.scrollIntoView({ behavior: "smooth" });
   }
 };
-// if (router.query.title) {
-//   console.log("===========================", router.query.title);
-//   filterBAsedOnTags(router.query.title);
-// }
+
 if (currentRoute) {
   filterBAsedOnTags(currentRoute);
 }
@@ -809,6 +808,11 @@ watch(
 );
 onMounted(() => {
   searchPrograms();
+  pageData.forEach((tag) => {
+    // Push the sliced array into displayedTags array
+    displayedTags.value.push(tag.tag.slice(0, 2));
+  });
+  console.log("displayedTags", displayedTags.value);
 });
 
 // create gtm trigger events
@@ -940,8 +944,7 @@ input[type="checkbox"] {
   outline: none;
 }
 
-.svg-styles {
-  fill: white !important;
-  background-color: grey;
+.svg-color {
+  color: #fafafa;
 }
 </style>

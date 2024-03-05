@@ -1,17 +1,12 @@
 <template>
-  <div class="card" style="height: 275px">
+  <div class="card">
     <div class="row gx-0">
       <div
         class="col-12 bg-dark-3 vma-lazy"
         :class="{ 'vma-lazy': bgImageLazy }"
         @click="handleModalOpen($event)"
       >
-        <img
-          style="height: 273px"
-          :src="props.imgSourceUrl"
-          class="img-fluid"
-          alt="card image"
-        />
+        <img :src="props.imgSourceUrl" class="img-fluid" alt="card image" />
       </div>
     </div>
 

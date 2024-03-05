@@ -76,37 +76,57 @@ class DataModellingVendors {
     this.category = fields["Primary Category"] || "";
     this.tag = fields.Tags || [];
     this.contact = fields["ASU Contact"] || [];
-    this.videoSrc = extractVideoId(fields["Demo Video"]) || "";
+    this.videoSrc = fields["Demo URL Link (Wistia)"] || "";
     this.owner = fields["License Owner"] || [];
     this.ctaLink = fields["Tool URL"] || "";
     this.ctaToolRequestFormLink =
       textToUrl(fields["Vender Demo Form (URL)"]) || "";
-    this.parallaxSectionImg =
-      fields["Feature Background Image (1280 X 550)"][0].url || "";
-    this.heroSectionImg =
-      fields["Header Background Image (1280x260)"][0].url || "";
-    this.cardLogo = fields["Tool Logo (60x60)"][0].url || "";
+
+    this.parallaxSectionImg = extractImageUrl(
+      fields,
+      "Feature Background Image (1280 X 550)"
+    );
+
+    // this.parallaxSectionImg =
+    //   fields["Feature Background Image (1280 X 550)"][0].url || "";
+
+    this.heroSectionImg = extractImageUrl(
+      fields,
+      "Header Background Image (1280x260)"
+    );
+
+    this.cardLogo = extractImageUrl(fields, "Tool Logo (60x60)");
     this.ctaTryLink = fields["URL Link - Try Tool (Sandbox Environment)"] || "";
     this.ctaWebinarLink = fields["URL Link - Webinar"] || "";
     this.ctaSupportLink = fields["URL Link - Support (tool)"] || "";
 
     const previewImages = [
-      { img: fields["(1)Tool Preview Image"][0].url || null },
-      { img: fields["(2)Tool Preview Image"][0].url || null },
-      { img: fields["(3)Tool Preview Image"][0].url || null },
-      { img: fields["(4)Tool Preview Image copy"][0].url || null },
+      { img: extractImageUrl(fields, "(1)Tool Preview Image") },
+      { img: extractImageUrl(fields, "(2)Tool Preview Image") },
+      { img: extractImageUrl(fields, "(3)Tool Preview Image") },
+      { img: extractImageUrl(fields, "(4)Tool Preview Image copy") },
     ];
 
     this.previewImages = previewImages.filter((image) => image.img !== null);
 
-    const toolFeatures = [
-      fields["(1) Tool Feature Text"] || null,
-      fields["(2) Tool Feature Text"] || null,
-      fields["(3) Tool Feature Text"] || null,
-    ];
+    // const toolFeatures = [
+    //   fields["(1) Tool Feature Text"] || null,
+    //   fields["(2) Tool Feature Text"] || null,
+    //   fields["(3) Tool Feature Text"] || null,
+    // ];
+    // const toolFeatures = [
+    //   "Multimedia integration$Harmonize allows users to incorporate multimedia elements such as images, videos, and links into their discussions. This feature enhances the richness of the conversations and supports a more engaging and dynamic learning environment.",
+    //   "Real-time collaboration$The platform supports real-time collaboration, enabling users to participate in discussions and interact with peers in a synchronous manner. This can foster more immediate and interactive exchanges of ideas among students and educators.",
+    //   "Analytics and insights$Harmonize provides analytics and insights into user engagement and participation. This feature allows educators to track the progress of discussions, identify trends, and assess the level of student involvement. Analytics can be valuable for instructors in understanding the effectiveness of discussions and making data-driven decisions.",
+    // ];
 
-    
+    const s1 =
+      "Multimedia integration\n$\nHarmonize allows users to incorporate multimedia elements such as images, videos, and links into their discussions. This feature enhances the richness of the conversations and supports a more engaging and dynamic learning environment.\n$$Real-time collaboration\n$\nThe platform supports real-time collaboration, enabling users to participate in discussions and interact with peers in a synchronous manner. This can foster more immediate and interactive exchanges of ideas among students and educators.\n$$     Analytics and insights\n$\nHarmonize provides analytics and insights into user engagement and participation. This feature allows educators to track the progress of discussions, identify trends, and assess the level of student involvement. Analytics can be valuable for instructors in understanding the effectiveness of discussions and making data-driven decisions.\n";
+    const toolFeatures = s1.split("$$");
     this.features = toolFeatures.map((toolFeatureText) => {
+      if (toolFeatureText === null) {
+        return { title: "", text: "" };
+      }
       const [title, text] = toolFeatureText
         .split("$")
         .map((item) => item.trim());
@@ -115,6 +135,23 @@ class DataModellingVendors {
         text: text || "",
       };
     });
+
+    const imageDetails = fields["(1-4) Tool Preview Images"] || [];
+    this.imageSize =
+      imageDetails.length > 0
+        ? {
+            images: imageDetails.map((image) => ({
+              url: image.url || "",
+            })),
+          }
+        : { images: [] };
+
+    // const imageDetails = fields["(1-4) Tool Preview Images"] || [];
+    // this.imageSize = imageDetails
+    //   ? {
+    //       image: imageDetails[0].url || "",
+    //     }
+    //   : { image: "" };
 
     // test ------------
     // const imageDetails = fields["Feature Background Image (1280 X 550)"];
@@ -168,5 +205,10 @@ class DataModellingVendors {
     //   .map(url => ({ link: url }));
   }
 }
+
+const extractImageUrl = (fields, key) => {
+  const images = fields[key] || [];
+  return images.length > 0 ? images[0].url || "" : "";
+};
 
 export default { init };
