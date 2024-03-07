@@ -89,6 +89,98 @@
                         Home
                       </p>
                     </a>
+                    <!-- nav-items -->
+                    <rds-accordion start-collapsed>
+                      <div
+                        class="nav-items"
+                        v-for="(item, index) in navItemsRef"
+                        :key="index"
+                        :class="
+                        index !== navItemsRef!.length - 1 ? 'border-bottom' : ``
+                      "
+                      >
+                        <div v-if="hasChildren(item)">
+                          <collapse-item
+                            class="mobile-menu-collapse"
+                            :display-highlight="false"
+                            border-variant="light-4"
+                            content-background-variant="white"
+                            button-size="sm"
+                            :data-cy="generateCypressId(item.htmlLink.text)"
+                            :collapse-id="
+                              generateCollapseId(item.htmlLink.text)
+                            "
+                            @collapse-shown="handleCollapseShow(item)"
+                            @collapse-hidden="handleCollapseHide(item)"
+                          >
+                            <template #title-slot>
+                              <span
+                                class="position-relative"
+                                :class="{ 'active-collapse': isActive(item) }"
+                                >{{ item.htmlLink.text }}</span
+                              >
+                            </template>
+
+                            <template v-if="item.children">
+                              <ul class="ps-0 mb-0">
+                                <li
+                                  class="remove-ul-dots pb-space-xxs"
+                                  v-for="(child, index) in item.children"
+                                  :key="index"
+                                >
+                                  <a
+                                    class="fs-medium text-dark-3"
+                                    :aria-label="child.htmlLink.text"
+                                    :href="child.htmlLink.uri"
+                                    :target="
+                                      formatLinkTarget(child.htmlLink.target)
+                                    "
+                                    @click="
+                                      handleNavLinkClick(
+                                        child.htmlLink.text,
+                                        'main navbar'
+                                      )
+                                    "
+                                    :data-cy="
+                                      generateCypressId(
+                                        child.htmlLink.text,
+                                        true
+                                      )
+                                    "
+                                  >
+                                    {{ child.htmlLink.text }}
+                                  </a>
+                                </li>
+                              </ul>
+                            </template>
+                          </collapse-item>
+                        </div>
+                        <div v-else>
+                          <a
+                            class="d-block w-100 p-space-xs fs-large text-dark-3"
+                            :aria-label="item.htmlLink.text"
+                            :href="item.htmlLink.uri"
+                            :target="formatLinkTarget(item.htmlLink.target)"
+                            @click="
+                              handleNavLinkClick(
+                                item.htmlLink.text,
+                                'main navbar'
+                              )
+                            "
+                            :data-cy="generateCypressId(item.htmlLink.text)"
+                          >
+                            <p
+                              class="position-relative width-max-content mb-0 fs-large text-start text-dark-3"
+                              :class="{
+                                'active-collapse': isActive(item),
+                              }"
+                            >
+                              {{ item.htmlLink.text }}
+                            </p>
+                          </a>
+                        </div>
+                      </div>
+                    </rds-accordion>
                   </div>
 
                   <div class="mobile-navbar-footer bg-light-2 border-top">
@@ -201,7 +293,7 @@
     </div>
 
     <!-- desktop-main-nav -->
-    <div class="d-none d-lg-block border-bottom header-text py-space-xs">
+    <div class="d-none d-lg-block border-bottom header-text">
       <div class="container-lg">
         <div class="row">
           <div :class="navColumnClass">
@@ -237,14 +329,14 @@
                       role="navigation"
                       class="navbar main-nav navbar-expand-lg bg-white p-0"
                     >
-                      <ul class="navbar-nav">
+                      <ul
+                        class="navbar-nav"
+                        :class="{
+                          'nav-item-active': isHomepage(),
+                        }"
+                      >
                         <!-- home icon -->
-                        <li
-                          class="nav-item"
-                          :class="{
-                            'nav-item-active': isHomepage(),
-                          }"
-                        >
+                        <li class="nav-item">
                           <a
                             title="Home"
                             class="nav-link text-dark-3"
@@ -260,6 +352,7 @@
                           </a>
                         </li>
                         <!-- nav-items with/without dropdowns -->
+
                         <li
                           class="nav-item dropdown"
                           v-for="(item, index) in navItemsRef"
@@ -303,32 +396,37 @@
                                 ></font-awesome-icon
                               ></template>
                               <!-- dropdown items -->
-                              <template
-                                v-for="(child, index) in item.children"
-                                :key="index"
-                              >
-                                <rds-dropdown-divider
-                                  v-if="child.hasBorderTop"
-                                  class="my-space-xxs mx-space-xs"
-                                ></rds-dropdown-divider>
-                                <rds-dropdown-item
-                                  :href="child.htmlLink.uri"
-                                  :target="
-                                    formatLinkTarget(child.htmlLink.target)
-                                  "
-                                  class="dropdown-item-padding py-space-xxxs"
-                                  @click="
-                                    handleNavLinkClick(
-                                      child.htmlLink.text,
-                                      'main navbar'
-                                    )
-                                  "
-                                  :data-cy="
-                                    generateCypressId(child.htmlLink.text, true)
-                                  "
+                              <template v-if="item.children">
+                                <div
+                                  v-for="(child, index) in item.children"
+                                  :key="index"
                                 >
-                                  {{ child.htmlLink.text }}
-                                </rds-dropdown-item>
+                                  <rds-dropdown-divider
+                                    v-if="child.hasBorderTop"
+                                    class="my-space-xxs mx-space-xs"
+                                  ></rds-dropdown-divider>
+                                  <rds-dropdown-item
+                                    :href="child.htmlLink.uri"
+                                    :target="
+                                      formatLinkTarget(child.htmlLink.target)
+                                    "
+                                    class="dropdown-item-padding py-space-xxxs"
+                                    @click="
+                                      handleNavLinkClick(
+                                        child.htmlLink.text,
+                                        'main navbar'
+                                      )
+                                    "
+                                    :data-cy="
+                                      generateCypressId(
+                                        child.htmlLink.text,
+                                        true
+                                      )
+                                    "
+                                  >
+                                    {{ child.htmlLink.text }}
+                                  </rds-dropdown-item>
+                                </div>
                               </template>
                             </rds-dropdown>
                           </div>
@@ -363,7 +461,7 @@
                     <a
                       v-if="displayRfiCta"
                       class="btn ms-lg-space-xxs ms-xxl-space-xs fs-small btn-size"
-                      :href="rfiCtaLink"
+                      :href="`#${rfiAnchorId}`"
                       :class="rfiCtaClass"
                       @click="scrollToRFI"
                       data-cy="rfi-button"
@@ -400,8 +498,6 @@ import {
   onUnmounted,
   ref,
 } from "vue";
-import { analyticsComposable } from "@rds-vue-ui/analytics-gs-composable";
-
 import { RdsAccordion } from "@rds-vue-ui/rds-accordion";
 import {
   RdsDropdown,
@@ -420,10 +516,16 @@ interface NavItemChild {
   htmlLink: NavItemLink;
 }
 
+interface NavItemDualChild {
+  childOne: NavItemChild[] | [];
+  childTwo: NavItemChild[] | [];
+}
+
 interface NavItem {
   isActive: boolean;
   htmlLink: NavItemLink;
   children?: NavItemChild[] | [];
+  dualChildren?: NavItemDualChild | {};
 }
 
 type TrackingData = {
@@ -449,7 +551,6 @@ interface Props {
   rfiCtaVariant?: string;
   rfiAnchorId?: string;
   rfiCtaText?: string;
-  rfiCtaLink?: string;
   signInRedirectUrl?: string;
   route?: URL | any;
 }
@@ -590,14 +691,6 @@ const generateLinkId = (title: string, index: number) => {
 const isActive = (item: NavItem) => {
   if (item.isActive) {
     return true;
-  } else if (props.route?.pathname) {
-    return (
-      item.htmlLink.uri.split("/")[1] === props.route?.pathname.split("/")[1]
-    );
-  } else if (window.location.pathname) {
-    return (
-      item.htmlLink.uri.split("/")[1] === window.location.pathname.split("/")[1]
-    );
   } else {
     return false;
   }
@@ -661,13 +754,21 @@ const handleNavLinkClick = (itemText: string, section: string) => {
     component: "header - global",
   };
 
-  analyticsComposable.trackEvent(trackingData);
+  emits("navLinkClick", trackingData);
 };
 
 const resetItems = () => {
   navItemsRef.value!.forEach((item) => {
     item.isActive = false;
   });
+};
+
+const handleCollapseHide = (item: NavItem) => {
+  item.isActive = false;
+};
+
+const handleCollapseShow = (item: NavItem) => {
+  item.isActive = true;
 };
 
 const handleMobileNavToggle = () => {
@@ -1027,6 +1128,7 @@ div.mobile-nav {
         content: "";
         display: block;
         height: 8px;
+        background-color: var(--rds-secondary, #ffc627);
         width: 0%;
         position: absolute;
         bottom: 0;
@@ -1076,10 +1178,10 @@ div.mobile-nav {
         width: calc(100% - 16px);
       }
     }
-  }
-  .nav-item-active {
-    &::after {
-      width: calc(100% - 16px);
+    .nav-item-active {
+      &::after {
+        width: calc(100% - 16px);
+      }
     }
   }
 }

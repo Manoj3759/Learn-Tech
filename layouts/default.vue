@@ -60,7 +60,7 @@
                     </p>
                     <a
                       href="https://airtable.com/apppjYD56k3fq9H2G/pagEXwlJgSpUVw6EQ/form"
-                      class="btn btn-lg bg-secondary py-space-xs px-space-md text-medium"
+                      class="btn bg-secondary mb-space-xs px-space-md text-medium"
                       @click="triggerDlContact"
                       >Contact US</a
                     >
@@ -409,7 +409,8 @@
 </template>
 <script setup lang="ts">
 import { FooterStandard } from "@rds-vue-ui/footer-standard";
-import { HeaderStandard } from "@rds-vue-ui/header-standard";
+import HeaderStandard from "../components/globalHeader.vue";
+// import { HeaderStandard } from "@rds-vue-ui/header-standard";
 import { analyticsComposable } from "@rds-vue-ui/analytics-gs-composable";
 import { ref } from "vue";
 
@@ -481,141 +482,32 @@ const headerNavItems = ref([
   {
     isActive: false,
     htmlLink: {
-      text: "Our service areas",
-      uri: "#",
+      text: "Instructional Design and New media",
+      uri: "https://idnm.asu.edu/",
       target: "SELF",
     },
-    children: [
-      {
-        hasBorderTop: false,
-        htmlLink: {
-          text: "Instructional Design",
-          uri: "https://idnm.asu.edu/service-areas/instructional-design/",
-          target: "SELF",
-        },
-      },
-      {
-        hasBorderTop: false,
-        htmlLink: {
-          text: "New Media",
-          uri: "https://idnm.asu.edu/service-areas/new-media/",
-          target: "SELF",
-        },
-      },
-      {
-        hasBorderTop: false,
-        htmlLink: {
-          text: "Quality Assurance",
-          uri: "https://idnm.asu.edu/service-areas/quality-assurance/",
-          target: "SELF",
-        },
-      },
-      {
-        hasBorderTop: false,
-        htmlLink: {
-          text: "Learning Technologies",
-          uri: "https://idnm.asu.edu/service-areas/learning-technologies/",
-          target: "SELF",
-        },
-      },
-      {
-        hasBorderTop: false,
-        htmlLink: {
-          text: "Professional development and training",
-          uri: "https://idnm.asu.edu/service-areas/professional-development%E2%80%931/",
-          target: "SELF",
-        },
-      },
-    ],
   },
   {
     isActive: false,
     htmlLink: {
-      text: "New Media studios",
-      uri: "#",
+      text: "TeachOnline",
+      uri: "https://teachonline.asu.edu/",
       target: "SELF",
     },
-    children: [
-      {
-        hasBorderTop: false,
-        htmlLink: {
-          text: "Overview",
-          uri: "https://idnm.asu.edu/service-areas/new-media/",
-          target: "SELF",
-        },
-      },
-      {
-        hasBorderTop: false,
-        htmlLink: {
-          text: "SkySong Studio 238",
-          uri: "https://idnm.asu.edu/studios/skysong-studio-238/",
-          target: "SELF",
-        },
-      },
-      {
-        hasBorderTop: false,
-        htmlLink: {
-          text: "Tempe Studio A",
-          uri: "https://idnm.asu.edu/studios/tempe-studio-a/",
-          target: "SELF",
-        },
-      },
-      {
-        hasBorderTop: false,
-        htmlLink: {
-          text: "Tempe MicroStudio",
-          uri: "https://idnm.asu.edu/studios/tempe-microstudio/",
-          target: "SELF",
-        },
-      },
-      {
-        hasBorderTop: false,
-        htmlLink: {
-          text: "See all Studio locations",
-          uri: "https://idnm.asu.edu/studios/",
-          target: "SELF",
-        },
-      },
-      {
-        hasBorderTop: false,
-        htmlLink: {
-          text: "Request Custom Graphics",
-          uri: "https://airtable.com/appB6Nlz7bys3Fmcd/shrN52HlkI8cLKgMf",
-          target: "SELF",
-        },
-      },
-      {
-        hasBorderTop: false,
-        htmlLink: {
-          text: "Request Slide Redesign",
-          uri: "https://airtable.com/appB6Nlz7bys3Fmcd/shrw2IB8uUZjoMa54",
-          target: "SELF",
-        },
-      },
-    ],
   },
   {
     isActive: false,
     htmlLink: {
-      text: "EdTech connect",
-      uri: "/",
+      text: "Learning Experience",
+      uri: "https://lx.asu.edu/",
       target: "SELF",
     },
   },
-  {
-    isActive: true,
-    htmlLink: {
-      text: "Resources",
-      uri: "https://idnm.asu.edu/resources/",
-      target: "SELF",
-    },
-  },
-
   {
     isActive: false,
     htmlLink: {
       text: "Contact",
-      uri: "https://idnm.asu.edu/contact/",
+      uri: "https://airtable.com/apppjYD56k3fq9H2G/pagEXwlJgSpUVw6EQ/form",
       target: "SELF",
     },
   },

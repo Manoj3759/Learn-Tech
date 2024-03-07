@@ -19,6 +19,7 @@
               <a
                 @click="emitTags(item)"
                 class="bg-light-2 p-space-xxxs fs-xs m-space-xxxs text-dark-3"
+                role="button"
               >
                 {{ item }}
               </a>
@@ -30,50 +31,92 @@
     <!-- End -->
 
     <!-- Sticky nav section -->
-    <section id="sticky_nav_section">
-      <navbar-sticky-atlas
-        :nav-items="navItemObject"
-        title="On this page:"
-        nav-item-variant="light-1"
-        background-variant="dark-3"
-        title-variant="light-1"
-        icon-variant="light-1"
-        :always-show-sticky-slot="true"
-      >
-        <template #stuckMenu>
-          <div class="d-flex justify-content-end">
-            <a
-              v-if="pageData.ctaSupportLink"
-              class="btn btn-secondary font-weight-bold ms-space-sm"
-              :href="pageData.ctaSupportLink"
-              target="_blank"
-              @click="triggerStickyNavButton('')"
-            >
-              Support</a
-            >
-            <a
-              v-if="pageData.ctaWebinarLink"
-              class="btn btn-secondary text-medium font-weight-bold ms-space-sm"
-              :href="pageData.ctaWebinarLink"
-              target="_blank"
-              @click="triggerStickyNavButton('')"
-              >Webinar</a
-            >
-            <a
-              v-if="pageData.ctaTryLink"
-              class="btn btn-secondary text-medium font-weight-bold ms-space-sm"
-              :href="pageData.ctaTryLink"
-              target="_blank"
-              @click="triggerStickyNavButton('')"
-              >Try
-            </a>
-          </div>
-        </template>
-      </navbar-sticky-atlas>
-    </section>
+
+    <stickyNavBar
+      :nav-items="navItemObject"
+      title="On this page:"
+      nav-item-variant="light-1"
+      background-variant="dark-3"
+      title-variant="light-1"
+      icon-variant="light-1"
+      :always-show-sticky-slot="true"
+    >
+      <template #stuckMenu>
+        <div class="d-flex justify-content-end">
+          <a
+            v-if="pageData.ctaSupportLink"
+            class="btn btn-secondary font-weight-bold ms-space-sm"
+            :href="pageData.ctaSupportLink"
+            target="_blank"
+            @click="triggerStickyNavButton('')"
+          >
+            Support</a
+          >
+          <a
+            v-if="pageData.ctaWebinarLink"
+            class="btn btn-secondary text-medium font-weight-bold ms-space-sm"
+            :href="pageData.ctaWebinarLink"
+            target="_blank"
+            @click="triggerStickyNavButton('')"
+            >Webinar</a
+          >
+          <a
+            v-if="pageData.ctaTryLink"
+            class="btn btn-secondary text-medium font-weight-bold ms-space-sm"
+            :href="pageData.ctaTryLink"
+            target="_blank"
+            @click="triggerStickyNavButton('')"
+            >Try
+          </a>
+        </div>
+      </template>
+    </stickyNavBar>
+
     <!-- End -->
 
+    <!-- <navbar-sticky-atlas
+      :nav-items="navItemObject"
+      title="On this page:"
+      nav-item-variant="light-1"
+      background-variant="dark-3"
+      title-variant="light-1"
+      icon-variant="light-1"
+      :always-show-sticky-slot="true"
+    >
+      <template #stuckMenu>
+        <div class="d-flex justify-content-end">
+          <a
+            v-if="pageData.ctaSupportLink"
+            class="btn btn-secondary font-weight-bold ms-space-sm"
+            :href="pageData.ctaSupportLink"
+            target="_blank"
+            @click="triggerStickyNavButton('')"
+          >
+            Support</a
+          >
+          <a
+            v-if="pageData.ctaWebinarLink"
+            class="btn btn-secondary text-medium font-weight-bold ms-space-sm"
+            :href="pageData.ctaWebinarLink"
+            target="_blank"
+            @click="triggerStickyNavButton('')"
+            >Webinar</a
+          >
+          <a
+            v-if="pageData.ctaTryLink"
+            class="btn btn-secondary text-medium font-weight-bold ms-space-sm"
+            :href="pageData.ctaTryLink"
+            target="_blank"
+            @click="triggerStickyNavButton('')"
+            >Try
+          </a>
+        </div>
+      </template>
+    </navbar-sticky-atlas> -->
+    <!-- end -->
+
     <!-- video section -->
+
     <section id="video_section">
       <div class="p-lg-space-xxl px-space-xs py-space-lg">
         <video-modal-atlas
@@ -81,7 +124,7 @@
           class="bg-dark-3"
           video-position="right"
           video-source="https://asuonline.wistia.com/medias/l6bb6qf05s"
-          :bg-image-source="pageData.heroSectionImg"
+          :bg-image-source="`/images/tool-img/${pageData.heroSectionImg}`"
           title-variant="light-1"
           @modalOpen="triggerplayBtnclickDataLayer('open', 'play button', '')"
           @modalClose="triggerplayBtnclickDataLayer('close', 'play button', '')"
@@ -97,9 +140,10 @@
     <!-- End -->
 
     <!-- feature section -->
+
     <section id="feature_section">
-      <section-parallax-atlas
-        :bg-image-source="pageData.parallaxSectionImg"
+      <sectionParallax
+        :bg-image-source="`/images/tool-img/${pageData.parallaxSectionImg}`"
         title="Features"
         title-size="large"
       >
@@ -123,9 +167,10 @@
             >
           </div>
         </template>
-      </section-parallax-atlas>
+      </sectionParallax>
     </section>
     <!-- End -->
+
     <!-- preview section -->
     <section id="preview_section">
       <carousel-card-apollo
@@ -146,7 +191,7 @@
             :key="item.slideKey"
           >
             <imageModalAtlas
-              :imgSourceUrl="item.url"
+              :imgSourceUrl="`/images/tool-img/${item.url}`"
               @modalOpen="triggerplayBtnclickDataLayer('open', 'image', '')"
               @modalClose="triggerplayBtnclickDataLayer('close', 'image', '')"
             ></imageModalAtlas>
@@ -173,7 +218,10 @@
             >
               <div>
                 <span class="d-flex justify-content-start"
-                  ><img :src="data.cardLogo" alt="card logo" class="img-fluid"
+                  ><img
+                    :src="`/images/tool-img/${data.cardLogo}`"
+                    alt="card logo"
+                    class="img-fluid"
                 /></span>
                 <div class="my-space-sm custom-line"></div>
                 <h3
@@ -184,17 +232,17 @@
               </div>
               <div>
                 <div class="d-flex flex-wrap">
-                  <div v-for="(item, idx) in data.tag" :key="idx">
+                  <template v-for="(item, idx) in data.tag" :key="idx">
                     <a
                       class="bg-light-2 p-space-xxxs fs-xs m-space-xxxs text-dark-3"
                       @click="emitTags(item)"
                     >
                       {{ item }}
                     </a>
-                  </div>
+                  </template>
                 </div>
                 <a
-                  :href="data.title"
+                  :href="data.pageRoute"
                   class="btn btn-secondary mt-space-xs"
                   @click="triggerCardButtton(data.title)"
                   >Learn more</a
@@ -210,10 +258,24 @@
             class="d-flex justify-content-center align-content-center"
           >
             <a
+              role="button"
               @click="loadMore"
               class="text-primary mb-space-sm fw-bold text-decoration-underline"
             >
               Show more...
+            </a>
+          </div>
+
+          <div
+            v-else-if="visibleVendors.length > 4"
+            class="d-flex justify-content-center align-content-center"
+          >
+            <a
+              role="button"
+              @click="loadLess"
+              class="text-primary mb-space-sm fw-bold text-decoration-underline"
+            >
+              Show less...
             </a>
           </div>
           <!-- End -->
@@ -233,19 +295,6 @@
                 </div>
               </div>
             </div>
-            <div class="pe-space-lg py-space-xs">
-              <h2 class="h2-medium fw-bold">ASU contact</h2>
-              <div class="py-space-xs d-flex flex-wrap">
-                <div v-for="(item, idx) in pageData.contact" :key="idx">
-                  <a
-                    :href="`mailto:${item}`"
-                    class="btn btn-light py-space-xs me-space-xxs"
-                    @click="triggerAsuContact(item)"
-                    >{{ item }}</a
-                  >
-                </div>
-              </div>
-            </div>
           </div>
           <!-- End -->
         </div>
@@ -255,13 +304,16 @@
   </main>
 </template>
 <script lang="ts" setup>
-import { NavbarStickyAtlas } from "@rds-vue-ui/navbar-sticky-atlas";
+import { ref, computed } from "vue";
+
+import stickyNavBar from "~/components/stickyNavBar.vue";
+import sectionParallax from "~/components/sectionParallax.vue";
+import imageModalAtlas from "../components/imageModalAtlas.vue";
+
 import { VideoModalAtlas } from "@rds-vue-ui/video-modal-atlas";
 import { SectionParallaxAtlas } from "@rds-vue-ui/section-parallax-atlas";
 import { ListTimeline } from "@rds-vue-ui/list-timeline";
 import { CarouselCardApollo } from "@rds-vue-ui/carousel-card-apollo";
-import imageModalAtlas from "../components/imageModalAtlas.vue";
-import { ref, computed } from "vue";
 import { analyticsComposable } from "@rds-vue-ui/analytics-gs-composable";
 
 interface relatedVendorsData {
@@ -270,80 +322,6 @@ interface relatedVendorsData {
   tag?: string[];
   cardLogo?: string;
 }
-
-let relatedVendorsData = ref<relatedVendorsData[]>([]);
-let visibleItemsCount = ref<number>(4);
-
-const router = useRouter();
-const emitTags = (item: string): void => {
-  router.push({ path: "/", query: { tag: item } });
-};
-
-const route = useRoute();
-console.log("route", route);
-const routeName = route.params.title as string;
-const pageData = await queryContent("vendors")
-  .where({ title: routeName })
-  .findOne();
-
-const relatedData = await queryContent("vendors").find();
-
-console.log(relatedData);
-
-const emit = defineEmits<{
-  (e: "subDomainCardFilter", item: string): void;
-}>();
-
-//   fetch a particular number of items in the array of relatedVendorsData
-const visibleVendors = computed(() => {
-  return relatedVendorsData.value.slice(0, visibleItemsCount.value);
-});
-
-//   fetch all items in the array of relatedVendorsData
-const loadMore = () => {
-  visibleItemsCount.value = relatedVendorsData.value.length;
-};
-
-// loading bg img
-const getImageUrl = (name: string): string => {
-  return new URL(name, import.meta.url).href;
-};
-
-// filtering the cards based on tag in slug
-const filteredData = relatedData.filter((data: relatedVendorsData) => {
-  console.log("data", data);
-  let shouldInclude = false;
-  pageData.tag?.forEach((tag: string) => {
-    console.log("inner loop", pageData.tag);
-    if (data.tag.includes(tag)) {
-      console.log("data", data, tag);
-      shouldInclude = true;
-      return;
-    }
-  });
-  return shouldInclude;
-});
-
-console.log("filteredData", filteredData);
-
-relatedVendorsData.value = filteredData;
-
-useHead({
-  title: pageData.title,
-  htmlAttrs: {
-    lang: "en",
-  },
-  meta: [
-    { charset: "utf-8" },
-    { name: "viewport", content: "width=device-width, initial-scale=1" },
-    {
-      hid: "description",
-      name: "description",
-      content: "",
-    },
-    { name: "format-detection", content: "telephone=no" },
-  ],
-});
 
 interface navItem {
   video_section: string;
@@ -363,6 +341,8 @@ type TrackingData = {
   component?: string;
 };
 
+let visibleItemsCount = ref<number>(4);
+let relatedVendorsData = ref<relatedVendorsData[]>([]);
 const navItemObject = ref<navItem>({
   video_section: "Overview",
   feature_section: "Feature",
@@ -395,6 +375,73 @@ const slideItemObject = ref([
   { img: "images/feature-section-img.png" },
   { img: "images/feature-section-img.png" },
 ]);
+
+const route = useRoute();
+const routeName = route.params.pageRoute as string;
+const pageData = await queryContent("vendors")
+  .where({ pageRoute: { $eq: routeName } })
+  .findOne();
+
+const router = useRouter();
+const emitTags = (item: string): void => {
+  router.push({ path: "/", query: { tag: item } });
+};
+
+const relatedData = await queryContent("vendors").find();
+
+// Meta title and Meta description for sub pages
+useHead({
+  title: pageData.pageRoute,
+  htmlAttrs: {
+    lang: "en",
+  },
+  meta: [
+    { charset: "utf-8" },
+    { name: "viewport", content: "width=device-width, initial-scale=1" },
+    {
+      hid: "description",
+      name: "description",
+      content: "",
+    },
+    { name: "format-detection", content: "telephone=no" },
+  ],
+});
+
+//   fetch a particular number of items in the array of relatedVendorsData
+const visibleVendors = computed(() => {
+  return relatedVendorsData.value.slice(0, visibleItemsCount.value);
+});
+
+//   fetch all items in the array of relatedVendorsData
+const loadMore = () => {
+  visibleItemsCount.value = relatedVendorsData.value.length;
+};
+
+const loadLess = () => {
+  visibleItemsCount.value = 4;
+};
+
+// loading bg img
+const getImageUrl = (name: string): string => {
+  return new URL(`../public/images/tool-img/${name}`, import.meta.url).href;
+};
+
+// filtering the cards based on tag in slug
+const filteredData = relatedData.filter((data: relatedVendorsData) => {
+  console.log("data", data);
+  let shouldInclude = false;
+  pageData.tag?.forEach((tag: string) => {
+    console.log("inner loop", pageData.tag);
+    if (data.tag.includes(tag)) {
+      console.log("data", data, tag);
+      shouldInclude = true;
+      return;
+    }
+  });
+  return shouldInclude;
+});
+
+relatedVendorsData.value = filteredData;
 
 // create gtm trigger events
 const triggerStickyNavButton = (text: string) => {
@@ -547,11 +594,15 @@ const triggerSearchNavItems = (eventObject: TrackingData): void => {
   analyticsComposable.trackEvent(eventObject);
 };
 </script>
+
+
 <style lang="scss">
+
 .bg-img-hero-section {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
 .card_spacing {
   cursor: default;
   border-bottom: 3px solid var(--rds-secondary, #ffc627) !important;
@@ -560,6 +611,7 @@ const triggerSearchNavItems = (eventObject: TrackingData): void => {
     height: 420px;
   }
 }
+
 .custom-line {
   width: 54px;
   height: 8px;
@@ -569,13 +621,16 @@ const triggerSearchNavItems = (eventObject: TrackingData): void => {
 .rds-modal-close.exterior svg[data-v-06e1beef] {
   fill: #fff;
 }
+
 svg[data-v-06e1beef]path[data-v-06e1beef] :focus {
   outline: none !important;
 }
-.header-image::before {
+
+.header-image {
   background-image: linear-gradient(
     rgb(25, 25, 25, 0.25),
     rgba(25, 25, 25, 0.25)
   ) !important;
 }
+
 </style>

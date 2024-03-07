@@ -19,9 +19,39 @@ const generateFileWritePromises = async (
   }
 };
 
+//   const imageUrls = await Promise.all(
+//     images.map(async (image, index) => {
+//       const imageUrl = image.url || "";
+//       const imageName = `image_${index + 1}.jpg`; // You can modify the naming convention as needed
+//       const imagePath = path.join(downloadPath, imageName);
+
+//       try {
+//         // Download the image and save it to the specified path
+//         const response = await axios({
+//           method: "get",
+//           url: imageUrl,
+//           responseType: "stream",
+//         });
+
+//         response.data.pipe(fs.createWriteStream(imagePath));
+
+//         return imagePath;
+//       } catch (error) {
+//         console.error(`Error downloading image ${index + 1}: ${error.message}`);
+//         return null;
+//       }
+//     })
+//   );
+
+//   return imageUrls.filter((url) => url !== null);
+// };
+
 // extract file name by removing unwanted characters
 const sanitizeFilename = (fileName) => {
-  return fileName.replace(/[/\\?%*:|"<>]/g, "-").replace(/ +/g, "-");
+  return fileName
+    .replace(/[/\\?%*:|"<>]/g, "-")
+    .replace(/ +/g, "-")
+    .toLowerCase();
 };
 
 // extract text by removing unwanted characters
@@ -54,4 +84,5 @@ export {
   filterDescriptionToText,
   textToUrl,
   extractVideoId,
+  sanitizeFilename,
 };

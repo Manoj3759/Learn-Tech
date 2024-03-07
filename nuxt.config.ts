@@ -1,4 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import fs from "fs";
+import Path from "path";
+const contentDirectory: string[] = [];
+
+fs.readdir("./content/vendors/", (err, files) => {
+  files.forEach((file) => {
+    console.log("Path.parse(file).name", Path.parse(file).name);
+    contentDirectory.push("/" + Path.parse(file).name);
+  });
+});
 export default defineNuxtConfig({
   devtools: { enabled: false },
   ssr: false,
@@ -20,4 +30,12 @@ export default defineNuxtConfig({
     "~/plugins/gtm.js",
   ],
   modules: ["@nuxt/content"],
+  content: {
+    experimental: {
+      clientDB: true,
+    },
+  },
+  generate: {
+    routes: contentDirectory,
+  },
 });

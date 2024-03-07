@@ -1,8 +1,8 @@
 <template>
-  <div class="card">
+  <div class="card img-opacity">
     <div class="row gx-0">
       <div
-        class="col-12 bg-dark-3 vma-lazy"
+        class="col-12 enlarge-img"
         :class="{ 'vma-lazy': bgImageLazy }"
         @click="handleModalOpen($event)"
       >
@@ -11,6 +11,7 @@
     </div>
 
     <!-- video modal -->
+
     <rds-modal
       :visible="showModal"
       centered
@@ -76,5 +77,19 @@ onMounted(() => {
 <style lang="scss" scoped>
 button.rds-modal-close {
   margin-top: 18px !important;
+}
+
+.enlarge-img {
+  transition: transform 1s ease-in-out 3ms;
+  border-radius: 0.5rem;
+}
+
+.img-opacity:hover {
+  opacity: 0.75;
+}
+
+.enlarge-img:hover {
+  transform: scale(1.1, 1.2);
+  background-color: #191919;
 }
 </style>

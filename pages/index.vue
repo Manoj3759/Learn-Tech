@@ -26,6 +26,7 @@
               }})</span
             >
             <span
+              role="button"
               class="text-primary text-decoration-underline"
               @click="clearFilter"
               >Clear all</span
@@ -140,14 +141,17 @@
           <!-- search bar section -->
           <section id="search-search-bar" class="sticky-top bg-white">
             <div class="py-space-xs">
-              <input
-                v-model="searchValue"
-                class="form-control"
-                type="text"
-                placeholder="Search resources"
-                aria-label="search bar input"
-                @change="triggerSearchBar(searchValue)"
-              />
+              <div id="search-input-wrapper">
+                <input
+                  id="search"
+                  v-model="searchValue"
+                  class="form-control"
+                  type="text"
+                  placeholder="Search resources"
+                  aria-label="search bar input"
+                  @change="triggerSearchBar(searchValue)"
+                />
+              </div>
               <div class="d-lg-none d-grid gap-2 mt-space-xs">
                 <a
                   class="btn btn-dark"
@@ -311,14 +315,12 @@
                   <div>
                     <span class="d-flex justify-content-start"
                       ><img
-                        :src="data.cardLogo"
+                        :src="`/images/tool-img/${data.cardLogo}`"
                         alt="card logo"
                         class="img-fluid"
                     /></span>
                     <div class="my-space-sm custom-line"></div>
-                    <h3
-                      class="mb-space-sm mb-md-space-md h3-large text-dark-3 text-start"
-                    >
+                    <h3 class="mb-space-xs h3-large text-dark-3 text-start">
                       {{ data.title }}
                     </h3>
                   </div>
@@ -326,6 +328,7 @@
                     <div class="d-flex flex-wrap">
                       <template v-for="(item, idx) in data.tag" :key="idx">
                         <a
+                          role="button"
                           class="bg-light-2 p-space-xxxs fs-xs m-space-xxxs text-dark-3"
                           @click="filterBAsedOnTags(item)"
                         >
@@ -333,6 +336,7 @@
                         </a>
                       </template>
                       <a
+                        role="button"
                         class="bg-light-2 p-space-xxxs fs-xs m-space-xxxs text-dark-3"
                         @click="filterBAsedOnTags(data.category)"
                       >
@@ -340,7 +344,7 @@
                       </a>
                     </div>
                     <a
-                      :href="data.title"
+                      :href="data.pageRoute"
                       class="btn btn-secondary mt-space-xs"
                       @click="triggerButtonClick(data.title)"
                       >Learn more</a
@@ -354,6 +358,7 @@
                 class="d-flex justify-content-center align-content-center"
               >
                 <a
+                  role="button"
                   @click="loadMore"
                   class="text-primary mb-space-sm fw-bold text-decoration-underline"
                 >
@@ -361,10 +366,11 @@
                 </a>
               </div>
               <div
-                v-else
+                v-else-if="visibleVendors.length > 3"
                 class="d-flex justify-content-center align-content-center"
               >
                 <a
+                  role="button"
                   @click="loadLess"
                   class="text-primary mb-space-sm fw-bold text-decoration-underline"
                 >
@@ -384,12 +390,12 @@
                 <div
                   v-for="(data, idx) in visibleVendors"
                   :key="idx"
-                  class="bg-white border-bottom border-2 mx-lg-space-xs mb-space-xs p-space-md d-flex justify-content-between"
+                  class="col-12 bg-white border-bottom border-2 mx-lg-space-xs mb-space-xs p-space-md d-flex justify-content-between"
                 >
-                  <div class="d-flex">
-                    <span class="d-flex justify-content-start"
+                  <div class="col-9 d-flex">
+                    <span class="d-flex justify-content-start pe-space-sm"
                       ><img
-                        :src="data.cardLogo"
+                        :src="`/images/tool-img/${data.cardLogo}`"
                         width="144px"
                         height="36px"
                         alt="card logo"
@@ -401,6 +407,7 @@
                       </h3>
                       <div class="py-space-xs d-flex flex-wrap">
                         <a
+                          role="button"
                           class="bg-light-2 p-space-xxs fs-xs me-space-xxs mb-space-xxs text-dark-3"
                           @click="filterBAsedOnTags(data.category)"
                         >
@@ -411,6 +418,7 @@
                           :key="idx"
                         >
                           <a
+                            role="button"
                             class="bg-light-2 p-space-xxs fs-xs me-space-xxs text-dark-3 mb-space-xxs"
                             @click="filterBAsedOnTags(item)"
                             >{{ item }}</a
@@ -433,9 +441,10 @@
                       </div>
                     </div>
                   </div>
-                  <div>
+                  <div class="col-3">
                     <a
-                      :href="data.title"
+                      role="button"
+                      :href="data.pageRoute"
                       class="btn btn-secondary"
                       @click="triggerButtonClick(data.title)"
                       >Learn more</a
@@ -470,6 +479,7 @@
                         class="my-space-xxs"
                       >
                         <a
+                          role="button"
                           class="bg-light-2 p-space-xxs fs-xs me-space-xxs text-dark-3"
                           @click="filterBAsedOnTags(item)"
                           >{{ item }}</a
@@ -477,6 +487,7 @@
                       </div>
                       <div class="my-space-xxs">
                         <a
+                          role="button"
                           class="bg-light-2 p-space-xxs fs-xs me-space-xxs text-dark-3"
                           @click="filterBAsedOnTags(data.category)"
                         >
@@ -487,7 +498,8 @@
                   </div>
                   <div>
                     <a
-                      :href="data.title"
+                      role="button"
+                      :href="data.pageRoute"
                       class="btn btn-secondary"
                       @click="triggerButtonClick(data.title)"
                       >Learn more</a
@@ -501,6 +513,7 @@
                 class="d-flex justify-content-center align-content-center"
               >
                 <a
+                  role="button"
                   @click="loadMore"
                   class="text-primary mb-space-sm fw-bold text-decoration-underline"
                 >
@@ -508,10 +521,11 @@
                 </a>
               </div>
               <div
-                v-else
+                v-else-if="visibleVendors.length > 3"
                 class="d-flex justify-content-center align-content-center"
               >
                 <a
+                  role="button"
                   @click="loadLess"
                   class="text-primary mb-space-sm fw-bold text-decoration-underline"
                 >
@@ -530,11 +544,14 @@
 </template>
 
 <script setup lang="ts">
+import { ref, watch, onMounted, computed } from "vue";
+
+import Fuse from "fuse.js";
+
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faList as listIcon } from "@fortawesome/free-solid-svg-icons";
 import { faBorderAll as gridIcon } from "@fortawesome/free-solid-svg-icons";
-import { ref, watch, onMounted, computed } from "vue";
-import Fuse from "fuse.js";
+
 import { analyticsComposable } from "@rds-vue-ui/analytics-gs-composable";
 
 useHead({
@@ -556,15 +573,8 @@ useHead({
 });
 
 let pageData = await queryContent("vendors")
-  .only(["title", "tag", "category", "cardLogo"])
+  .only(["title", "tag", "category", "cardLogo", "pageRoute"])
   .find();
-
-console.log("pageData", pageData);
-// split the string based on any character/ special character
-// const splitText = (text: string): string[] => text.split("\n");
-// const getTitle = (text: string): string => splitText(text)[0];
-// const getDescription = (text: string): string =>
-//   splitText(text).slice(1).join(" ");
 
 type TrackingData = {
   event: string;
@@ -597,21 +607,24 @@ interface vendorsData {
   tag: string[] | null;
 }
 
-let listDisplay = ref<string>("inline-block");
+let fuseInstance = ref();
+
 let gridDisplay = ref<string>("");
 const searchValue = ref<string>("");
+
 let displayedTags = ref<string[]>([]);
 let filteredVendors = ref<string[]>([]);
 let filteredVendorsTags = ref<string[]>([]);
 let filteredVendorsCategory = ref<string[]>([]);
 let vendorsCategory = ref<string[]>([]);
 let vendorsTag = ref<string[]>([]);
-let fuseInstance = ref();
-let visibleItemsCount = ref<number>(9);
-let visibleTag = ref<boolean>(true);
-let showAll = ref<boolean>(true);
 
+let visibleTag = ref<boolean>(true);
 let visibleCategories = ref<boolean>(true);
+
+let visibleItemsCount = ref<number>(9);
+
+let listDisplay = ref<string>("inline-block");
 let minusimg = ref<string>(
   "https://currentstudent.asuonline.asu.edu/sites/default/files/Icon%20-%20minus-circle-solid.png"
 );
@@ -633,13 +646,22 @@ const fuseOptions = ref<fuseOptions>({
   keys: ["title", "tag", "category"],
 });
 
+const route = useRoute();
+const currentRoute = route.query.tag;
+
 //   fetch a particular number of items in the array of filteredVendors
 const visibleVendors = computed(() => {
   return filteredVendors.value.slice(0, visibleItemsCount.value);
 });
 
-const route = useRoute();
-const currentRoute = route.query.tag;
+onMounted(() => {
+  searchPrograms();
+  pageData.forEach((tag) => {
+    // Push the sliced array into displayedTags array
+    displayedTags.value.push(tag.tag.slice(0, 2));
+  });
+  console.log("displayedTags", displayedTags.value);
+});
 
 //   fetch all items in the array of filteredVendors
 const loadMore = () => {
@@ -784,12 +806,9 @@ const changeDisplay = (action: string): void => {
 // filter cards based on tags
 const filterBAsedOnTags = (val: string): void => {
   filteredVendorsTags.value[0] = val;
-  // Get the target element by ID
   const sectionId = document.getElementById("view_items_section");
 
-  // Check if the element is found
   if (sectionId) {
-    // Use the smooth scroll behavior for a better user experience
     sectionId.scrollIntoView({ behavior: "smooth" });
   }
 };
@@ -821,14 +840,6 @@ watch(
   [filteredVendorsCategory, () => searchPrograms()],
   [filteredVendorsTags, () => searchPrograms()]
 );
-onMounted(() => {
-  searchPrograms();
-  pageData.forEach((tag) => {
-    // Push the sliced array into displayedTags array
-    displayedTags.value.push(tag.tag.slice(0, 2));
-  });
-  console.log("displayedTags", displayedTags.value);
-});
 
 // create gtm trigger events
 
@@ -929,6 +940,7 @@ const triggerSearchNavItems = (eventObject: TrackingData): void => {
 </script>
 
 <style lang="scss">
+
 .card_spacing {
   cursor: default;
   border-bottom: 8px solid var(--rds-secondary, #ffc627) !important;
@@ -937,6 +949,7 @@ const triggerSearchNavItems = (eventObject: TrackingData): void => {
     height: 420px;
   }
 }
+
 .custom-line {
   width: 30px;
   height: 4px;
@@ -961,5 +974,29 @@ input[type="checkbox"] {
 
 .svg-color {
   color: #fafafa;
+}
+
+.form-control {
+  border-radius: 0px;
+  z-index: 1;
+}
+
+#search-input-wrapper {
+  position: relative;
+  display: block;
+}
+
+#search-input-wrapper::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  right: 10px;
+  background: url("https://i.ibb.co/D1dvJTV/icons8-search.gif") no-repeat center;
+  background-size: 23px auto;
+  height: 30px;
+  width: 30px;
 }
 </style>

@@ -7,7 +7,7 @@
     "build-content": "node ./script/index.js",
     "clean-content": "node ./script/clean-content.js",
     "build": "nuxt build",
-    "generate": "nuxt generate",
+    "generate": "yarn clean-content && yarn build-content && nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
@@ -31,6 +31,7 @@
     "@rds-vue-ui/video-modal-atlas": "^0.2.0",
     "@types/bootstrap": "^5.2.10",
     "airtable": "^0.12.2",
+    "axios": "^1.6.7",
     "bootstrap": "^5.3.2",
     "fuse.js": "^7.0.0",
     "nuxt": "^3.10.2",
