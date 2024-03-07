@@ -234,7 +234,9 @@
                 <p
                   class="fw-bold fs-large mx-space-xs border-bottom py-space-xs"
                 >
-                  Filters ({{ filteredVendors.length }})
+                  Filters ({{
+                    filteredVendorsTags.length + filteredVendorsCategory.length
+                  }})
                 </p>
               </div>
             </div>
@@ -243,52 +245,101 @@
               <div class="border-bottom">
                 <div class="d-flex align-items-center justify-content-between">
                   <span class="fw-bold">Categories</span>
+
+                  <a
+                    class="category-collapse"
+                    href="#collapse-categories"
+                    data-bs-toggle="collapse"
+                    aria-expanded="true"
+                    aria-controls="collapse-categories-mobile"
+                    @click="visibleCategories = !visibleCategories"
+                  >
+                    <img
+                      :src="visibleCategories ? minusimg : plusimg"
+                      alt="collapse icon"
+                    />
+                  </a>
                 </div>
                 <div
-                  v-for="item in vendorsCategory"
-                  :key="item"
-                  :id="`${item}-category-check-box-mobile`"
-                  class="text-dark-3"
+                  id="collapse-categories-mobile"
+                  :class="{
+                    collapse: !visibleCategories,
+                    show: visibleCategories,
+                  }"
                 >
-                  <input
-                    type="checkbox"
-                    :id="`${item}-category-checkbox`"
-                    v-model="filteredVendorsCategory"
-                    :value="item"
-                    @click="triggerCheckBoxClick(item, 'categories')"
-                  />
-                  <label
-                    :for="`${item}-category-checkbox`"
-                    class="pt-space-xs px-space-xxs"
-                    >{{ item }}</label
+                  <div
+                    v-for="item in vendorsCategory"
+                    :key="item"
+                    :id="`${item}-category-check-box-mobile`"
+                    class="text-dark-3"
                   >
+                    <input
+                      type="checkbox"
+                      :id="`${item}-category-checkbox`"
+                      v-model="filteredVendorsCategory"
+                      :value="item"
+                      @click="triggerCheckBoxClick(item, 'categories')"
+                    />
+                    <label
+                      :for="`${item}-category-checkbox`"
+                      class="pt-space-xs px-space-xxs"
+                      >{{ item }}</label
+                    >
+                  </div>
                 </div>
               </div>
               <!-- End -->
 
               <!-- tag check box -->
               <div class="py-space-xs border-bottom">
-                <div class="d-flex align-items-center justify-content-between">
+                <!-- <div class="d-flex align-items-center justify-content-between">
                   <span class="fw-bold">Tags</span>
+                </div> -->
+                <div
+                  class="d-flex align-items-center justify-content-between sticky-top bg-white pt-space-xs"
+                >
+                  <span class="fw-bold">Tags</span>
+
+                  <a
+                    class="category-collapse"
+                    href="#collapse-tag"
+                    data-bs-toggle="collapse"
+                    aria-expanded="true"
+                    aria-controls="collapse-tag"
+                    @click="visibleTag = !visibleTag"
+                  >
+                    <img
+                      :src="visibleTag ? minusimg : plusimg"
+                      alt="collapse icon"
+                    />
+                  </a>
                 </div>
                 <div
-                  v-for="(item, idx) in vendorsTag"
-                  :key="item"
-                  :id="`tag-checkbox-${idx}`"
-                  class="text-dark-3"
+                  id="collapse-tag"
+                  :class="{
+                    collapse: !visibleTag,
+                    show: visibleTag,
+                  }"
                 >
-                  <input
-                    type="checkbox"
-                    :id="`${item}-tag-checkbox-mobile-${idx}`"
-                    v-model="filteredVendorsTags"
-                    :value="item"
-                    @click="triggerCheckBoxClick(item, 'tags')"
-                  />
-                  <label
-                    :for="`${item}-tag-checkbox-mobile-${idx}`"
-                    class="pt-space-xs px-space-xxs"
-                    >{{ item }}</label
+                  <div
+                    v-for="(item, idx) in vendorsTag"
+                    :key="item"
+                    :id="`tag-checkbox-${idx}`"
+                    class="text-dark-3"
                   >
+                    <input
+                      type="checkbox"
+                      :id="`${item}-tag-checkbox-mobile-${idx}`"
+                      v-model="filteredVendorsTags"
+                      :value="item"
+                      @click="triggerCheckBoxClick(item, 'tags')"
+                    />
+                    <label
+                      :for="`${item}-tag-checkbox-mobile-${idx}`"
+                      class="pt-space-xs px-space-xxs"
+                      >{{ item }}</label
+                    >
+                  </div>
                 </div>
               </div>
               <!-- End -->
@@ -940,7 +991,6 @@ const triggerSearchNavItems = (eventObject: TrackingData): void => {
 </script>
 
 <style lang="scss">
-
 .card_spacing {
   cursor: default;
   border-bottom: 8px solid var(--rds-secondary, #ffc627) !important;

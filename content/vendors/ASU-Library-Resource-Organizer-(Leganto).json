@@ -1,1 +1,43 @@
-{"id":"recNu69JVnrQFX05G","pageRoute":"asu-library-resource-organizer-(leganto)","title":"ASU Library Resource Organizer (Leganto)","text":"Leganto is a course resource and citation management tool that gives students and instructors easy access to curated materials for their courses. Integrated with Canvas and the Ex Libris Alma® library services platform, Leganto enables users to seamlessly merge library resources within their Canvas modules, quizzes, discussion boards and more.","featureText":"The ASU Library Resource Organizer is a comprehensive service integrated with Canvas, designed to facilitate the management and accessibility of course materials. \n","category":"Content","tag":["Library Resource"],"contact":["asaf@asu.edu"],"videoSrc":"https://asuonline.wistia.com/medias/p2z90hgh5i","owner":["Academic Enterprise"],"ctaLink":"https://libguides.asu.edu/resource-organizer","ctaToolRequestFormLink":"https://airtable.com/apppjYD56k3fq9H2G/shrHOfYdam3oUARz3?prefill_fldTjPdpBxRPLvsVz=ASU%20Library%20Resource%20Organizer%20%28Leganto%29&prefill_fldgdYu8iKfA5ts7N=recNu69JVnrQFX05G&hide_fldgdYu8iKfA5ts7N=true","parallaxSectionImg":"","heroSectionImg":"","cardLogo":"asu-resource-org-logo.jpg","ctaTryLink":"https://airtable.com/apppjYD56k3fq9H2G/pagEXwlJgSpUVw6EQ/form","ctaWebinarLink":"https://www.eventbrite.com/o/asu-online-790244257","ctaSupportLink":"https://libguides.asu.edu/resource-organizer","features":[{"title":"Adding, Editing, and Deleting Content","text":"Easily add, edit, and delete various types of content including library resources, internet sources, and personal files."},{"title":"Capture Internet Content with CITE IT","text":"Provides a seamless way to incorporate open educational resources (OER) and other internet-based materials into course readings."},{"title":"Stable Access to Content","text":"Ensures stable access to content through library-licensed renewals/purchases. Reserve staff are available to support access to materials."}],"imageSize":{"images":[]}}
+{
+    "id": "recNu69JVnrQFX05G",
+    "pageRoute": "asu-library-resource-organizer-(leganto)",
+    "title": "ASU Library Resource Organizer (Leganto)",
+    "text": "Leganto is a course resource and citation management tool that gives students and instructors easy access to curated materials for their courses. Integrated with Canvas and the Ex Libris Alma® library services platform, Leganto enables users to seamlessly merge library resources within their Canvas modules, quizzes, discussion boards and more.",
+    "featureText": "The ASU Library Resource Organizer is a comprehensive service integrated with Canvas, designed to facilitate the management and accessibility of course materials. \n",
+    "category": "Content",
+    "tag": [
+        "Library Resource"
+    ],
+    "contact": [
+        "asaf@asu.edu"
+    ],
+    "videoSrc": "https://asuonline.wistia.com/medias/p2z90hgh5i",
+    "owner": [
+        "Academic Enterprise"
+    ],
+    "ctaLink": "https://libguides.asu.edu/resource-organizer",
+    "ctaToolRequestFormLink": "https://airtable.com/apppjYD56k3fq9H2G/shrHOfYdam3oUARz3?prefill_fldTjPdpBxRPLvsVz=ASU%20Library%20Resource%20Organizer%20%28Leganto%29&prefill_fldgdYu8iKfA5ts7N=recNu69JVnrQFX05G&hide_fldgdYu8iKfA5ts7N=true",
+    "parallaxSectionImg": "",
+    "heroSectionImg": "",
+    "cardLogo": "asu-resource-org-logo.jpg",
+    "ctaTryLink": "https://airtable.com/apppjYD56k3fq9H2G/pagEXwlJgSpUVw6EQ/form",
+    "ctaWebinarLink": "https://www.eventbrite.com/o/asu-online-790244257",
+    "ctaSupportLink": "https://libguides.asu.edu/resource-organizer",
+    "features": [
+        {
+            "title": "Adding, Editing, and Deleting Content",
+            "text": "Easily add, edit, and delete various types of content including library resources, internet sources, and personal files."
+        },
+        {
+            "title": "Capture Internet Content with CITE IT",
+            "text": "Provides a seamless way to incorporate open educational resources (OER) and other internet-based materials into course readings."
+        },
+        {
+            "title": "Stable Access to Content",
+            "text": "Ensures stable access to content through library-licensed renewals/purchases. Reserve staff are available to support access to materials."
+        }
+    ],
+    "imageSize": {
+        "images": []
+    }
+}

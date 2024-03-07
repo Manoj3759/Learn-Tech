@@ -2,7 +2,7 @@
   <div id="app-default-layout">
     <header id="section-header">
       <HeaderStandard
-        home-title="Instructional Design and New Media"
+        home-title="EdTech Connect"
         :display-rfi-cta="false"
         :display-apply-now="false"
         :navItems="headerNavItems"
