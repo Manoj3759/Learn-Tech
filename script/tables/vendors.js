@@ -132,14 +132,14 @@ class DataModellingVendors {
           }))
         : { images: [] };
 
-    imageDetails.forEach(() => {
-      // console.log("iiiiiiiiiiiiiiiii", Object.values(i));
-      extractImageUrl(fields, "(1-4) Tool Preview Images");
-    });
+    // imageDetails.forEach(() => {
+    //   // console.log("iiiiiiiiiiiiiiiii", Object.values(i));
+    //   extractImageUrl(fields, "(1-4) Tool Preview Images");
+    // });
 
-    extractImageUrl(fields, "Tool Logo (60x60)");
-    extractImageUrl(fields, "Header Background Image (1280x260)");
-    extractImageUrl(fields, "Feature Background Image (1280 X 550)");
+    // extractImageUrl(fields, "Tool Logo (60x60)");
+    // extractImageUrl(fields, "Header Background Image (1280x260)");
+    // extractImageUrl(fields, "Feature Background Image (1280 X 550)");
   }
 }
 
