@@ -8,6 +8,7 @@ fs.readdir("./content/vendors/", (err, files) => {
     contentDirectory.push("/" + Path.parse(file).name);
   });
 });
+
 export default defineNuxtConfig({
   devtools: { enabled: false },
   ssr: false,

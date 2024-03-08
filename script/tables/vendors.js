@@ -12,10 +12,11 @@ import {
   filterDescriptionToText,
   textToUrl,
   sanitizeFilename,
+  extractImageName,
 } from "../utils/file-utils.js";
-import fs from "fs";
-import path from "path";
-import axios from "axios";
+// import fs from "fs";
+// import path from "path";
+// import axios from "axios";
 
 // fetching each record from the airtable and storing at ./content/vendors based on title
 const getData = (resolve, reject) => {
@@ -143,45 +144,45 @@ class DataModellingVendors {
   }
 }
 
-const downloadImage = async (imageUrl, imageName) => {
-  const downloadPath = "public/images/tool-img";
+// const downloadImage = async (imageUrl, imageName) => {
+//   const downloadPath = "public/images/tool-img";
 
-  if (!fs.existsSync(downloadPath)) {
-    fs.mkdirSync(downloadPath, { recursive: true });
-  }
+//   if (!fs.existsSync(downloadPath)) {
+//     fs.mkdirSync(downloadPath, { recursive: true });
+//   }
 
-  const imagePath = path.join(downloadPath, imageName);
-  try {
-    const response = await axios({
-      method: "get",
-      url: imageUrl,
-      responseType: "stream",
-    });
+//   const imagePath = path.join(downloadPath, imageName);
+//   try {
+//     const response = await axios({
+//       method: "get",
+//       url: imageUrl,
+//       responseType: "stream",
+//     });
 
-    response.data.pipe(fs.createWriteStream(imagePath));
+//     response.data.pipe(fs.createWriteStream(imagePath));
 
-    return imagePath;
-  } catch (error) {
-    console.error(`Error downloading image: ${error.message}`);
-    return null;
-  }
-};
+//     return imagePath;
+//   } catch (error) {
+//     console.error(`Error downloading image: ${error.message}`);
+//     return null;
+//   }
+// };
 
-const extractImageUrl = async (fields, key) => {
-  const images = fields[key] || [];
-  // console.log("imageeeeeeeeee", images);
-  const downloadPromises = images.map((img) =>
-    downloadImage(img.url, img.filename)
-  );
+// const extractImageUrl = async (fields, key) => {
+//   const images = fields[key] || [];
+//   // console.log("imageeeeeeeeee", images);
+//   const downloadPromises = images.map((img) =>
+//     downloadImage(img.url, img.filename)
+//   );
 
-  return Promise.all(downloadPromises);
-};
+//   return Promise.all(downloadPromises);
+// };
 
-const extractImageName = (fields, key) => {
-  const images = fields[key] || "";
+// const extractImageName = (fields, key) => {
+//   const images = fields[key] || "";
 
-  const downloadPromises = images.length > 0 ? images[0].filename || "" : "";
-  return downloadPromises;
-};
+//   const downloadPromises = images.length > 0 ? images[0].filename || "" : "";
+//   return downloadPromises;
+// };
 
 export default { init };
