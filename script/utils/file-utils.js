@@ -1,4 +1,4 @@
-// import { writeFileSync } from "fs";
+import { writeFileSync } from "fs";
 
 import fs from "fs";
 import path from "path";
@@ -14,11 +14,11 @@ const generateFileWritePromises = async (
     if (item[fileNameProp]) {
       const sanitizedFileName = sanitizeFilename(item[fileNameProp]);
       console.log("sanitizedFileName=========",sanitizedFileName)
-      // writeFileSync(
-      //   `${basePath}/${sanitizedFileName}.json`,
-      //   JSON.stringify(item),
-      //   "utf8"
-      // );
+      writeFileSync(
+        `${basePath}/${sanitizedFileName}.json`,
+        JSON.stringify(item),
+        "utf8"
+      );
     }
   }
 };
