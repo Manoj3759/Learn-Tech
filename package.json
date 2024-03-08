@@ -7,7 +7,7 @@
     "build-content": "node ./script/index.js",
     "clean-content": "node ./script/clean-content.js",
     "build": "nuxt build",
-    "generate": "nuxt generate",
+    "generate": "yarn clean-content && yarn build-content && nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },

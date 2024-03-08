@@ -14,4 +14,4 @@ jobs:
         run: yarn install
 
       - name: Host
-        run: yarn clean-content && yarn build-content && yarn generate
+        run: yarn generate

@@ -5,7 +5,6 @@ const contentDirectory: string[] = [];
 
 fs.readdir("./content/vendors/", (err, files) => {
   files.forEach((file) => {
-    console.log("Path.parse(file).name", Path.parse(file).name);
     contentDirectory.push("/" + Path.parse(file).name);
   });
 });
