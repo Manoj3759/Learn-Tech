@@ -74,47 +74,6 @@
 
     <!-- End -->
 
-    <!-- <navbar-sticky-atlas
-      :nav-items="navItemObject"
-      title="On this page:"
-      nav-item-variant="light-1"
-      background-variant="dark-3"
-      title-variant="light-1"
-      icon-variant="light-1"
-      :always-show-sticky-slot="true"
-    >
-      <template #stuckMenu>
-        <div class="d-flex justify-content-end">
-          <a
-            v-if="pageData.ctaSupportLink"
-            class="btn btn-secondary font-weight-bold ms-space-sm"
-            :href="pageData.ctaSupportLink"
-            target="_blank"
-            @click="triggerStickyNavButton('')"
-          >
-            Support</a
-          >
-          <a
-            v-if="pageData.ctaWebinarLink"
-            class="btn btn-secondary text-medium font-weight-bold ms-space-sm"
-            :href="pageData.ctaWebinarLink"
-            target="_blank"
-            @click="triggerStickyNavButton('')"
-            >Webinar</a
-          >
-          <a
-            v-if="pageData.ctaTryLink"
-            class="btn btn-secondary text-medium font-weight-bold ms-space-sm"
-            :href="pageData.ctaTryLink"
-            target="_blank"
-            @click="triggerStickyNavButton('')"
-            >Try
-          </a>
-        </div>
-      </template>
-    </navbar-sticky-atlas> -->
-    <!-- end -->
-
     <!-- video section -->
 
     <section id="video_section">
@@ -174,7 +133,7 @@
     <!-- preview section -->
     <section id="preview_section">
       <carousel-card-apollo
-        :slides="pageData.imageSize.images"
+        :slides="pageData.previewImages"
         :slidesPerPage="4"
         title="Preview"
         title-variant="light-1"
@@ -321,6 +280,7 @@ interface relatedVendorsData {
   category?: string;
   tag?: string[];
   cardLogo?: string;
+  pageRoute?: string;
 }
 
 interface navItem {
@@ -350,31 +310,32 @@ const navItemObject = ref<navItem>({
   related_tool_section: "Related tools",
 });
 
-const listItemObject = ref([
-  {
-    title: "Feature",
-    text: "More updates are on the way.",
-  },
-  {
-    title: "Feature",
-    text: "More updates are on the way.",
-  },
-  {
-    title: "Feature",
-    text: "More updates are on the way.",
-  },
-]);
+// testing purpose
+// const listItemObject = ref([
+//   {
+//     title: "Feature",
+//     text: "More updates are on the way.",
+//   },
+//   {
+//     title: "Feature",
+//     text: "More updates are on the way.",
+//   },
+//   {
+//     title: "Feature",
+//     text: "More updates are on the way.",
+//   },
+// ]);
 
-const slideItemObject = ref([
-  { img: "images/Group 119826.png" },
-  { img: "images/feature-section-img.png" },
-  { img: "images/feature-section-img.png" },
-  { img: "images/feature-section-img.png" },
-  { img: "images/feature-section-img.png" },
-  { img: "images/feature-section-img.png" },
-  { img: "images/feature-section-img.png" },
-  { img: "images/feature-section-img.png" },
-]);
+// const slideItemObject = ref([
+//   { img: "images/Group 119826.png" },
+//   { img: "images/feature-section-img.png" },
+//   { img: "images/feature-section-img.png" },
+//   { img: "images/feature-section-img.png" },
+//   { img: "images/feature-section-img.png" },
+//   { img: "images/feature-section-img.png" },
+//   { img: "images/feature-section-img.png" },
+//   { img: "images/feature-section-img.png" },
+// ]);
 
 const route = useRoute();
 const routeName = route.params.pageRoute as string;
@@ -595,9 +556,7 @@ const triggerSearchNavItems = (eventObject: TrackingData): void => {
 };
 </script>
 
-
 <style lang="scss">
-
 .bg-img-hero-section {
   background-repeat: no-repeat;
   background-size: cover;
@@ -632,5 +591,4 @@ svg[data-v-06e1beef]path[data-v-06e1beef] :focus {
     rgba(25, 25, 25, 0.25)
   ) !important;
 }
-
 </style>

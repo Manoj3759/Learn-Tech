@@ -14,25 +14,6 @@
     <footer id="section-footer">
       <footer-standard @tertiaryMenuLinkClick="triggerDlTertiaryMenu"
         ><template #primary-section>
-          <!-- <div class="bg-dark-3">
-            <div class="container">
-              <img
-                src="../assets/images/asu-footer-logo.png"
-                width="235px"
-                class="py-space-sm"
-                alt="primary footer logo"
-              />
-              <hr />
-              <div class="py-space-md py-lg-space-lg">
-                <a
-                  href="mailto:learntech@asu.edu"
-                  class="btn btn-lg bg-secondary py-space-xs px-space-md text-medium"
-                  @click="triggerDlContact"
-                  >Contact US</a
-                >
-              </div>
-            </div>
-          </div> -->
           <div>
             <div class="bg-dark-3 pt-space-sm pt-lg-space-md">
               <div class="container">
@@ -40,7 +21,7 @@
                   <div class="col-12 col-lg-6 mb-space-xs mb-lg-0">
                     <img
                       loading="lazy"
-                      src="../assets/images/asu-footer-logo.png"
+                      src="../assets/images/asu-footer-logo.webp"
                       alt="ASU Online"
                       class="img-fluid"
                     />
@@ -55,9 +36,6 @@
               <div class="container">
                 <div class="row px-space-xs px-lg-0">
                   <div class="col-12 col-lg-4">
-                    <p class="fs-large mb-0 text-light-1 fw-bold mb-space-sm">
-                      Instructional Design and New Media
-                    </p>
                     <a
                       href="https://airtable.com/apppjYD56k3fq9H2G/pagEXwlJgSpUVw6EQ/form"
                       class="btn bg-secondary mb-space-xs px-space-md text-medium"
@@ -78,7 +56,7 @@
                           <p
                             class="mb-0 text-large text-left text-white fw-bold"
                           >
-                            Our service areas
+                            Partner sites
                           </p>
                           <div
                             class="ml-space-xs ml-md-space-sm ml-lg-space-md"
@@ -104,7 +82,7 @@
                       <div id="collapse-our-service" class="collapse">
                         <div class="collapse-content mb-space-xs">
                           <p
-                            v-for="(item, index) in primaryFooter.ourServices"
+                            v-for="(item, index) in primaryFooter.partnerSites"
                             :key="index"
                             class="text-light-1"
                           >
@@ -119,265 +97,29 @@
                         </div>
                       </div>
                     </div>
-                    <div class="d-block d-lg-none border-top border-white">
-                      <a
-                        class="d-block mobile-parent1 w-100 px-0 py-space-sm text-decoration-none collapsed"
-                        aria-expanded="false"
-                        aria-controls="ft-ps-tuition"
-                        style="overflow-anchor: none"
-                      >
-                        <div
-                          class="d-flex flex-row justify-content-between align-items-center"
-                        >
-                          <p
-                            class="mb-0 text-large text-left text-white fw-bold"
-                          >
-                            Other resources
-                          </p>
-                          <div
-                            class="ml-space-xs ml-md-space-sm ml-lg-space-md"
-                          >
-                            <a
-                              class="ml-space-xs ml-md-space-sm ml-lg-space-md"
-                              data-bs-toggle="collapse"
-                              href="#collapse-other-resources"
-                              role="button"
-                              aria-expanded="false"
-                              aria-controls="collapse-other-resources"
-                            >
-                              <img
-                                src="../assets/images/down-arrow.svg"
-                                alt="down arrow icon"
-                                height=" 20px"
-                                width=" 20px"
-                              />
-                            </a>
-                          </div>
-                        </div>
-                      </a>
-                      <div id="collapse-other-resources" class="collapse">
-                        <div class="collapse-content mb-space-xs">
-                          <p>
-                            <a
-                              title="Studios"
-                              href="/studios"
-                              target="_self"
-                              class="mb-space-xs text-small text-white"
-                            >
-                              Studios
-                            </a>
-                          </p>
-                          <p>
-                            <a
-                              title="Resources"
-                              href="/resources"
-                              target="_self"
-                              class="mb-space-xs text-small text-white"
-                            >
-                              Resources
-                            </a>
-                          </p>
-                          <p>
-                            <a
-                              title="Contact us"
-                              href="/contact"
-                              target="_self"
-                              class="mb-space-xs text-small text-white"
-                            >
-                              Contact us
-                            </a>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="d-block d-lg-none border-top border-white">
-                      <a
-                        class="d-block mobile-parent2 w-100 px-0 py-space-sm text-decoration-none collapsed"
-                        aria-expanded="false"
-                        aria-controls="ft-ps-admission"
-                        style="overflow-anchor: none"
-                      >
-                        <div
-                          class="d-flex flex-row justify-content-between align-items-center"
-                        >
-                          <p
-                            class="mb-0 text-large text-left text-white fw-bold"
-                          >
-                            Partner sites
-                          </p>
-                          <a
-                            class="ml-space-xs ml-md-space-sm ml-lg-space-md"
-                            data-bs-toggle="collapse"
-                            href="#collapse-partner-sites"
-                            role="button"
-                            aria-expanded="false"
-                            aria-controls="collapse-partner-sites"
-                          >
-                            <img
-                              src="../assets/images/down-arrow.svg"
-                              alt="down arrow icon"
-                              height=" 20px"
-                              width=" 20px"
-                            />
-                          </a>
-                        </div>
-                      </a>
-                      <div id="collapse-partner-sites" class="collapse">
-                        <div class="collapse-content mb-space-xs">
-                          <p>
-                            <a
-                              title="asu.edu"
-                              href="https://asu.edu"
-                              target="_self"
-                              class="mb-space-xs text-small text-white"
-                            >
-                              asu.edu
-                            </a>
-                          </p>
-                          <p>
-                            <a
-                              title="ASU Online"
-                              href="https://asuonline.asu.edu"
-                              target="_self"
-                              class="mb-space-xs text-small text-white"
-                            >
-                              ASU Online
-                            </a>
-                          </p>
-                          <p>
-                            <a
-                              title="EdPlus"
-                              href="https://edplus.asu.edu"
-                              target="_self"
-                              class="mb-space-xs text-small text-white"
-                            >
-                              EdPlus
-                            </a>
-                          </p>
-                          <p>
-                            <a
-                              title="Teach Online"
-                              href="https://teachonline.asu.edu"
-                              target="_self"
-                              class="mb-space-xs text-small text-white"
-                            >
-                              Teach Online
-                            </a>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                   <div class="d-none d-lg-block col-lg-8">
                     <div class="row pl-space-xl pb-space-lg">
-                      <div class="col-4">
-                        <p class="text-medium text-white fw-bold mb-space-xs">
-                          Our service areas
-                        </p>
-                        <div
-                          v-for="(item, index) in primaryFooter.ourServices"
-                          :key="index"
-                        >
-                          <p class="mb-space-xs footermenu-item">
-                            <a
-                              :href="item.url"
-                              target="_blank"
-                              class="text-small text-white"
-                            >
-                              {{ item.title }}
-                            </a>
+                      <div class="d-flex justify-content-end">
+                        <div class="col-lg-4">
+                          <p class="text-medium text-white fw-bold mb-space-xs">
+                            Partner sites
                           </p>
+                          <div
+                            v-for="(item, index) in primaryFooter.partnerSites"
+                            :key="index"
+                          >
+                            <p class="mb-space-xs footermenu-item">
+                              <a
+                                :href="item.url"
+                                target="_blank"
+                                class="text-small text-secondary"
+                              >
+                                {{ item.title }}
+                              </a>
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                      <div class="col-4">
-                        <p
-                          class="text-medium text-white fw-bold mb-space-xs"
-                          data-v-22a323ba=""
-                        >
-                          Other resources
-                        </p>
-                        <p class="mb-space-xs footermenu-item">
-                          <a
-                            title="Studios"
-                            href="/studios"
-                            target="_self"
-                            class="text-small text-white"
-                            data-v-22a323ba=""
-                          >
-                            Studios
-                          </a>
-                        </p>
-                        <p class="mb-space-xs footermenu-item">
-                          <a
-                            title="Resources"
-                            href="/resources"
-                            target="_self"
-                            class="text-small text-white"
-                            data-v-22a323ba=""
-                          >
-                            Resources
-                          </a>
-                        </p>
-                        <p class="mb-0 footermenu-item">
-                          <a
-                            title="Contact us"
-                            href="/contact"
-                            target="_self"
-                            class="text-small text-white"
-                            data-v-22a323ba=""
-                          >
-                            Contact us
-                          </a>
-                        </p>
-                      </div>
-                      <div class="col-4">
-                        <p class="text-medium text-white fw-bold mb-space-xs">
-                          Partner sites
-                        </p>
-                        <p class="mb-space-xs footermenuitem">
-                          <a
-                            title="asu.edu"
-                            href="https://asu.edu"
-                            target="_self"
-                            class="text-small text-underline text-secondary"
-                            data-v-22a323ba=""
-                          >
-                            asu.edu
-                          </a>
-                        </p>
-                        <p class="mb-space-xs footermenuitem">
-                          <a
-                            title="ASU Online"
-                            href="https://asuonline.asu.edu"
-                            target="_self"
-                            class="text-small text-underline text-secondary"
-                            data-v-22a323ba=""
-                          >
-                            ASU Online
-                          </a>
-                        </p>
-                        <p class="mb-space-xs footermenuitem">
-                          <a
-                            title="EdPlus"
-                            href="https://edplus.asu.edu"
-                            target="_self"
-                            class="text-small text-underline text-secondary"
-                            data-v-22a323ba=""
-                          >
-                            EdPlus
-                          </a>
-                        </p>
-                        <p class="mb-space-xs footermenuitem">
-                          <a
-                            title="Teach Online"
-                            href="https://teachonline.asu.edu"
-                            target="_self"
-                            class="text-small text-underline text-secondary"
-                            data-v-22a323ba=""
-                          >
-                            Teach Online
-                          </a>
-                        </p>
                       </div>
                     </div>
                   </div>
@@ -454,26 +196,26 @@ const sectionFooter = ref([
 ]);
 
 const primaryFooter = ref({
-  ourServices: [
+  partnerSites: [
     {
-      title: "Instructional Design",
-      url: "https://idnm.asu.edu/service-areas/instructional-design/",
+      title: "asu.edu",
+      url: "https://asu.edu",
     },
     {
-      title: "New Media",
-      url: "https://idnm.asu.edu/service-areas/new-media/",
+      title: "ASU Online",
+      url: "https://asuonline.asu.edu",
     },
     {
-      title: "Quality Assurance",
-      url: "https://idnm.asu.edu/service-areas/quality-assurance/",
+      title: " EdPlus",
+      url: "https://edplus.asu.edu",
     },
     {
-      title: "Learning Technologies",
-      url: "https://idnm.asu.edu/service-areas/learning-technologies/",
+      title: "Teach Online",
+      url: "https://teachonline.asu.edu",
     },
     {
-      title: "Professional development and training",
-      url: "https://idnm.asu.edu/service-areas/professional-development%E2%80%931/",
+      title: "Learning Experience",
+      url: "https://lx.asu.edu/",
     },
   ],
 });

@@ -1,10 +1,6 @@
-// "use strict";
-
 "use strict";
 
 import fs from "fs";
-// import fs from "fs";
-// import path from "path";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 

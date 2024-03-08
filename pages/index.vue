@@ -3,7 +3,7 @@
     <section class="container">
       <!-- intro section -->
       <section id="section-intro">
-        <h1 class="h1-medium pt-space-xl">EdTech Connect</h1>
+        <h1 class="h1-medium pt-space-xl"></h1>
         <p class="py-space-sm">
           Explore our library to find the support you need. Navigate through
           resources using tags organized by topics, tools, technology and media.
@@ -82,12 +82,9 @@
           <!-- End -->
 
           <!-- tag check box -->
-          <div
-            class="pb-space-xs border-bottom"
-            id="section-filter-sidebar-tag"
-          >
+          <div class="pb-space-xs border-bottom">
             <div
-              class="d-flex align-items-center justify-content-between sticky-top bg-white pt-space-xs"
+              class="d-flex align-items-center justify-content-between sticky-top bg-white py-space-xs"
             >
               <span class="fw-bold">Tags</span>
 
@@ -112,24 +109,26 @@
                 show: visibleTag,
               }"
             >
-              <div
-                v-for="(item, idx) in vendorsTag"
-                :key="item"
-                :id="`tag-check-box-${idx}`"
-                class="text-dark-3"
-              >
-                <input
-                  type="checkbox"
-                  :id="`${item}-tag-checkbox-${idx}`"
-                  v-model="filteredVendorsTags"
-                  :value="item"
-                  @click="triggerCheckBoxClick(item, 'tags')"
-                />
-                <label
-                  :for="`${item}-tag-checkbox-${idx}`"
-                  class="pt-space-xs px-space-xxs"
-                  >{{ item }}</label
+              <div id="section-filter-sidebar-tag">
+                <div
+                  v-for="(item, idx) in vendorsTag"
+                  :key="item"
+                  :id="`tag-check-box-${idx}`"
+                  class="text-dark-3"
                 >
+                  <input
+                    type="checkbox"
+                    :id="`${item}-tag-checkbox-${idx}`"
+                    v-model="filteredVendorsTags"
+                    :value="item"
+                    @click="triggerCheckBoxClick(item, 'tags')"
+                  />
+                  <label
+                    :for="`${item}-tag-checkbox-${idx}`"
+                    class="pt-space-xs px-space-xxs"
+                    >{{ item }}</label
+                  >
+                </div>
               </div>
             </div>
           </div>
@@ -292,9 +291,6 @@
 
               <!-- tag check box -->
               <div class="py-space-xs border-bottom">
-                <!-- <div class="d-flex align-items-center justify-content-between">
-                  <span class="fw-bold">Tags</span>
-                </div> -->
                 <div
                   class="d-flex align-items-center justify-content-between sticky-top bg-white pt-space-xs"
                 >
@@ -305,7 +301,7 @@
                     href="#collapse-tag"
                     data-bs-toggle="collapse"
                     aria-expanded="true"
-                    aria-controls="collapse-tag"
+                    aria-controls="collapse-tag-mobile"
                     @click="visibleTag = !visibleTag"
                   >
                     <img
@@ -315,7 +311,7 @@
                   </a>
                 </div>
                 <div
-                  id="collapse-tag"
+                  id="collapse-tag-mobile"
                   :class="{
                     collapse: !visibleTag,
                     show: visibleTag,
@@ -375,6 +371,7 @@
                       {{ data.title }}
                     </h3>
                   </div>
+
                   <div>
                     <div class="d-flex flex-wrap">
                       <template v-for="(item, idx) in data.tag" :key="idx">
@@ -389,7 +386,7 @@
                       <a
                         role="button"
                         class="bg-light-2 p-space-xxxs fs-xs m-space-xxxs text-dark-3"
-                        @click="filterBAsedOnTags(data.category)"
+                        @click="filterBAsedOnCategory(data.category)"
                       >
                         {{ data.category }}
                       </a>
@@ -421,6 +418,7 @@
                 class="d-flex justify-content-center align-content-center"
               >
                 <a
+                  href="#"
                   role="button"
                   @click="loadLess"
                   class="text-primary mb-space-sm fw-bold text-decoration-underline"
@@ -460,7 +458,7 @@
                         <a
                           role="button"
                           class="bg-light-2 p-space-xxs fs-xs me-space-xxs mb-space-xxs text-dark-3"
-                          @click="filterBAsedOnTags(data.category)"
+                          @click="filterBAsedOnCategory(data.category)"
                         >
                           {{ data.category }}
                         </a>
@@ -479,8 +477,7 @@
                           v-if="
                             data.tag &&
                             displayedTags[idx] &&
-                            data.tag.length > 2 &&
-                            displayedTags[idx].length
+                            displayedTags[idx].length < data.tag.length
                           "
                           :key="idx"
                           role="button"
@@ -488,6 +485,16 @@
                           @click="showAllTags(data.tag, idx)"
                         >
                           +{{ data.tag.length - displayedTags[idx].length }}
+                        </a>
+                        <a
+                          class="bg-light-2 text-dark-3 fs-small me-space-xxs mb-space-xxs p-space-xxs"
+                          role="button"
+                          v-else-if="
+                            displayedTags[idx] && displayedTags[idx].length > 2
+                          "
+                          @click="ShowLessTags(displayedTags[idx], idx)"
+                        >
+                          -{{ displayedTags[idx].length - 2 }}
                         </a>
                       </div>
                     </div>
@@ -540,7 +547,7 @@
                         <a
                           role="button"
                           class="bg-light-2 p-space-xxs fs-xs me-space-xxs text-dark-3"
-                          @click="filterBAsedOnTags(data.category)"
+                          @click="filterBAsedOnCategory(data.category)"
                         >
                           {{ data.category }}
                         </a>
@@ -576,6 +583,7 @@
                 class="d-flex justify-content-center align-content-center"
               >
                 <a
+                  href="#"
                   role="button"
                   @click="loadLess"
                   class="text-primary mb-space-sm fw-bold text-decoration-underline"
@@ -604,6 +612,7 @@ import { faList as listIcon } from "@fortawesome/free-solid-svg-icons";
 import { faBorderAll as gridIcon } from "@fortawesome/free-solid-svg-icons";
 
 import { analyticsComposable } from "@rds-vue-ui/analytics-gs-composable";
+import type { LocationQueryValue } from "vue-router";
 
 useHead({
   title: "Learning Technology Platform | IDNM",
@@ -623,7 +632,7 @@ useHead({
   ],
 });
 
-let pageData = await queryContent("vendors")
+let pageData: visibleVendorsData[] = await queryContent("vendors")
   .only(["title", "tag", "category", "cardLogo", "pageRoute"])
   .find();
 
@@ -656,6 +665,14 @@ interface vendorsData {
   title: string;
   category: string;
   tag: string[] | null;
+}
+
+interface visibleVendorsData {
+  title?: string;
+  category?: string;
+  tag?: string[];
+  cardLogo?: string;
+  pageRoute?: string;
 }
 
 let fuseInstance = ref();
@@ -707,11 +724,12 @@ const visibleVendors = computed(() => {
 
 onMounted(() => {
   searchPrograms();
-  pageData.forEach((tag) => {
-    // Push the sliced array into displayedTags array
+
+  // Push the sliced array into displayedTags array
+
+  pageData.forEach((tag: visibleVendorsData) => {
     displayedTags.value.push(tag.tag.slice(0, 2));
   });
-  console.log("displayedTags", displayedTags.value);
 });
 
 //   fetch all items in the array of filteredVendors
@@ -726,6 +744,11 @@ const loadLess = () => {
 
 const showAllTags = (tags: string[], i: number): void => {
   displayedTags.value[i] = [...tags];
+};
+
+const ShowLessTags = (tagArray: string[], i: number) => {
+  console.log("tagArray", tagArray);
+  return (displayedTags.value[i] = tagArray.slice(0, 2));
 };
 
 const data = JSON.parse(JSON.stringify(pageData));
@@ -746,16 +769,13 @@ const sortByTitle = (a: vendorsData, b: vendorsData): number => {
 // search value using fuse JS
 const searchPrograms = () => {
   const query = getSearchQuery();
-  console.log("anything", query);
   if (query.length > 0) {
     const searchResult = fuseInstance.value.search({
       $or: query,
     });
     filteredVendors.value = searchResult.map((vendors) => {
-      console.log("vendor itemmmmmm", vendors);
       return vendors.item;
     });
-    console.log("filteredVendors", filteredVendors.value);
   } else {
     filteredVendors.value = data.sort(sortByTitle);
   }
@@ -786,7 +806,6 @@ function getSearchQuery() {
     });
 
     searchQuery.push(categoryQuery);
-    console.log(searchQuery);
   }
 
   return searchQuery;
@@ -797,29 +816,24 @@ function getSearchQuery() {
   let tag: string[] = [];
   searchPrograms();
   data.filter((program) => {
-    console.log("program", program);
     if (
       !category.includes(program.category) &&
       program.category !== "" &&
       program.category !== undefined
     ) {
       category.push(program.category);
-      console.log("category", category);
     }
 
     if (program.tag !== null) {
       program.tag.forEach((vendor) => {
         if (!tag.includes(vendor)) {
           tag.push(vendor);
-          console.log("tagsgsggsg", tag);
         }
       });
     }
 
     vendorsCategory.value = category.sort();
-    console.log("vendorsCategory", vendorsCategory.value);
     vendorsTag.value = tag.sort();
-    console.log("tagsssssssssss", vendorsTag.value);
   });
 })();
 
@@ -857,6 +871,16 @@ const changeDisplay = (action: string): void => {
 // filter cards based on tags
 const filterBAsedOnTags = (val: string): void => {
   filteredVendorsTags.value[0] = val;
+  const sectionId = document.getElementById("view_items_section");
+
+  if (sectionId) {
+    sectionId.scrollIntoView({ behavior: "smooth" });
+  }
+};
+
+// filter cards based on category
+const filterBAsedOnCategory = (val: string): void => {
+  filteredVendorsCategory.value[0] = val;
   const sectionId = document.getElementById("view_items_section");
 
   if (sectionId) {
@@ -1010,7 +1034,7 @@ const triggerSearchNavItems = (eventObject: TrackingData): void => {
   max-height: calc(100vh - 1rem);
 }
 #section-filter-sidebar-tag {
-  max-height: calc(100vh - 75vh);
+  max-height: calc(100vh - 70vh);
   overflow-y: auto;
 }
 

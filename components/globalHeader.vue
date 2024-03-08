@@ -698,9 +698,9 @@ const isActive = (item: NavItem) => {
 
 const isHomepage = () => {
   if (props.route?.pathname) {
-    return props.route?.pathname == "/";
+    return true;
   } else if (window.location.pathname) {
-    return window.location.pathname == "/";
+    return true;
   } else {
     return false;
   }
