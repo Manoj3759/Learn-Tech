@@ -123,14 +123,14 @@ class DataModellingVendors {
       };
     });
 
-    const imageDetails = fields["(1-4) Tool Preview Images"] || [];
+    // const imageDetails = fields["(1-4) Tool Preview Images"] || [];
 
-    this.previewImages =
-      imageDetails.length > 0
-        ? imageDetails.map((image) => ({
-            url: image.filename || "",
-          }))
-        : { images: [] };
+    // this.previewImages =
+    //   imageDetails.length > 0
+    //     ? imageDetails.map((image) => ({
+    //         url: image.filename || "",
+    //       }))
+    //     : { images: [] };
 
     // imageDetails.forEach(() => {
     //   // console.log("iiiiiiiiiiiiiiiii", Object.values(i));
