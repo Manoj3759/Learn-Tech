@@ -13,7 +13,6 @@ const generateFileWritePromises = async (
   for (const item of collection) {
     if (item[fileNameProp]) {
       const sanitizedFileName = sanitizeFilename(item[fileNameProp]);
-      console.log("sanitizedFileName=========",sanitizedFileName)
       writeFileSync(
         `${basePath}/${sanitizedFileName}.json`,
         JSON.stringify(item),
@@ -22,33 +21,6 @@ const generateFileWritePromises = async (
     }
   }
 };
-
-//   const imageUrls = await Promise.all(
-//     images.map(async (image, index) => {
-//       const imageUrl = image.url || "";
-//       const imageName = `image_${index + 1}.jpg`; // You can modify the naming convention as needed
-//       const imagePath = path.join(downloadPath, imageName);
-
-//       try {
-//         // Download the image and save it to the specified path
-//         const response = await axios({
-//           method: "get",
-//           url: imageUrl,
-//           responseType: "stream",
-//         });
-
-//         response.data.pipe(fs.createWriteStream(imagePath));
-
-//         return imagePath;
-//       } catch (error) {
-//         console.error(`Error downloading image ${index + 1}: ${error.message}`);
-//         return null;
-//       }
-//     })
-//   );
-
-//   return imageUrls.filter((url) => url !== null);
-// };
 
 // extract file name by removing unwanted characters
 const sanitizeFilename = (fileName) => {
@@ -84,46 +56,46 @@ const extractVideoId = (text) => {
 };
 
 // remove
-const downloadImage = async (imageUrl, imageName) => {
-  const downloadPath = "public/images/tool-img";
+// const downloadImage = async (imageUrl, imageName) => {
+//   const downloadPath = "public/images/tool-img";
 
-  if (!fs.existsSync(downloadPath)) {
-    fs.mkdirSync(downloadPath, { recursive: true });
-  }
+//   if (!fs.existsSync(downloadPath)) {
+//     fs.mkdirSync(downloadPath, { recursive: true });
+//   }
 
-  const imagePath = path.join(downloadPath, imageName);
-  try {
-    const response = await axios({
-      method: "get",
-      url: imageUrl,
-      responseType: "stream",
-    });
+//   const imagePath = path.join(downloadPath, imageName);
+//   try {
+//     const response = await axios({
+//       method: "get",
+//       url: imageUrl,
+//       responseType: "stream",
+//     });
 
-    response.data.pipe(fs.createWriteStream(imagePath));
+//     response.data.pipe(fs.createWriteStream(imagePath));
 
-    return imagePath;
-  } catch (error) {
-    console.error(`Error downloading image: ${error.message}`);
-    return null;
-  }
-};
+//     return imagePath;
+//   } catch (error) {
+//     console.error(`Error downloading image: ${error.message}`);
+//     return null;
+//   }
+// };
 
-const extractImageUrl = async (fields, key) => {
-  const images = fields[key] || [];
-  // console.log("imageeeeeeeeee", images);
-  const downloadPromises = images.map((img) =>
-    downloadImage(img.url, img.filename)
-  );
+// const extractImageUrl = async (fields, key) => {
+//   const images = fields[key] || [];
+//   // console.log("imageeeeeeeeee", images);
+//   const downloadPromises = images.map((img) =>
+//     downloadImage(img.url, img.filename)
+//   );
 
-  return Promise.all(downloadPromises);
-};
+//   return Promise.all(downloadPromises);
+// };
 
-const extractImageName = (fields, key) => {
-  const images = fields[key] || "";
+// const extractImageName = (fields, key) => {
+//   const images = fields[key] || "";
 
-  const downloadPromises = images.length > 0 ? images[0].filename || "" : "";
-  return downloadPromises;
-};
+//   const downloadPromises = images.length > 0 ? images[0].filename || "" : "";
+//   return downloadPromises;
+// };
 
 export {
   generateFileWritePromises,
@@ -131,7 +103,4 @@ export {
   textToUrl,
   extractVideoId,
   sanitizeFilename,
-  extractImageName,
-  extractImageUrl,
-  downloadImage,
 };

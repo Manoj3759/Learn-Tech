@@ -338,16 +338,18 @@ const navItemObject = ref<navItem>({
 // ]);
 
 const route = useRoute();
-const routeName = route.params.pageRoute as string;
-const pageData = await queryContent("vendors")
-  .where({ pageRoute: { $eq: routeName } })
-  .findOne();
-
 const router = useRouter();
+
+
+const routeName = route.params.pageRoute as string;
 const emitTags = (item: string): void => {
   router.push({ path: "/", query: { tag: item } });
 };
 
+
+const pageData = await queryContent("vendors")
+  .where({ pageRoute: { $eq: routeName } })
+  .findOne();
 const relatedData = await queryContent("vendors").find();
 
 // Meta title and Meta description for sub pages

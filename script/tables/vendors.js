@@ -13,9 +13,9 @@ import {
   textToUrl,
   sanitizeFilename,
 } from "../utils/file-utils.js";
-// import fs from "fs";
-// import path from "path";
-// import axios from "axios";
+import fs from "fs";
+import path from "path";
+import axios from "axios";
 
 // fetching each record from the airtable and storing at ./content/vendors based on title
 const getData = (resolve, reject) => {
@@ -66,12 +66,6 @@ const generateCollection = (cmsResponse) => {
     await collection.push(new DataModellingVendors(fields, id));
   });
 
-  // const collection = await Promise.all(
-  //   cmsResponse.map(async ({ fields, id }) => {
-  //     return new DataModellingVendors(fields, id);
-  //   })
-  // );
-
   return collection;
 };
 
@@ -96,17 +90,17 @@ class DataModellingVendors {
     this.contact = fields["ASU Contact"] || [];
     this.owner = fields["License Owner"] || [];
 
-    // this.parallaxSectionImg = extractImageName(
-    //   fields,
-    //   "Feature Background Image (1280 X 550)"
-    // );
+    this.parallaxSectionImg = extractImageName(
+      fields,
+      "Feature Background Image (1280 X 550)"
+    );
 
-    // this.heroSectionImg = extractImageName(
-    //   fields,
-    //   "Header Background Image (1280x260)"
-    // );
+    this.heroSectionImg = extractImageName(
+      fields,
+      "Header Background Image (1280x260)"
+    );
 
-    // this.cardLogo = extractImageName(fields, "Tool Logo (60x60)");
+    this.cardLogo = extractImageName(fields, "Tool Logo (60x60)");
 
     const s1 = fields["Tools Features website formula"] || "";
     const toolFeatures = s1.split("$$");
@@ -123,65 +117,88 @@ class DataModellingVendors {
       };
     });
 
-    // const imageDetails = fields["(1-4) Tool Preview Images"] || [];
+    const imageDetails = fields["(1-4) Tool Preview Images"] || [];
 
-    // this.previewImages =
-    //   imageDetails.length > 0
-    //     ? imageDetails.map((image) => ({
-    //         url: image.filename || "",
-    //       }))
-    //     : { images: [] };
+    this.previewImages =
+      imageDetails.length > 0
+        ? imageDetails.map((image) => ({
+            url: image.filename || "",
+          }))
+        : { images: [] };
 
-    // imageDetails.forEach(() => {
-    //   // console.log("iiiiiiiiiiiiiiiii", Object.values(i));
-    //   extractImageUrl(fields, "(1-4) Tool Preview Images");
-    // });
+    imageDetails.forEach(() => {
+      // console.log("iiiiiiiiiiiiiiiii", Object.values(i));
+      extractImageUrl(fields, "(1-4) Tool Preview Images");
+    });
 
-    // extractImageUrl(fields, "Tool Logo (60x60)");
-    // extractImageUrl(fields, "Header Background Image (1280x260)");
-    // extractImageUrl(fields, "Feature Background Image (1280 X 550)");
+    extractImageUrl(fields, "Tool Logo (60x60)");
+    extractImageUrl(fields, "Header Background Image (1280x260)");
+    extractImageUrl(fields, "Feature Background Image (1280 X 550)");
   }
+  // const downloadImage = async (imageUrl, imageName) => {
+  //   const downloadPath = "public/images/tool-img";
+
+  //   if (!fs.existsSync(downloadPath)) {
+  //     fs.mkdirSync(downloadPath, { recursive: true });
+  //   }
+
+  //   const imagePath = path.join(downloadPath, imageName);
+  //   try {
+  //     const response = await axios({
+  //       method: "get",
+  //       url: imageUrl,
+  //       responseType: "stream",
+  //     });
+
+  //     response.data.pipe(fs.createWriteStream(imagePath));
+
+  //     return imagePath;
+  //   } catch (error) {
+  //     console.error(`Error downloading image: ${error.message}`);
+  //     return null;
+  //   }
+  // };
 }
 
-// const downloadImage = async (imageUrl, imageName) => {
-//   const downloadPath = "public/images/tool-img";
+const downloadImage = async (imageUrl, imageName) => {
+  const downloadPath = "public/images/tool-img";
 
-//   if (!fs.existsSync(downloadPath)) {
-//     fs.mkdirSync(downloadPath, { recursive: true });
-//   }
+  if (!fs.existsSync(downloadPath)) {
+    fs.mkdirSync(downloadPath, { recursive: true });
+  }
 
-//   const imagePath = path.join(downloadPath, imageName);
-//   try {
-//     const response = await axios({
-//       method: "get",
-//       url: imageUrl,
-//       responseType: "stream",
-//     });
+  const imagePath = path.join(downloadPath, imageName);
+  try {
+    const response = await axios({
+      method: "get",
+      url: imageUrl,
+      responseType: "stream",
+    });
 
-//     response.data.pipe(fs.createWriteStream(imagePath));
+    response.data.pipe(fs.createWriteStream(imagePath));
 
-//     return imagePath;
-//   } catch (error) {
-//     console.error(`Error downloading image: ${error.message}`);
-//     return null;
-//   }
-// };
+    return imagePath;
+  } catch (error) {
+    console.error(`Error downloading image: ${error.message}`);
+    return null;
+  }
+};
 
-// const extractImageUrl = async (fields, key) => {
-//   const images = fields[key] || [];
-//   // console.log("imageeeeeeeeee", images);
-//   const downloadPromises = images.map((img) =>
-//     downloadImage(img.url, img.filename)
-//   );
+const extractImageUrl = async (fields, key) => {
+  const images = fields[key] || [];
+  // console.log("imageeeeeeeeee", images);
+  const downloadPromises = images.map((img) =>
+    downloadImage(img.url, img.filename)
+  );
 
-//   return Promise.all(downloadPromises);
-// };
+  return Promise.all(downloadPromises);
+};
 
-// const extractImageName = (fields, key) => {
-//   const images = fields[key] || "";
+const extractImageName = (fields, key) => {
+  const images = fields[key] || "";
 
-//   const downloadPromises = images.length > 0 ? images[0].filename || "" : "";
-//   return downloadPromises;
-// };
+  const downloadPromises = images.length > 0 ? images[0].filename || "" : "";
+  return downloadPromises;
+};
 
 export default { init };

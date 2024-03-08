@@ -631,10 +631,6 @@ useHead({
   ],
 });
 
-let pageData: visibleVendorsData[] = await queryContent("vendors")
-  .only(["title", "tag", "category", "cardLogo", "pageRoute"])
-  .find();
-
 type TrackingData = {
   event: string;
   name: string;
@@ -716,27 +712,36 @@ const fuseOptions = ref<fuseOptions>({
 const route = useRoute();
 const currentRoute = route.query.tag;
 
-//   fetch a particular number of items in the array of filteredVendors
-const visibleVendors = computed(() => {
-  return filteredVendors.value.slice(0, visibleItemsCount.value);
-});
+let pageData: visibleVendorsData[] = await queryContent("vendors")
+  .only(["title", "tag", "category", "cardLogo", "pageRoute"])
+  .find();
 
+// mounted
 onMounted(() => {
   searchPrograms();
-
   // Push the sliced array into displayedTags array
-
   pageData.forEach((tag: visibleVendorsData) => {
     displayedTags.value.push(tag.tag.slice(0, 2));
   });
 });
 
-//   fetch all items in the array of filteredVendors
+const data: visibleVendorsData[] = JSON.parse(JSON.stringify(pageData));
+// initialise Fuse with the index
+fuseInstance.value = new Fuse(data, fuseOptions.value);
+
+//computed
+// fetch a particular number of items in the array of filteredVendors
+const visibleVendors = computed(() => {
+  return filteredVendors.value.slice(0, visibleItemsCount.value);
+});
+
+//methods
+// fetch all items in the array of filteredVendors
 const loadMore = () => {
   visibleItemsCount.value = filteredVendors.value.length;
 };
 
-//   fetch all items in the array with length 9
+// fetch all items in the array with length 9
 const loadLess = () => {
   visibleItemsCount.value = 6;
 };
@@ -749,11 +754,6 @@ const ShowLessTags = (tagArray: string[], i: number) => {
   console.log("tagArray", tagArray);
   return (displayedTags.value[i] = tagArray.slice(0, 2));
 };
-
-const data = JSON.parse(JSON.stringify(pageData));
-
-// initialise Fuse with the index
-fuseInstance.value = new Fuse(data, fuseOptions.value);
 
 // sorting of items
 const sortByTitle = (a: vendorsData, b: vendorsData): number => {
@@ -810,31 +810,28 @@ function getSearchQuery() {
   return searchQuery;
 }
 
-(function () {
+searchPrograms();
+data.filter((program) => {
   let category: string[] = [];
   let tag: string[] = [];
-  searchPrograms();
-  data.filter((program) => {
-    if (
-      !category.includes(program.category) &&
-      program.category !== "" &&
-      program.category !== undefined
-    ) {
-      category.push(program.category);
-    }
+  if (
+    !category.includes(program.category) &&
+    program.category !== "" &&
+    program.category !== undefined
+  ) {
+    category.push(program.category);
+  }
 
-    if (program.tag !== null) {
-      program.tag.forEach((vendor) => {
-        if (!tag.includes(vendor)) {
-          tag.push(vendor);
-        }
-      });
-    }
-
-    vendorsCategory.value = category.sort();
-    vendorsTag.value = tag.sort();
-  });
-})();
+  if (program.tag !== null) {
+    program.tag.forEach((vendor) => {
+      if (!tag.includes(vendor)) {
+        tag.push(vendor);
+      }
+    });
+  }
+  vendorsCategory.value = category.sort();
+  vendorsTag.value = tag.sort();
+});
 
 // toggle between views (card / grid)
 const changeDisplay = (action: string): void => {
@@ -918,7 +915,7 @@ watch(
 // create gtm trigger events
 
 const triggerCheckBoxClick = (text: string, section: string): void => {
-  if (filteredVendorsTags || filteredVendorsCategory) {
+  if (filteredVendorsTags) {
     const eventObject = {
       event: "select",
       action: "click",

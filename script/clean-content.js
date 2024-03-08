@@ -17,10 +17,22 @@ const deleteAllFilesRecursively = (dirPath, arrayOfFiles) => {
 
     if (fs.statSync(filePath).isDirectory()) {
       arrayOfFiles = deleteAllFilesRecursively(filePath, arrayOfFiles);
-    } else if (path.extname(file) === ".json") {
+    } else {
       const fullPath = path.join(__dirname, "..", dirPath, file);
-      arrayOfFiles.push(fullPath);
-      fs.unlinkSync(fullPath);
+
+      if (
+        path.extname(file) === ".json" ||
+        dirPath.includes("public/images/tool-img")
+      ) {
+        arrayOfFiles.push(fullPath);
+
+        try {
+          fs.unlinkSync(fullPath);
+          console.log(`Deleted: ${fullPath}`);
+        } catch (error) {
+          console.error(`Error deleting: ${fullPath}`, error);
+        }
+      }
     }
   });
 
@@ -28,8 +40,25 @@ const deleteAllFilesRecursively = (dirPath, arrayOfFiles) => {
 };
 
 function init() {
-  deleteAllFilesRecursively("content");
-  console.log("== completed clean-content script");
+  try {
+    // Delete JSON files in the "content" directory
+    deleteAllFilesRecursively("content");
+
+    // Delete files in the "public/images/tool-img" directory
+    deleteAllFilesRecursively("public/images/tool-img");
+
+    console.log("== Completed clean-content script");
+
+    // Check if the "public/images/tool-img" directory is empty after deletion
+    const toolImgFiles = fs.readdirSync("public/images/tool-img");
+    if (toolImgFiles.length === 0) {
+      console.log("== Successfully deleted files in 'public/images/tool-img'");
+    } else {
+      console.log("== Error: Files in 'public/images/tool-img' not deleted.");
+    }
+  } catch (error) {
+    console.error("== Error during cleanup:", error);
+  }
 }
 
 init();
