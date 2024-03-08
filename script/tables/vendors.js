@@ -12,7 +12,6 @@ import {
   filterDescriptionToText,
   textToUrl,
   sanitizeFilename,
-  extractImageName,
 } from "../utils/file-utils.js";
 // import fs from "fs";
 // import path from "path";
@@ -97,17 +96,17 @@ class DataModellingVendors {
     this.contact = fields["ASU Contact"] || [];
     this.owner = fields["License Owner"] || [];
 
-    this.parallaxSectionImg = extractImageName(
-      fields,
-      "Feature Background Image (1280 X 550)"
-    );
+    // this.parallaxSectionImg = extractImageName(
+    //   fields,
+    //   "Feature Background Image (1280 X 550)"
+    // );
 
-    this.heroSectionImg = extractImageName(
-      fields,
-      "Header Background Image (1280x260)"
-    );
+    // this.heroSectionImg = extractImageName(
+    //   fields,
+    //   "Header Background Image (1280x260)"
+    // );
 
-    this.cardLogo = extractImageName(fields, "Tool Logo (60x60)");
+    // this.cardLogo = extractImageName(fields, "Tool Logo (60x60)");
 
     const s1 = fields["Tools Features website formula"] || "";
     const toolFeatures = s1.split("$$");
