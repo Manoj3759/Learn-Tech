@@ -1,3 +1,24 @@
+# name: Tests
+
+# on:
+#   push:
+#     branches:
+#       - master
+
+# jobs:
+#   tests:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#      - name: Checkout Repository
+#       uses: actions/checkout@v2
+
+#       - name: Install Dependencies
+#         run: yarn install
+
+#       - name: Host
+#         run: yarn clean-content && yarn build-content && yarn generate
+
 name: Tests
 
 on:
@@ -10,6 +31,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
       - name: Install Dependencies
         run: yarn install
 
