@@ -612,7 +612,6 @@ import { faList as listIcon } from "@fortawesome/free-solid-svg-icons";
 import { faBorderAll as gridIcon } from "@fortawesome/free-solid-svg-icons";
 
 import { analyticsComposable } from "@rds-vue-ui/analytics-gs-composable";
-import type { LocationQueryValue } from "vue-router";
 
 useHead({
   title: "Learning Technology Platform | IDNM",
