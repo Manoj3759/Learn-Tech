@@ -127,7 +127,6 @@ class DataModellingVendors {
         : { images: [] };
 
     imageDetails.forEach(() => {
-      // console.log("iiiiiiiiiiiiiiiii", Object.values(i));
       extractImageUrl(fields, "(1-4) Tool Preview Images");
     });
 
@@ -135,29 +134,6 @@ class DataModellingVendors {
     extractImageUrl(fields, "Header Background Image (1280x260)");
     extractImageUrl(fields, "Feature Background Image (1280 X 550)");
   }
-  // const downloadImage = async (imageUrl, imageName) => {
-  //   const downloadPath = "public/images/tool-img";
-
-  //   if (!fs.existsSync(downloadPath)) {
-  //     fs.mkdirSync(downloadPath, { recursive: true });
-  //   }
-
-  //   const imagePath = path.join(downloadPath, imageName);
-  //   try {
-  //     const response = await axios({
-  //       method: "get",
-  //       url: imageUrl,
-  //       responseType: "stream",
-  //     });
-
-  //     response.data.pipe(fs.createWriteStream(imagePath));
-
-  //     return imagePath;
-  //   } catch (error) {
-  //     console.error(`Error downloading image: ${error.message}`);
-  //     return null;
-  //   }
-  // };
 }
 
 const downloadImage = async (imageUrl, imageName) => {
@@ -179,19 +155,18 @@ const downloadImage = async (imageUrl, imageName) => {
 
     return imagePath;
   } catch (error) {
-    console.error(`Error downloading image: ${error.message}`);
+    console.error(`Error downloading image: ${imagePath}`);
     return null;
   }
 };
 
 const extractImageUrl = async (fields, key) => {
   const images = fields[key] || [];
-  // console.log("imageeeeeeeeee", images);
-  const downloadPromises = images.map((img) =>
-    downloadImage(img.url, img.filename)
+  const downloadPromises = images.map(
+    async (img) => await downloadImage(img.url, img.filename)
   );
 
-  return Promise.all(downloadPromises);
+  return await Promise.all(downloadPromises);
 };
 
 const extractImageName = (fields, key) => {

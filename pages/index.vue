@@ -74,7 +74,7 @@
                 <label
                   :for="`${item}-category-checkbox-${idx}`"
                   class="pt-space-xs px-space-xxs"
-                  >{{ item }}</label
+                  >{{ item.toLowerCase() }}</label
                 >
               </div>
             </div>
@@ -126,7 +126,7 @@
                   <label
                     :for="`${item}-tag-checkbox-${idx}`"
                     class="pt-space-xs px-space-xxs"
-                    >{{ item }}</label
+                    >{{ item.toLowerCase() }}</label
                   >
                 </div>
               </div>
@@ -146,7 +146,7 @@
                   v-model="searchValue"
                   class="form-control"
                   type="text"
-                  placeholder="Search resources"
+                  placeholder="Search resources by name or filter"
                   aria-label="search bar input"
                   @change="triggerSearchBar(searchValue)"
                 />
@@ -239,7 +239,7 @@
                 </p>
               </div>
             </div>
-            <div class="offcanvas-body">
+            <div class="offcanvas-body pt-0">
               <!-- category check box -->
               <div class="border-bottom">
                 <div class="d-flex align-items-center justify-content-between">
@@ -282,7 +282,7 @@
                     <label
                       :for="`${item}-category-checkbox`"
                       class="pt-space-xs px-space-xxs"
-                      >{{ item }}</label
+                      >{{ item.toLowerCase() }}</label
                     >
                   </div>
                 </div>
@@ -292,7 +292,7 @@
               <!-- tag check box -->
               <div class="py-space-xs border-bottom">
                 <div
-                  class="d-flex align-items-center justify-content-between sticky-top bg-white pt-space-xs"
+                  class="d-flex align-items-center justify-content-between sticky-top bg-white pb-space-xs"
                 >
                   <span class="fw-bold">Tags</span>
 
@@ -333,7 +333,7 @@
                     <label
                       :for="`${item}-tag-checkbox-mobile-${idx}`"
                       class="pt-space-xs px-space-xxs"
-                      >{{ item }}</label
+                      >{{ item.toLowerCase() }}</label
                     >
                   </div>
                 </div>
@@ -380,7 +380,7 @@
                           class="bg-light-2 p-space-xxxs fs-xs m-space-xxxs text-dark-3"
                           @click="filterBAsedOnTags(item)"
                         >
-                          {{ item }}
+                          {{ item.toLowerCase() }}
                         </a>
                       </template>
                       <a
@@ -388,7 +388,7 @@
                         class="bg-light-2 p-space-xxxs fs-xs m-space-xxxs text-dark-3"
                         @click="filterBAsedOnCategory(data.category)"
                       >
-                        {{ data.category }}
+                        {{ data.category.toLowerCase() }}
                       </a>
                     </div>
                     <a
@@ -410,7 +410,7 @@
                   @click="loadMore"
                   class="text-primary mb-space-sm fw-bold text-decoration-underline"
                 >
-                  Show more...
+                  Show more
                 </a>
               </div>
               <div
@@ -423,7 +423,7 @@
                   @click="loadLess"
                   class="text-primary mb-space-sm fw-bold text-decoration-underline"
                 >
-                  Show less...
+                  Show less
                 </a>
               </div>
               <!-- End -->
@@ -460,7 +460,7 @@
                           class="bg-light-2 p-space-xxs fs-xs me-space-xxs mb-space-xxs text-dark-3"
                           @click="filterBAsedOnCategory(data.category)"
                         >
-                          {{ data.category }}
+                          {{ data.category.toLowerCase() }}
                         </a>
                         <template
                           v-for="(item, idx) in displayedTags[idx]"
@@ -470,7 +470,7 @@
                             role="button"
                             class="bg-light-2 p-space-xxs fs-xs me-space-xxs text-dark-3 mb-space-xxs"
                             @click="filterBAsedOnTags(item)"
-                            >{{ item }}</a
+                            >{{ item.toLowerCase() }}</a
                           >
                         </template>
                         <a
@@ -540,7 +540,7 @@
                           role="button"
                           class="bg-light-2 p-space-xxs fs-xs me-space-xxs text-dark-3"
                           @click="filterBAsedOnTags(item)"
-                          >{{ item }}</a
+                          >{{ item.toLowerCase() }}</a
                         >
                       </div>
                       <div class="my-space-xxs">
@@ -549,7 +549,7 @@
                           class="bg-light-2 p-space-xxs fs-xs me-space-xxs text-dark-3"
                           @click="filterBAsedOnCategory(data.category)"
                         >
-                          {{ data.category }}
+                          {{ data.category.toLowerCase() }}
                         </a>
                       </div>
                     </div>
@@ -575,7 +575,7 @@
                   @click="loadMore"
                   class="text-primary mb-space-sm fw-bold text-decoration-underline"
                 >
-                  Show more...
+                  Show more
                 </a>
               </div>
               <div
@@ -588,7 +588,7 @@
                   @click="loadLess"
                   class="text-primary mb-space-sm fw-bold text-decoration-underline"
                 >
-                  Show less...
+                  Show less
                 </a>
               </div>
               <!-- End -->
@@ -681,6 +681,8 @@ let filteredVendorsTags = ref<string[]>([]);
 let filteredVendorsCategory = ref<string[]>([]);
 let vendorsCategory = ref<string[]>([]);
 let vendorsTag = ref<string[]>([]);
+let category: string[] = [];
+let tag: string[] = [];
 
 let visibleTag = ref<boolean>(true);
 let visibleCategories = ref<boolean>(true);
@@ -812,8 +814,6 @@ function getSearchQuery() {
 
 searchPrograms();
 data.filter((program) => {
-  let category: string[] = [];
-  let tag: string[] = [];
   if (
     !category.includes(program.category) &&
     program.category !== "" &&

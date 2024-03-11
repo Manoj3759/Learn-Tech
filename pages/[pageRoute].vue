@@ -21,7 +21,7 @@
                 class="bg-light-2 p-space-xxxs fs-xs m-space-xxxs text-dark-3"
                 role="button"
               >
-                {{ item }}
+                {{ item.toLowerCase() }}
               </a>
             </div>
           </div>
@@ -66,7 +66,7 @@
             :href="pageData.ctaTryLink"
             target="_blank"
             @click="triggerStickyNavButton('')"
-            >Try
+            >Try tool
           </a>
         </div>
       </template>
@@ -164,81 +164,82 @@
     <section id="related_tool_section">
       <div class="container">
         <div class="py-lg-space xxl py-space-lg">
-          <h1 class="h1-medium">Related tools</h1>
+          <div v-if="pageData.pageRoute === visibleVendors.pageRoute">
+            <h1 class="h1-medium">Related tools</h1>
 
-          <!-- card section -->
-          <div
-            class="d-lg-flex px-lg-0 py-lg-space-md px-space-xs py-space-md row"
-          >
+            <!-- card section -->
             <div
-              v-for="(data, idx) in visibleVendors"
-              :key="idx"
-              class="bg-white border ms-lg-space-xxs me-lg-space-xs mb-space-xs p-space-md card_spacing d-flex justify-content-between flex-column"
+              class="d-lg-flex px-lg-0 py-lg-space-md px-space-xs py-space-md row"
             >
-              <div>
-                <span class="d-flex justify-content-start"
-                  ><img
-                    :src="`/images/tool-img/${data.cardLogo}`"
-                    alt="card logo"
-                    class="img-fluid"
-                /></span>
-                <div class="my-space-sm custom-line"></div>
-                <h3
-                  class="mb-space-sm mb-md-space-md h3-large text-dark-3 text-start"
-                >
-                  {{ data.title }}
-                </h3>
-              </div>
-              <div>
-                <div class="d-flex flex-wrap">
-                  <template v-for="(item, idx) in data.tag" :key="idx">
-                    <a
-                      class="bg-light-2 p-space-xxxs fs-xs m-space-xxxs text-dark-3"
-                      @click="emitTags(item)"
-                    >
-                      {{ item }}
-                    </a>
-                  </template>
+              <div
+                v-for="(data, idx) in visibleVendors"
+                :key="idx"
+                class="bg-white border ms-lg-space-xxs me-lg-space-xs mb-space-xs p-space-md card_spacing d-flex justify-content-between flex-column"
+              >
+                <div>
+                  <span class="d-flex justify-content-start"
+                    ><img
+                      :src="`/images/tool-img/${data.cardLogo}`"
+                      alt="card logo"
+                      class="img-fluid"
+                  /></span>
+                  <div class="my-space-sm custom-line"></div>
+                  <h3
+                    class="mb-space-sm mb-md-space-md h3-large text-dark-3 text-start"
+                  >
+                    {{ data.title }}
+                  </h3>
                 </div>
-                <a
-                  :href="data.pageRoute"
-                  class="btn btn-secondary mt-space-xs"
-                  @click="triggerCardButtton(data.title)"
-                  >Learn more</a
-                >
+                <div>
+                  <div class="d-flex flex-wrap">
+                    <template v-for="(item, idx) in data.tag" :key="idx">
+                      <a
+                        class="bg-light-2 p-space-xxxs fs-xs m-space-xxxs text-dark-3"
+                        @click="emitTags(item)"
+                      >
+                        {{ item }}
+                      </a>
+                    </template>
+                  </div>
+                  <a
+                    :href="data.pageRoute"
+                    class="btn btn-secondary mt-space-xs"
+                    @click="triggerCardButtton(data.title)"
+                    >Learn more</a
+                  >
+                </div>
               </div>
             </div>
-          </div>
-          <!-- End -->
+            <!-- End -->
 
-          <!-- Load more button -->
-          <div
-            v-if="visibleVendors.length < relatedVendorsData.length"
-            class="d-flex justify-content-center align-content-center"
-          >
-            <a
-              role="button"
-              @click="loadMore"
-              class="text-primary mb-space-sm fw-bold text-decoration-underline"
+            <!-- Load more button -->
+            <div
+              v-if="visibleVendors.length < relatedVendorsData.length"
+              class="d-flex justify-content-center align-content-center"
             >
-              Show more...
-            </a>
-          </div>
+              <a
+                role="button"
+                @click="loadMore"
+                class="text-primary mb-space-sm fw-bold text-decoration-underline"
+              >
+                Show more
+              </a>
+            </div>
 
-          <div
-            v-else-if="visibleVendors.length > 4"
-            class="d-flex justify-content-center align-content-center"
-          >
-            <a
-              role="button"
-              @click="loadLess"
-              class="text-primary mb-space-sm fw-bold text-decoration-underline"
+            <div
+              v-else-if="visibleVendors.length > 4"
+              class="d-flex justify-content-center align-content-center"
             >
-              Show less...
-            </a>
+              <a
+                role="button"
+                @click="loadLess"
+                class="text-primary mb-space-sm fw-bold text-decoration-underline"
+              >
+                Show less
+              </a>
+            </div>
+            <!-- End -->
           </div>
-          <!-- End -->
-
           <!-- ASU license owner section  -->
           <div class="py-space-lg py-lg-space-xl border-top border-3 d-lg-flex">
             <div class="pe-space-lg py-space-xs">
@@ -305,7 +306,7 @@ let visibleItemsCount = ref<number>(4);
 let relatedVendorsData = ref<relatedVendorsData[]>([]);
 const navItemObject = ref<navItem>({
   video_section: "Overview",
-  feature_section: "Feature",
+  feature_section: "Features",
   preview_section: "Preview",
   related_tool_section: "Related tools",
 });
@@ -340,12 +341,10 @@ const navItemObject = ref<navItem>({
 const route = useRoute();
 const router = useRouter();
 
-
 const routeName = route.params.pageRoute as string;
 const emitTags = (item: string): void => {
   router.push({ path: "/", query: { tag: item } });
 };
-
 
 const pageData = await queryContent("vendors")
   .where({ pageRoute: { $eq: routeName } })
@@ -392,16 +391,18 @@ const getImageUrl = (name: string): string => {
 // filtering the cards based on tag in slug
 const filteredData = relatedData.filter((data: relatedVendorsData) => {
   console.log("data", data);
-  let shouldInclude = false;
-  pageData.tag?.forEach((tag: string) => {
-    console.log("inner loop", pageData.tag);
-    if (data.tag.includes(tag)) {
-      console.log("data", data, tag);
-      shouldInclude = true;
-      return;
-    }
-  });
-  return shouldInclude;
+  if (pageData.pageRoute !== data.pageRoute) {
+    let shouldInclude = false;
+    pageData.tag?.forEach((tag: string) => {
+      console.log("inner loop", pageData.tag);
+      if (data.tag.includes(tag)) {
+        console.log("data", data, tag);
+        shouldInclude = true;
+        return;
+      }
+    });
+    return shouldInclude;
+  }
 });
 
 relatedVendorsData.value = filteredData;

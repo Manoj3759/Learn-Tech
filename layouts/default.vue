@@ -40,7 +40,7 @@
                       href="https://airtable.com/apppjYD56k3fq9H2G/pagEXwlJgSpUVw6EQ/form"
                       class="btn bg-secondary mb-space-xs px-space-md text-medium"
                       @click="triggerDlContact"
-                      >Contact US</a
+                      >Contact us</a
                     >
 
                     <div class="d-block d-lg-none border-top border-white">
@@ -103,7 +103,7 @@
                       <div class="d-flex justify-content-end">
                         <div class="col-lg-4">
                           <p class="text-medium text-white fw-bold mb-space-xs">
-                            Partner sites
+                            Partner Sites
                           </p>
                           <div
                             v-for="(item, index) in primaryFooter.partnerSites"
@@ -198,7 +198,7 @@ const sectionFooter = ref([
 const primaryFooter = ref({
   partnerSites: [
     {
-      title: "asu.edu",
+      title: "Arizona State University",
       url: "https://asu.edu",
     },
     {
@@ -224,7 +224,7 @@ const headerNavItems = ref([
   {
     isActive: false,
     htmlLink: {
-      text: "Instructional Design and New media",
+      text: "Instructional Design and New Media",
       uri: "https://idnm.asu.edu/",
       target: "SELF",
     },
@@ -232,7 +232,7 @@ const headerNavItems = ref([
   {
     isActive: false,
     htmlLink: {
-      text: "TeachOnline",
+      text: "Teach Online",
       uri: "https://teachonline.asu.edu/",
       target: "SELF",
     },
