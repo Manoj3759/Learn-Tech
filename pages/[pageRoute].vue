@@ -118,7 +118,7 @@
               number-bg-color="light-1"
             ></ListTimeline>
             <a
-              :href="pageData.ctaFeaturesLink"
+              :href="pageData.ctaTryLink"
               target="_blank"
               class="btn btn-secondary"
               @click="triggerTryButton('')"
