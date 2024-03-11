@@ -74,7 +74,7 @@
                 <label
                   :for="`${item}-category-checkbox-${idx}`"
                   class="pt-space-xs px-space-xxs"
-                  >{{ item.toLowerCase() }}</label
+                  >{{ item }}</label
                 >
               </div>
             </div>
@@ -126,7 +126,7 @@
                   <label
                     :for="`${item}-tag-checkbox-${idx}`"
                     class="pt-space-xs px-space-xxs"
-                    >{{ item.toLowerCase() }}</label
+                    >{{ item }}</label
                   >
                 </div>
               </div>
@@ -282,7 +282,7 @@
                     <label
                       :for="`${item}-category-checkbox`"
                       class="pt-space-xs px-space-xxs"
-                      >{{ item.toLowerCase() }}</label
+                      >{{ item }}</label
                     >
                   </div>
                 </div>
@@ -333,7 +333,7 @@
                     <label
                       :for="`${item}-tag-checkbox-mobile-${idx}`"
                       class="pt-space-xs px-space-xxs"
-                      >{{ item.toLowerCase() }}</label
+                      >{{ item }}</label
                     >
                   </div>
                 </div>
@@ -380,7 +380,7 @@
                           class="bg-light-2 p-space-xxxs fs-xs m-space-xxxs text-dark-3"
                           @click="filterBAsedOnTags(item)"
                         >
-                          {{ item.toLowerCase() }}
+                          {{ item }}
                         </a>
                       </template>
                       <a
@@ -388,7 +388,7 @@
                         class="bg-light-2 p-space-xxxs fs-xs m-space-xxxs text-dark-3"
                         @click="filterBAsedOnCategory(data.category)"
                       >
-                        {{ data.category.toLowerCase() }}
+                        {{ data.category }}
                       </a>
                     </div>
                     <a
@@ -460,7 +460,7 @@
                           class="bg-light-2 p-space-xxs fs-xs me-space-xxs mb-space-xxs text-dark-3"
                           @click="filterBAsedOnCategory(data.category)"
                         >
-                          {{ data.category.toLowerCase() }}
+                          {{ data.category }}
                         </a>
                         <template
                           v-for="(item, idx) in displayedTags[idx]"
@@ -470,7 +470,7 @@
                             role="button"
                             class="bg-light-2 p-space-xxs fs-xs me-space-xxs text-dark-3 mb-space-xxs"
                             @click="filterBAsedOnTags(item)"
-                            >{{ item.toLowerCase() }}</a
+                            >{{ item }}</a
                           >
                         </template>
                         <a
@@ -540,7 +540,7 @@
                           role="button"
                           class="bg-light-2 p-space-xxs fs-xs me-space-xxs text-dark-3"
                           @click="filterBAsedOnTags(item)"
-                          >{{ item.toLowerCase() }}</a
+                          >{{ item }}</a
                         >
                       </div>
                       <div class="my-space-xxs">
@@ -549,7 +549,7 @@
                           class="bg-light-2 p-space-xxs fs-xs me-space-xxs text-dark-3"
                           @click="filterBAsedOnCategory(data.category)"
                         >
-                          {{ data.category.toLowerCase() }}
+                          {{ data.category }}
                         </a>
                       </div>
                     </div>

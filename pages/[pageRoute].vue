@@ -21,7 +21,7 @@
                 class="bg-light-2 p-space-xxxs fs-xs m-space-xxxs text-dark-3"
                 role="button"
               >
-                {{ item.toLowerCase() }}
+                {{ item }}
               </a>
             </div>
           </div>
@@ -82,7 +82,7 @@
           :title="pageData.title"
           class="bg-dark-3"
           video-position="right"
-          video-source="https://asuonline.wistia.com/medias/l6bb6qf05s"
+          :video-source="pageData.videoSrc"
           :bg-image-source="`/images/tool-img/${pageData.heroSectionImg}`"
           title-variant="light-1"
           @modalOpen="triggerplayBtnclickDataLayer('open', 'play button', '')"
@@ -164,9 +164,8 @@
     <section id="related_tool_section">
       <div class="container">
         <div class="py-lg-space xxl py-space-lg">
-          <div v-if="pageData.pageRoute === visibleVendors.pageRoute">
+          <div v-if="visibleVendors.length !== 0">
             <h1 class="h1-medium">Related tools</h1>
-
             <!-- card section -->
             <div
               class="d-lg-flex px-lg-0 py-lg-space-md px-space-xs py-space-md row"
