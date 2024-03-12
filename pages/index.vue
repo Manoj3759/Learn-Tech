@@ -136,7 +136,7 @@
         </aside>
         <!-- End -->
 
-        <div class="col-lg-9 p-space-xxs pt-0 mt-lg-space-sm">
+        <div class="col-lg-9 p-space-xs pt-0 mt-lg-space-sm">
           <!-- search bar section -->
           <section id="search-search-bar" class="sticky-top bg-white">
             <div class="py-space-xs">
@@ -171,32 +171,44 @@
               </p>
               <div class="d-flex">
                 <div
-                  class="grid-filter p-space-xxxs"
+                  class="grid-filter p-space-xxxs bg-color-svg"
                   :class="{ 'bg-dark-3': gridDisplay == 'inline-block' }"
                   @click="changeDisplay('grid-filter')"
                 >
-                  <font-awesome-icon
-                    :icon="listIcon"
-                    size="lg"
-                    role="tooltip"
-                    aria-label="navbar-toggle-icon"
-                    :class="{ 'svg-color': gridDisplay == 'inline-block' }"
-                  >
-                  </font-awesome-icon>
+                  <div v-if="gridDisplay !== 'inline-block'">
+                    <img
+                      src="/images/list-thin-light.svg"
+                      height="30px"
+                      alt="list icon light"
+                    />
+                  </div>
+                  <div v-else>
+                    <img
+                      src="/images/list-thin-dark.svg"
+                      height="30px"
+                      alt="list icon dark"
+                    />
+                  </div>
                 </div>
                 <div
-                  class="list-filter p-space-xxxs"
+                  class="list-filter p-space-xxxs bg-color-svg"
                   :class="{ 'bg-dark-3': listDisplay == 'inline-block' }"
                   @click="changeDisplay('list-filter')"
                 >
-                  <font-awesome-icon
-                    :icon="gridIcon"
-                    size="lg"
-                    role="tooltip"
-                    aria-label="navbar-toggle-icon"
-                    :class="{ 'svg-color': 'inline-block' == listDisplay }"
-                  >
-                  </font-awesome-icon>
+                  <div v-if="listDisplay !== 'inline-block'">
+                    <img
+                      src="/images/grid-thin-light.svg"
+                      height="30px"
+                      alt="grid icon light"
+                    />
+                  </div>
+                  <div v-else>
+                    <img
+                      src="/images/grid-thin-dark.svg"
+                      height="30px"
+                      alt="grid icon dark"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -357,7 +369,7 @@
                 <div
                   v-for="(data, idx) in visibleVendors"
                   :key="idx"
-                  class="bg-white border mx-lg-space-xs mb-space-xs p-space-md card_spacing d-flex justify-content-between flex-column"
+                  class="bg-white border me-lg-space-xxs ms-lg-space-xs mb-space-xs p-space-md card_spacing d-flex justify-content-between flex-column"
                 >
                   <div>
                     <span class="d-flex justify-content-start"
@@ -439,7 +451,7 @@
                 <div
                   v-for="(data, idx) in visibleVendors"
                   :key="idx"
-                  class="col-12 bg-white border-bottom border-2 mx-lg-space-xs mb-space-xs p-space-md d-flex justify-content-between"
+                  class="col-12 bg-white border-bottom border-2 ms-lg-space-xxs mb-space-xs p-space-md d-flex justify-content-between"
                 >
                   <div class="col-9 d-flex">
                     <span class="d-flex justify-content-start pe-space-sm"
@@ -499,7 +511,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-3">
+                  <div class="col-3 ms-space-sm">
                     <a
                       role="button"
                       :href="data.pageRoute"
@@ -606,10 +618,6 @@
 import { ref, watch, onMounted, computed } from "vue";
 
 import Fuse from "fuse.js";
-
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faList as listIcon } from "@fortawesome/free-solid-svg-icons";
-import { faBorderAll as gridIcon } from "@fortawesome/free-solid-svg-icons";
 
 import { analyticsComposable } from "@rds-vue-ui/analytics-gs-composable";
 
@@ -1027,10 +1035,11 @@ const triggerSearchNavItems = (eventObject: TrackingData): void => {
 }
 
 #section-filter-sidebar {
-  max-height: calc(100vh - 1rem);
+  max-height: calc(100vh);
 }
+
 #section-filter-sidebar-tag {
-  max-height: calc(100vh - 70vh);
+  max-height: calc(100vh - 61vh);
   overflow-y: auto;
 }
 
@@ -1046,6 +1055,9 @@ input[type="checkbox"] {
   color: #fafafa;
 }
 
+.bg-color-svg {
+  background-color: #f1f1f1;
+}
 .form-control {
   border-radius: 0px;
   z-index: 1;
@@ -1064,7 +1076,7 @@ input[type="checkbox"] {
   bottom: 0;
   margin: auto;
   right: 10px;
-  background: url("https://i.ibb.co/D1dvJTV/icons8-search.gif") no-repeat center;
+  background: url("/images/search-icon.svg") no-repeat center;
   background-size: 23px auto;
   height: 30px;
   width: 30px;

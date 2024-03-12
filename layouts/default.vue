@@ -38,7 +38,7 @@
                   <div class="col-12 col-lg-4">
                     <a
                       href="https://airtable.com/apppjYD56k3fq9H2G/pagEXwlJgSpUVw6EQ/form"
-                      class="btn bg-secondary mb-space-xs px-space-md text-medium"
+                      class="btn btn-secondary mb-space-xs px-space-md text-medium"
                       @click="triggerDlContact"
                       >Contact us</a
                     >
@@ -100,7 +100,7 @@
                   </div>
                   <div class="d-none d-lg-block col-lg-8">
                     <div class="row pl-space-xl pb-space-lg">
-                      <div class="d-flex justify-content-end">
+                      <div class="d-flex">
                         <div class="col-lg-4">
                           <p class="text-medium text-white fw-bold mb-space-xs">
                             Partner Sites

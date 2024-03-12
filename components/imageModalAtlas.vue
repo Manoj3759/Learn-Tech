@@ -6,7 +6,12 @@
         :class="{ 'vma-lazy': bgImageLazy }"
         @click="handleModalOpen($event)"
       >
-        <img :src="props.imgSourceUrl" class="img-fluid" alt="card image" />
+        <img
+          :src="props.imgSourceUrl"
+          class="img-fluid"
+          alt="card image"
+          style="height: 205px"
+        />
       </div>
     </div>
 
@@ -58,7 +63,6 @@ const bgImage = computed(() => {
 });
 
 const handleModalOpen = (event: Event) => {
-  console.log("opennnnnnnnnnnn");
   showModal.value = true;
   emits("modalOpen", event);
 };

@@ -332,7 +332,7 @@
                       <ul
                         class="navbar-nav"
                         :class="{
-                          'nav-item-active': isHomepage(),
+                          'nav-item-active-home': true,
                         }"
                       >
                         <!-- home icon -->
@@ -1146,6 +1146,19 @@ div.mobile-nav {
         margin-left: 2px;
       }
     }
+    .nav-item-active-home {
+      &::after {
+        content: "";
+        display: block;
+        height: 8px;
+        background-color: var(--rds-secondary, #ffc627);
+        width: 0%;
+        position: absolute;
+        bottom: 0;
+        width: calc(100% - 94%);
+        margin-left: 2px;
+      }
+    }
 
     .dropdown-item-padding {
       &:hover {
@@ -1199,5 +1212,8 @@ div.mobile-nav {
       }
     }
   }
+}
+a {
+  text-decoration: none !important;
 }
 </style>

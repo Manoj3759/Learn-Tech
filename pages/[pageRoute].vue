@@ -50,7 +50,7 @@
             target="_blank"
             @click="triggerStickyNavButton('')"
           >
-            Support</a
+            Get support</a
           >
           <a
             v-if="pageData.ctaWebinarLink"
@@ -58,7 +58,8 @@
             :href="pageData.ctaWebinarLink"
             target="_blank"
             @click="triggerStickyNavButton('')"
-            >Webinar</a
+          >
+            View webinars</a
           >
           <a
             v-if="pageData.ctaTryLink"
@@ -219,7 +220,7 @@
               <a
                 role="button"
                 @click="loadMore"
-                class="text-primary mb-space-sm fw-bold text-decoration-underline"
+                class="text-primary mb-space-md fw-bold text-decoration-underline"
               >
                 Show more
               </a>
@@ -232,7 +233,7 @@
               <a
                 role="button"
                 @click="loadLess"
-                class="text-primary mb-space-sm fw-bold text-decoration-underline"
+                class="text-primary mb-space-md fw-bold text-decoration-underline"
               >
                 Show less
               </a>
@@ -240,7 +241,7 @@
             <!-- End -->
           </div>
           <!-- ASU license owner section  -->
-          <div class="py-space-lg py-lg-space-xl border-top border-3 d-lg-flex">
+          <div class="py-space-lg py-lg-space-xl border-top border-2 d-lg-flex">
             <div class="pe-space-lg py-space-xs">
               <h2 class="h2-medium fw-bold">ASU license owner</h2>
               <div class="py-space-xs d-flex flex-wrap">
