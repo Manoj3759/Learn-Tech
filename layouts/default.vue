@@ -17,8 +17,8 @@
           <div>
             <div class="bg-dark-3 pt-space-sm pt-lg-space-md">
               <div class="container">
-                <div class="row px-space-xs px-lg-0 mb-space-sm mb-lg-space-md">
-                  <div class="col-12 col-lg-6 mb-space-xs mb-lg-0">
+                <div class="d-lg-flex justify-content-between px-space-xs px-lg-0">
+                  <div class="mb-space-xs mb-lg-0">
                     <img
                       loading="lazy"
                       src="../assets/images/asu-footer-logo.webp"
@@ -26,11 +26,18 @@
                       class="img-fluid"
                     />
                   </div>
+                  <div class="my-auto">
+                    <a
+                      href="https://airtable.com/apppjYD56k3fq9H2G/pagEXwlJgSpUVw6EQ/form"
+                      class="btn btn-lg btn-secondary mb-space-xs px-space-md text-medium"
+                      @click="triggerDlContact"
+                      >Contact us</a
+                    >
+                  </div>
                 </div>
-                <hr class="mx-space-xs mx-lg-0 my-0 footer-border-bottom" />
               </div>
             </div>
-            <section
+            <!-- <section
               class="bg-dark-3 text-white py-space-md pb-lg-space-xl pt-lg-space-lg"
             >
               <div class="container">
@@ -125,7 +132,7 @@
                   </div>
                 </div>
               </div>
-            </section>
+            </section> -->
           </div>
         </template>
         <template #secondary-menu>

@@ -9,7 +9,6 @@ const client = new Airtable({ apiKey: process.env.AIRTABLE_AUTH_vendor }).base(
 );
 import {
   generateFileWritePromises,
-  filterDescriptionToText,
   textToUrl,
   sanitizeFilename,
 } from "../utils/file-utils.js";
@@ -75,7 +74,7 @@ class DataModellingVendors {
     this.id = id;
     this.pageRoute = sanitizeFilename(fields.Tool) || "";
     this.title = fields.Tool || "";
-    this.text = filterDescriptionToText(fields.Description) || "";
+    this.text = fields.Description || "";
     this.featureText = fields["Tool Feature Intro Text"] || "";
     this.category = fields["Primary Category"] || "";
     this.videoSrc = fields["Demo URL Link (Wistia)"] || "";

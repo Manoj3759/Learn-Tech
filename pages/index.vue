@@ -171,41 +171,45 @@
               </p>
               <div class="d-flex">
                 <div
-                  class="grid-filter p-space-xxxs bg-color-svg"
+                  class="grid-filter p-space-xxs bg-color-svg"
                   :class="{ 'bg-dark-3': gridDisplay == 'inline-block' }"
                   @click="changeDisplay('grid-filter')"
                 >
                   <div v-if="gridDisplay !== 'inline-block'">
                     <img
                       src="/images/list-thin-light.svg"
-                      height="30px"
+                      height="15px"
+                      width="18px"
                       alt="list icon light"
                     />
                   </div>
                   <div v-else>
                     <img
                       src="/images/list-thin-dark.svg"
-                      height="30px"
+                      height="15px"
+                      width="18px"
                       alt="list icon dark"
                     />
                   </div>
                 </div>
                 <div
-                  class="list-filter p-space-xxxs bg-color-svg"
+                  class="list-filter p-space-xxs bg-color-svg"
                   :class="{ 'bg-dark-3': listDisplay == 'inline-block' }"
                   @click="changeDisplay('list-filter')"
                 >
                   <div v-if="listDisplay !== 'inline-block'">
                     <img
                       src="/images/grid-thin-light.svg"
-                      height="30px"
+                      height="18px"
+                      width="18px"
                       alt="grid icon light"
                     />
                   </div>
                   <div v-else>
                     <img
                       src="/images/grid-thin-dark.svg"
-                      height="30px"
+                      height="18px"
+                      width="18px"
                       alt="grid icon dark"
                     />
                   </div>
@@ -451,7 +455,7 @@
                 <div
                   v-for="(data, idx) in visibleVendors"
                   :key="idx"
-                  class="col-12 bg-white border-bottom border-2 ms-lg-space-xxs mb-space-xs p-space-md d-flex justify-content-between"
+                  class="col-12 bg-white border-bottom border-2 mb-space-xs p-space-md d-flex justify-content-between"
                 >
                   <div class="col-9 d-flex">
                     <span class="d-flex justify-content-start pe-space-sm"
@@ -511,11 +515,11 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-3 ms-space-sm">
+                  <div class="col-3">
                     <a
                       role="button"
                       :href="data.pageRoute"
-                      class="btn btn-secondary"
+                      class="btn btn-secondary ms-space-md"
                       @click="triggerButtonClick(data.title)"
                       >Learn more</a
                     >
@@ -1039,7 +1043,7 @@ const triggerSearchNavItems = (eventObject: TrackingData): void => {
 }
 
 #section-filter-sidebar-tag {
-  max-height: calc(100vh - 61vh);
+  max-height: calc(100vh - 64vh);
   overflow-y: auto;
 }
 
