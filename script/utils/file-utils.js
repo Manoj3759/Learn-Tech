@@ -52,7 +52,8 @@ const textToUrl = (text) => {
 // extract only video id
 const extractVideoId = (text) => {
   if (!text) return "";
-  return text.replace(/<https:\/\/youtu\.be\/(\w+)>/, "$1").replace(/\n/g, "");
+  // return text.replace(/<https:\/\/youtu\.be\/(\w+)>/, "$1").replace(/\n/g, "");
+  return text.replace(/https:\/\/asuonline\.wistia\.com\/medias\/(\w+)/, "$1").replace(/\n/g, "");
 };
 
 // remove

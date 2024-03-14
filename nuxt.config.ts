@@ -12,11 +12,29 @@ fs.readdir("./content/vendors/", (err, files) => {
 export default defineNuxtConfig({
   devtools: { enabled: false },
   ssr: false,
+
   app: {
     head: {
+      title: "EdTech Connect | IDNM",
+      htmlAttrs: {
+        lang: "en",
+      },
+      meta: [
+        { charset: "utf-8" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        {
+          hid: "description",
+          name: "description",
+          content:
+            "Explore a range of online learning tools from assessment and grading to curriculum, AI resources and more.",
+        },
+        { name: "format-detection", content: "telephone=no" },
+      ],
+
       link: [{ rel: "icon", type: "image/x-icon", href: "favicon.ico" }],
     },
   },
+
   css: ["~/assets/scss/styles.scss"],
   components: [
     {

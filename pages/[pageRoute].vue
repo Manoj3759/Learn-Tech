@@ -78,7 +78,8 @@
     <!-- video section -->
 
     <!-- :video-source="pageData.videoSrc" -->
-
+    <!-- :video-source="`https://www.youtube.com/embed/${pageData.videoSrc}`" -->
+    <!-- https://fast.wistia.net/embed/iframe/p6sli9mdvl -->
     <section id="video_section">
       <div class="p-lg-space-xxl px-space-xs py-space-lg">
         <video-modal-atlas
@@ -86,15 +87,13 @@
           class="bg-dark-3"
           video-position="right"
           :bg-image-source="`/images/tool-img/${pageData.heroSectionImg}`"
-          video-source="https://fast.wistia.net/embed/iframe/p6sli9mdvl"
+          :video-source="`https://fast.wistia.net/embed/iframe/${pageData.videoSrc}`"
           title-variant="light-1"
           @modalOpen="triggerplayBtnclickDataLayer('open', 'play button', '')"
           @modalClose="triggerplayBtnclickDataLayer('close', 'play button', '')"
         >
           <p class="text-light-1">
-            <a :href="pageData.ctaLink" class="text-light-1"
-              >{{ pageData.title }} </a
-            >{{ pageData.text }}
+            {{ pageData.text }}
           </p></video-modal-atlas
         >
       </div>
@@ -278,6 +277,25 @@ import { ListTimeline } from "@rds-vue-ui/list-timeline";
 import { CarouselCardApollo } from "@rds-vue-ui/carousel-card-apollo";
 import { analyticsComposable } from "@rds-vue-ui/analytics-gs-composable";
 
+// Meta title and Meta description for sub pages
+// useHead({
+//   title: pageData.pageRoute,
+//   htmlAttrs: {
+//     lang: "en",
+//   },
+//   meta: [
+//     { charset: "utf-8" },
+//     { name: "viewport", content: "width=device-width, initial-scale=1" },
+//     {
+//       hid: "description",
+//       name: "description",
+//       content: "",
+//     },
+//     { name: "format-detection", content: "telephone=no" },
+//   ],
+//   link: [{ rel: "icon", type: "image/x-icon", href: "favicon.ico" }],
+// });
+
 interface relatedVendorsData {
   title?: string;
   category?: string;
@@ -352,24 +370,6 @@ const pageData = await queryContent("vendors")
   .where({ pageRoute: { $eq: routeName } })
   .findOne();
 const relatedData = await queryContent("vendors").find();
-
-// Meta title and Meta description for sub pages
-useHead({
-  title: pageData.pageRoute,
-  htmlAttrs: {
-    lang: "en",
-  },
-  meta: [
-    { charset: "utf-8" },
-    { name: "viewport", content: "width=device-width, initial-scale=1" },
-    {
-      hid: "description",
-      name: "description",
-      content: "",
-    },
-    { name: "format-detection", content: "telephone=no" },
-  ],
-});
 
 //   fetch a particular number of items in the array of relatedVendorsData
 const visibleVendors = computed(() => {

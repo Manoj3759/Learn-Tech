@@ -515,14 +515,16 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-3">
-                    <a
-                      role="button"
-                      :href="data.pageRoute"
-                      class="btn btn-secondary ms-space-md"
-                      @click="triggerButtonClick(data.title)"
-                      >Learn more</a
-                    >
+                  <div class="col-3 d-flex justify-content-end">
+                    <div>
+                      <a
+                        role="button"
+                        :href="data.pageRoute"
+                        class="btn btn-secondary"
+                        @click="triggerButtonClick(data.title)"
+                        >Learn more</a
+                      >
+                    </div>
                   </div>
                 </div>
               </div>
@@ -625,23 +627,24 @@ import Fuse from "fuse.js";
 
 import { analyticsComposable } from "@rds-vue-ui/analytics-gs-composable";
 
-useHead({
-  title: "Learning Technology Platform | IDNM",
-  htmlAttrs: {
-    lang: "en",
-  },
-  meta: [
-    { charset: "utf-8" },
-    { name: "viewport", content: "width=device-width, initial-scale=1" },
-    {
-      hid: "description",
-      name: "description",
-      content:
-        "Explore a range of online learning tools from assessment and grading to curriculum, AI resources and more.",
-    },
-    { name: "format-detection", content: "telephone=no" },
-  ],
-});
+// useHead({
+//   title: "EdTech Connect | IDNM",
+//   htmlAttrs: {
+//     lang: "en",
+//   },
+//   meta: [
+//     { charset: "utf-8" },
+//     { name: "viewport", content: "width=device-width, initial-scale=1" },
+//     {
+//       hid: "description",
+//       name: "description",
+//       content:
+//         "Explore a range of online learning tools from assessment and grading to curriculum, AI resources and more.",
+//     },
+//     { name: "format-detection", content: "telephone=no" },
+//   ],
+//   link: [{ rel: "icon", type: "image/x-icon", href: "favicon.ico" }],
+// });
 
 type TrackingData = {
   event: string;
