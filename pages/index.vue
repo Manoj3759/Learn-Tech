@@ -1,5 +1,11 @@
 <template>
   <main>
+    <!-- test -->
+    <VideoModalAtlas
+      video-source="https://fast.wistia.net/embed/iframe/p6sli9mdvl"
+    ></VideoModalAtlas>
+    <!-- end -->
+
     <section class="container">
       <!-- intro section -->
       <section id="section-intro">
@@ -626,6 +632,7 @@ import { ref, watch, onMounted, computed } from "vue";
 import Fuse from "fuse.js";
 
 import { analyticsComposable } from "@rds-vue-ui/analytics-gs-composable";
+import { VideoModalAtlas } from "@rds-vue-ui/video-modal-atlas";
 
 // useHead({
 //   title: "EdTech Connect | IDNM",

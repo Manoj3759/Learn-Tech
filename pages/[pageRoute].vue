@@ -118,6 +118,13 @@
     </section>
     <!-- end -->
 
+    <!-- test 2 -->
+    <VideoModalAtlas
+      :video-source="pageData.videoSrc"
+      :bg-image-source="`/images/tool-img/${pageData.heroSectionImg}`"
+    ></VideoModalAtlas>
+    <!-- end -->
+
     <!-- feature section -->
 
     <section id="feature_section">
@@ -288,7 +295,6 @@ import sectionParallax from "~/components/sectionParallax.vue";
 import imageModalAtlas from "../components/imageModalAtlas.vue";
 
 import { VideoModalAtlas } from "@rds-vue-ui/video-modal-atlas";
-import { SectionParallaxAtlas } from "@rds-vue-ui/section-parallax-atlas";
 import { ListTimeline } from "@rds-vue-ui/list-timeline";
 import { CarouselCardApollo } from "@rds-vue-ui/carousel-card-apollo";
 import { analyticsComposable } from "@rds-vue-ui/analytics-gs-composable";
