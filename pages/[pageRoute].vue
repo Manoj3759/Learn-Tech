@@ -80,27 +80,7 @@
     <!-- :video-source="`https://www.youtube.com/embed/${pageData.videoSrc}`" -->
     <!-- https://fast.wistia.net/embed/iframe/p6sli9mdvl -->
     <!-- :video-source="`https://fast.wistia.net/embed/iframe/${pageData.videoSrc}`" -->
-    <!-- <section id="video_section">
-      <div class="p-lg-space-xxl px-space-xs py-space-lg">
-        <video-modal-atlas
-          :title="pageData.title"
-          class="bg-dark-3"
-          video-position="right"
-          :video-source="pageData.videoSrc"
-          :bg-image-source="`/images/tool-img/${pageData.heroSectionImg}`"
-          title-variant="light-1"
-          @modalOpen="triggerPlayBtnclickDataLayer('open', 'play button', '')"
-          @modalClose="triggerPlayBtnclickDataLayer('close', 'play button', '')"
-        >
-          <p class="text-light-1">
-            {{ pageData.text }}
-          </p></video-modal-atlas
-        >
-      </div>
-    </section> -->
-    <!-- End -->
 
-    <!-- test -->
     <section id="video_section">
       <div class="p-lg-space-xxl px-space-xs py-space-lg">
         <video-modal-atlas
@@ -119,7 +99,7 @@
         >
       </div>
     </section>
-    <!-- end -->
+    <!-- End -->
 
     <!-- feature section -->
 
