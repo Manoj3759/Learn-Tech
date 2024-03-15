@@ -80,7 +80,7 @@
     <!-- :video-source="`https://www.youtube.com/embed/${pageData.videoSrc}`" -->
     <!-- https://fast.wistia.net/embed/iframe/p6sli9mdvl -->
     <!-- :video-source="`https://fast.wistia.net/embed/iframe/${pageData.videoSrc}`" -->
-    <section id="video_section">
+    <!-- <section id="video_section">
       <div class="p-lg-space-xxl px-space-xs py-space-lg">
         <video-modal-atlas
           :title="pageData.title"
@@ -97,8 +97,32 @@
           </p></video-modal-atlas
         >
       </div>
-    </section>
+    </section> -->
     <!-- End -->
+
+    <!-- test -->
+    <section id="video_section">
+      <div class="p-lg-space-xxl px-space-xs py-space-lg">
+        <video-modal-atlas
+          :title="pageData.title"
+          class="bg-dark-3"
+          :video-source="pageData.videoSrc"
+          :bg-image-source="`/images/tool-img/${pageData.heroSectionImg}`"
+          title-variant="light-1"
+          @modalOpen="
+            triggerplayBtnclickDataLayer('open', 'play button', pageData.title)
+          "
+          @modalClose="
+            triggerplayBtnclickDataLayer('close', 'play button', pageData.title)
+          "
+        >
+          <p class="text-light-1">
+            {{ pageData.text }}
+          </p></video-modal-atlas
+        >
+      </div>
+    </section>
+    <!-- end -->
 
     <!-- feature section -->
 
@@ -153,8 +177,12 @@
           >
             <imageModalAtlas
               :imgSourceUrl="`/images/tool-img/${item.url}`"
-              @modalOpen="triggerplayBtnclickDataLayer('open', 'image', '')"
-              @modalClose="triggerplayBtnclickDataLayer('close', 'image', '')"
+              @modalOpen="
+                triggerplayBtnclickDataLayer('open', 'image', pageData.title)
+              "
+              @modalClose="
+                triggerplayBtnclickDataLayer('close', 'image', pageData.title)
+              "
             ></imageModalAtlas>
           </div>
         </template>
