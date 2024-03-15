@@ -1,9 +1,9 @@
 <template>
   <main>
     <!-- test -->
-    <VideoModalAtlas
+    <!-- <VideoModalAtlas
       video-source="https://fast.wistia.net/embed/iframe/p6sli9mdvl"
-    ></VideoModalAtlas>
+    ></VideoModalAtlas> -->
     <!-- end -->
 
     <section class="container">
