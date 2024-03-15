@@ -11,7 +11,6 @@ import {
   generateFileWritePromises,
   textToUrl,
   sanitizeFilename,
-  extractVideoId,
 } from "../utils/file-utils.js";
 import fs from "fs";
 import path from "path";
@@ -78,7 +77,7 @@ class DataModellingVendors {
     this.text = fields.Description || "";
     this.featureText = fields["Tool Feature Intro Text"] || "";
     this.category = fields["Primary Category"] || "";
-    this.videoSrc = extractVideoId(fields["Demo URL Link (Wistia)"]) || "";
+    this.videoSrc = fields["Demo URL Link (Wistia)"] || "";
     this.ctaLink = fields["Tool URL"] || "";
     this.ctaToolRequestFormLink =
       textToUrl(fields["Vender Demo Form (URL)"]) || "";

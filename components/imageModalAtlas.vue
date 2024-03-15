@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import lozad from "lozad";
-import { computed, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 // @ts-ignore
 import { RdsModal } from "@rds-vue-ui/rds-modal";
 
@@ -55,12 +55,6 @@ const emits = defineEmits<{
 }>();
 
 const showModal = ref(false);
-
-const bgImage = computed(() => {
-  if (!props.bgImageLazy) {
-    return { "background-image": `url('${props.imgSourceUrl}')` };
-  }
-});
 
 const handleModalOpen = (event: Event) => {
   showModal.value = true;
