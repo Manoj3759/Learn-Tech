@@ -109,12 +109,6 @@
           :video-source="pageData.videoSrc"
           :bg-image-source="`/images/tool-img/${pageData.heroSectionImg}`"
           title-variant="light-1"
-          @modalOpen="
-            triggerplayBtnclickDataLayer('open', 'play button', pageData.title)
-          "
-          @modalClose="
-            triggerplayBtnclickDataLayer('close', 'play button', pageData.title)
-          "
         >
           <p class="text-light-1">
             {{ pageData.text }}
@@ -177,12 +171,6 @@
           >
             <imageModalAtlas
               :imgSourceUrl="`/images/tool-img/${item.url}`"
-              @modalOpen="
-                triggerplayBtnclickDataLayer('open', 'image', pageData.title)
-              "
-              @modalClose="
-                triggerplayBtnclickDataLayer('close', 'image', pageData.title)
-              "
             ></imageModalAtlas>
           </div>
         </template>
