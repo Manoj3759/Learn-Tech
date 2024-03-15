@@ -89,8 +89,8 @@
           :video-source="pageData.videoSrc"
           :bg-image-source="`/images/tool-img/${pageData.heroSectionImg}`"
           title-variant="light-1"
-          @modalOpen="triggerplayBtnclickDataLayer('open', 'play button', '')"
-          @modalClose="triggerplayBtnclickDataLayer('close', 'play button', '')"
+          @modalOpen="triggerPlayBtnclickDataLayer('open', 'play button', '')"
+          @modalClose="triggerPlayBtnclickDataLayer('close', 'play button', '')"
         >
           <p class="text-light-1">
             {{ pageData.text }}
@@ -106,9 +106,12 @@
         <video-modal-atlas
           :title="pageData.title"
           class="bg-dark-3"
+          video-position="right"
           :video-source="pageData.videoSrc"
           :bg-image-source="`/images/tool-img/${pageData.heroSectionImg}`"
           title-variant="light-1"
+          @modalOpen="triggerPlayBtnclickDataLayer('open', 'play button', '')"
+          @modalClose="triggerPlayBtnclickDataLayer('close', 'play button', '')"
         >
           <p class="text-light-1">
             {{ pageData.text }}
@@ -116,13 +119,6 @@
         >
       </div>
     </section>
-    <!-- end -->
-
-    <!-- test 2 -->
-    <VideoModalAtlas
-      :video-source="pageData.videoSrc"
-      :bg-image-source="`/images/tool-img/${pageData.heroSectionImg}`"
-    ></VideoModalAtlas>
     <!-- end -->
 
     <!-- feature section -->
@@ -550,7 +546,7 @@ const triggerNextSlideClick = () => {
   analyticsComposable.trackEvent(eventObject);
 };
 
-const triggerplayBtnclickDataLayer = (
+const triggerPlayBtnclickDataLayer = (
   data: string,
   text: string,
   section: string
